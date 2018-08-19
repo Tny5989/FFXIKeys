@@ -101,7 +101,7 @@ function run()
 
     -- Find keys in the players inventory and trade one
     for index, item in pairs(bag) do
-        if item.id == key_id then
+        if type(item) == 'table' and item.id == key_id then
             local pkt = packets.new('outgoing', 0x036)
             if not pkt then
                 log('Unable to create outgoing packet')
