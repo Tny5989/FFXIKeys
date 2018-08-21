@@ -1,30 +1,34 @@
-local settings = {}
-
 local config = require('config')
 
+local settings = {}
+settings.config = {}
+
 --------------------------------------------------------------------------------
--- Load and validate addon configuration.
+-- Generate default values for the addon.
 --
--- Returns a table with the loaded settings.
+-- Returns a dicitionary with defaulted values.
 --
-function settings.load()
-    -- Setup deafults
+local function defaults()
     local defaults = {}
     defaults.printlinks = false
     defaults.openlinks = false
     defaults.maxdistance = 25.0
 
-    -- Load settings
-    return config.load('data\\settings.xml', defaults)
+    return defaults
+end
+
+--------------------------------------------------------------------------------
+-- Load addon configuration.
+--
+function settings.load()
+    settings.config = config.load('data\\settings.xml', defaults())
 end
 
 --------------------------------------------------------------------------------
 -- Saves addon configuration.
 --
--- param [in] settings - The settings to save.
---
-function settings.save(settings)
-    config.save(settings)
+function settings.save()
+    config.save(settings.config)
 end
 
 return settings

@@ -58,7 +58,6 @@ local targets =
 local key_id = resources.items:with('en', 'SP Gobbie Key').id
 local running = false
 local player_id
-local config = {}
 
 --------------------------------------------------------------------------------
 -- Validates game state before attempting to trade.
@@ -88,7 +87,7 @@ function run()
 
     -- Make sure the npc is in range
     local mob = windower.ffxi.get_mob_by_name(data.name)
-    if not mob or mob.distance > config.maxdistance then
+    if not mob or mob.distance > settings.config.maxdistance then
         log('Not in range of npc')
         return
     end
@@ -145,14 +144,14 @@ function handle_command(cmd)
         running = false
 
     elseif lcmd == 'printlinks' then
-        log('Turning printing links ' .. (config.printlinks and 'off' or 'on'))
-        config.printlinks = not config.printlinks
-        settings.save(config)
+        log('Turning printing links ' .. (settings.config.printlinks and 'off' or 'on'))
+        settings.config.printlinks = not settings.config.printlinks
+        settings.save()
 
     elseif lcmd == 'openlinks' then
-        log('Turning opening links ' .. (config.openlinks and 'off' or 'on'))
-        config.openlinks = not config.openlinks
-        settings.save(config)
+        log('Turning opening links ' .. (settings.config.openlinks and 'off' or 'on'))
+        settings.config.openlinks = not settings.config.openlinks
+        settings.save()
 
     end
 end
@@ -168,7 +167,7 @@ function handle_load()
         player_id = player.id
     end
 
-    config = settings.load()
+    settings.load()
 end
 
 --------------------------------------------------------------------------------
@@ -186,10 +185,10 @@ function handle_incoming(id, _, pkt, _, _)
     elseif running and id == 0x020 then
         local pkt = packets.parse('incoming', pkt)
         if pkt and pkt['Status'] == 0 then
-            if config.printlinks then
+            if settings.config.printlinks then
                 log('https://www.ffxiah.com/item/' .. pkt['Item'] .. '/')
             end
-            if config.openlinks then
+            if settings.config.openlinks then
                 windower.open_url('https://www.ffxiah.com/item/' .. pkt['Item'] .. '/')
             end
         end
