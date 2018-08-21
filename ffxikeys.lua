@@ -5,6 +5,7 @@ _addon.commands = {'keys' }
 
 local resources = require('resources')
 local packets = require('packets')
+local settings = require('settings')
 require('logger')
 
 local targets =
@@ -55,11 +56,9 @@ local targets =
     }
 }
 local key_id = resources.items:with('en', 'SP Gobbie Key').id
-local max_distance = 25.0
 local running = false
-local print_links = false
-local open_links = false
 local player_id
+local config = {}
 
 --------------------------------------------------------------------------------
 -- Validates game state before attempting to trade.
@@ -89,7 +88,7 @@ function run()
 
     -- Make sure the npc is in range
     local mob = windower.ffxi.get_mob_by_name(data.name)
-    if not mob or mob.distance > max_distance then
+    if not mob or mob.distance > config.maxdistance then
         log('Not in range of npc')
         return
     end
@@ -146,12 +145,14 @@ function handle_command(cmd)
         running = false
 
     elseif lcmd == 'printlinks' then
-        log('Turning printing links ' .. (print_links and 'off' or 'on'))
-        print_links = not print_links
+        log('Turning printing links ' .. (config.printlinks and 'off' or 'on'))
+        config.printlinks = not config.printlinks
+        settings.save(config)
 
     elseif lcmd == 'openlinks' then
-        log('Turning opening links ' .. (open_links and 'off' or 'on'))
-        open_links = not open_links
+        log('Turning opening links ' .. (config.openlinks and 'off' or 'on'))
+        config.openlinks = not config.openlinks
+        settings.save(config)
 
     end
 end
@@ -166,6 +167,8 @@ function handle_load()
     else
         player_id = player.id
     end
+
+    config = settings.load()
 end
 
 --------------------------------------------------------------------------------
@@ -179,6 +182,16 @@ function handle_incoming(id, _, pkt, _, _)
         local pkt = packets.parse('incoming', pkt)
         if pkt and pkt['Status'] == 0 and pkt['Player'] == player_id then
             run()
+        end
+    elseif running and id == 0x020 then
+        local pkt = packets.parse('incoming', pkt)
+        if pkt and pkt['Status'] == 0 then
+            if config.printlinks then
+                log('https://www.ffxiah.com/item/' .. pkt['Item'] .. '/')
+            end
+            if config.openlinks then
+                windower.open_url('https://www.ffxiah.com/item/' .. pkt['Item'] .. '/')
+            end
         end
     end
 end
