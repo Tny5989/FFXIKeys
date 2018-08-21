@@ -137,14 +137,22 @@ function handle_command(cmd)
 
     local lcmd = cmd:lower()
     if lcmd == 'start' then
+        log('Starting')
         running = true
         run()
+
     elseif lcmd == 'stop' then
+        log('Stopping')
         running = false
+
     elseif lcmd == 'printlinks' then
+        log('Turning printing links ' .. (print_links and 'off' or 'on'))
         print_links = not print_links
+
     elseif lcmd == 'openlinks' then
+        log('Turning opening links ' .. (open_links and 'off' or 'on'))
         open_links = not open_links
+
     end
 end
 
