@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint'
-_addon.version = '0.5'
+_addon.version = '1.0.0'
 _addon.commands = {'keys' }
 
 local resources = require('resources')
