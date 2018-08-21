@@ -57,6 +57,8 @@ local targets =
 local key_id = resources.items:with('en', 'SP Gobbie Key').id
 local max_distance = 25.0
 local running = false
+local print_links = false
+local open_links = false
 local player_id
 
 --------------------------------------------------------------------------------
@@ -139,6 +141,10 @@ function handle_command(cmd)
         run()
     elseif lcmd == 'stop' then
         running = false
+    elseif lcmd == 'printlinks' then
+        print_links = not print_links
+    elseif lcmd == 'openlinks' then
+        open_links = not open_links
     end
 end
 
