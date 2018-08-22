@@ -3,6 +3,8 @@ A small windower addon to automate trading Special Gobbiedial Keys for rewards
 
 * //lua l ffxikeys
   * Loads the addon
+  
+  
 * //lua u ffxikeys
   * Unloads the addon
   
