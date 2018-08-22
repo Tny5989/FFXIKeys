@@ -1,61 +1,14 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint'
 _addon.version = '1.0.1'
-_addon.commands = {'keys' }
+_addon.commands = {'keys'}
 
-local resources = require('resources')
+require('logger')
 local packets = require('packets')
 local settings = require('settings')
-require('logger')
+local targets = require('targets')
 
-local targets =
-{
-    [resources.zones:with('en', 'Port San d\'Oria').id] =
-    {
-        name = 'Habitox'
-    },
-    [resources.zones:with('en', 'Southern San d\'Oria').id] =
-    {
-        name = 'Mystrix'
-    },
-    [resources.zones:with('en', 'Bastok Mines').id] =
-    {
-        name = 'Bountibox'
-    },
-    [resources.zones:with('en', 'Bastok Markets').id] =
-    {
-        name = 'Specilox'
-    },
-    [resources.zones:with('en', 'Windurst Walls').id] =
-    {
-        name = 'Arbitrix'
-    },
-    [resources.zones:with('en', 'Windurst Woods').id] =
-    {
-        name = 'Funtrox'
-    },
-    [resources.zones:with('en', 'Lower Jeuno').id] =
-    {
-        name = 'Sweepstox'
-    },
-    [resources.zones:with('en', 'Upper Jeuno').id] =
-    {
-        name = 'Priztrix'
-    },
-    [resources.zones:with('en', 'Aht Urhgan Whitegate').id] =
-    {
-        name = 'Wondrix'
-    },
-    [resources.zones:with('en', 'Western Adoulin').id] =
-    {
-        name = 'Rewardox'
-    },
-    [resources.zones:with('en', 'Eastern Adoulin').id] =
-    {
-        name = 'Winrix'
-    }
-}
-local key_id = resources.items:with('en', 'SP Gobbie Key').id
+local key_id = require('resources').items:with('en', 'SP Gobbie Key').id
 local running = false
 local player_id
 
