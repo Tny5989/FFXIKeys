@@ -11,12 +11,14 @@ local targets = require('targets')
 local key_id = require('resources').items:with('en', 'SP Gobbie Key').id
 local running = false
 local player_id
+local npc
 
 --------------------------------------------------------------------------------
 -- Validates game state before attempting to trade.
 --
 function run()
     running = false
+    npc = nil
 
     -- Make sure we have player information
     if not player_id then
@@ -38,17 +40,17 @@ function run()
         return
     end
 
-    -- Make sure the npc is in range
-    local mob = windower.ffxi.get_mob_by_name(data.name)
-    if not mob or mob.distance > settings.config.maxdistance then
-        log('Not in range of npc')
-        return
-    end
-
     -- Make sure there is room in the players inventory
     local bag = windower.ffxi.get_items(0)
     if not bag or bag.count >= bag.max then
         log('Inventory is full')
+        return
+    end
+
+    -- Make sure the npc is in range
+    npc = windower.ffxi.get_mob_by_name(data.name)
+    if not npc or npc.distance > settings.config.maxdistance then
+        log('Not in range of npc')
         return
     end
 
@@ -61,10 +63,10 @@ function run()
                 return
             end
 
-            pkt['Target'] = mob.id
+            pkt['Target'] = npc.id
             pkt['Item Count 1'] = 1
             pkt['Item Index 1'] = index
-            pkt['Target Index'] = mob.index
+            pkt['Target Index'] = npc.index
             pkt['Number of Items'] = 1
 
             packets.inject(pkt)
@@ -135,14 +137,14 @@ function handle_incoming(id, _, pkt, _, _)
         if pkt and pkt['Status'] == 0 and pkt['Player'] == player_id then
             run()
         end
-    elseif running and id == 0x020 then
+    elseif running and npc and id == 0x02A then
         local pkt = packets.parse('incoming', pkt)
-        if pkt and pkt['Status'] == 0 then
+        if pkt and pkt['Message ID'] == 39155 and pkt['Player'] == npc.id and pkt['Player Index'] == npc.index then
             if settings.config.printlinks then
-                log('https://www.ffxiah.com/item/' .. pkt['Item'] .. '/')
+                log('https://www.ffxiah.com/item/' .. pkt['Param 1'] .. '/')
             end
             if settings.config.openlinks then
-                windower.open_url('https://www.ffxiah.com/item/' .. pkt['Item'] .. '/')
+                windower.open_url('https://www.ffxiah.com/item/' .. pkt['Param 1'] .. '/')
             end
         end
     end
