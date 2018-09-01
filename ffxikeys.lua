@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint'
-_addon.version = '1.0.3'
+_addon.version = '1.0.4'
 _addon.commands = {'keys'}
 
 require('logger')
@@ -139,7 +139,7 @@ function handle_incoming(id, _, pkt, _, _)
         end
     elseif running and npc and id == 0x02A then
         local pkt = packets.parse('incoming', pkt)
-        if pkt and pkt['Message ID'] == 39155 and pkt['Player'] == npc.id and pkt['Player Index'] == npc.index then
+        if pkt and pkt['Player'] == npc.id and pkt['Player Index'] == npc.index then
             if settings.config.printlinks then
                 log('https://www.ffxiah.com/item/' .. pkt['Param 1'] .. '/')
             end
