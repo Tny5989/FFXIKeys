@@ -9,3 +9,5 @@ A small windower addon to automate trading Special Gobbiedial Keys for rewards
   
 * //keys printlinks - Toggles printing ffxiah keys to chat
 * //keys openlinks  - Toggles opening ffxiah links in your default browser
+
+* //keys printinfo  - Toggles printing remaining keys / open inventory slots
