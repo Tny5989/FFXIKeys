@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint'
-_addon.version = '1.0.4'
+_addon.version = '1.0.5'
 _addon.commands = {'keys'}
 
 require('logger')
@@ -71,6 +71,11 @@ function run()
 
             packets.inject(pkt)
             running = true
+
+            if settings.config.printinfo then
+                log('Keys: ' .. item.count)
+                log('Inv : ' .. (bag.max - bag.count))
+            end
             return
         end
     end
@@ -99,15 +104,19 @@ function handle_command(cmd)
         running = false
 
     elseif lcmd == 'printlinks' then
-        log('Turning printing links ' .. (settings.config.printlinks and 'off' or 'on'))
+        log('Printing links is ' .. (settings.config.printlinks and 'off' or 'on'))
         settings.config.printlinks = not settings.config.printlinks
         settings.save()
 
     elseif lcmd == 'openlinks' then
-        log('Turning opening links ' .. (settings.config.openlinks and 'off' or 'on'))
+        log('Opening links is ' .. (settings.config.openlinks and 'off' or 'on'))
         settings.config.openlinks = not settings.config.openlinks
         settings.save()
 
+    elseif lcmd == 'printinfo' then
+        log('Printing info is ' .. (settings.config.printinfo and 'off' or 'on'))
+        settings.config.printinfo = not settings.config.printinfo
+        settings.save()
     end
 end
 
