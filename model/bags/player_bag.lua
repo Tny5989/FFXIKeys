@@ -10,6 +10,10 @@ function PlayerBag:PlayerBag(bag)
     return o
 end
 
+function PlayerBag:BagType()
+    return 'PlayerBag'
+end
+
 function PlayerBag:GetOpenInv()
     return self._bag.max - self._bag.count
 end

@@ -20,7 +20,8 @@ function LockType:GetName()
 end
 
 function LockType:_get_lock_type(lock_id)
-    return LockTypes[lock_id and lock_id or '']
+    local t = LockTypes[lock_id and lock_id or '']
+    return t and t or LockTypes['']
 end
 
 return LockType

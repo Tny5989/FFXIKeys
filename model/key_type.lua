@@ -20,7 +20,8 @@ function KeyType:GetItem()
 end
 
 function KeyType:_get_key_type(key_id)
-    return KeyTypes[key_id and key_id or '']
+    local t = KeyTypes[key_id and key_id or '']
+    return t and t or KeyTypes['']
 end
 
 return KeyType

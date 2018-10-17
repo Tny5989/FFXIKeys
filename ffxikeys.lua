@@ -5,6 +5,7 @@ _addon.commands = {'keys'}
 
 require('logger')
 settings = require('settings')
+packets = require('packets')
 local keysmith = require('keysmith')
 
 --------------------------------------------------------------------------------

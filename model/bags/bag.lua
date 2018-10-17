@@ -1,10 +1,15 @@
 local Bag = {}
 Bag.__index = Bag
+Bag.INVALID_ITEM_INDEX = -1
 
 function Bag:Bag()
     local o = {}
     setmetatable(o, self)
     return o
+end
+
+function Bag:BagType()
+    return 'Bag'
 end
 
 function Bag:GetOpenInv()
@@ -16,7 +21,7 @@ function Bag:GetNumItems(item_id)
 end
 
 function Bag:GetItemIndex(item_id)
-    return -1
+    return Bag.INVALID_ITEM_INDEX
 end
 
 return Bag

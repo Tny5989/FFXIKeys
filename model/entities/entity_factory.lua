@@ -3,7 +3,6 @@ local MobEntity = require('model/entities/mob_entity')
 local PlayerEntity = require('model/entities/player_entity')
 
 local EntityFactory = {}
-EntityFactory.__index = EntityFactory
 
 function EntityFactory.GetPlayer()
     local player = windower.ffxi.get_player()
