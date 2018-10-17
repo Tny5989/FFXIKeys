@@ -12,4 +12,8 @@ function Lock:Lock(lock_id)
     return o
 end
 
+function Lock:GetName()
+    return self._lock_type:GetName()
+end
+
 return Lock

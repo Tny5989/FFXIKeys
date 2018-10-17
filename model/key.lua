@@ -12,4 +12,8 @@ function Key:Key(key_id)
     return o
 end
 
+function Key:GetItem()
+    return self._key_type:GetItem()
+end
+
 return Key

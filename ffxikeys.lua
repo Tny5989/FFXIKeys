@@ -1,81 +1,17 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint'
-_addon.version = '1.0.1'
+_addon.version = '1.1.1'
 _addon.commands = {'keys'}
 
 require('logger')
-local packets = require('packets')
-local settings = require('settings')
-local targets = require('targets')
-
-local key_id = require('resources').items:with('en', 'SP Gobbie Key').id
-local running = false
-local player_id
-local npc
+settings = require('settings')
+local keysmith = require('keysmith')
 
 --------------------------------------------------------------------------------
 -- Validates game state before attempting to trade.
 --
 function run()
-    running = false
-    npc = nil
-
-    -- Make sure we have player information
-    if not player_id then
-        log('Unable to get player information')
-        return
-    end
-
-    -- Make sure we can get info from the game
-    local info = windower.ffxi.get_info()
-    if not info then
-        log('Unable to get game info')
-        return
-    end
-
-    -- Make sure the player is in a supported zone
-    local data = targets[info.zone]
-    if not data then
-        log('Not in a valid zone')
-        return
-    end
-
-    -- Make sure there is room in the players inventory
-    local bag = windower.ffxi.get_items(0)
-    if not bag or bag.count >= bag.max then
-        log('Inventory is full')
-        return
-    end
-
-    -- Make sure the npc is in range
-    npc = windower.ffxi.get_mob_by_name(data.name)
-    if not npc or npc.distance > settings.config.maxdistance then
-        log('Not in range of npc')
-        return
-    end
-
-    -- Find keys in the players inventory and trade one
-    for index, item in pairs(bag) do
-        if type(item) == 'table' and item.id == key_id then
-            local pkt = packets.new('outgoing', 0x036)
-            if not pkt then
-                log('Unable to create outgoing packet')
-                return
-            end
-
-            pkt['Target'] = npc.id
-            pkt['Item Count 1'] = 1
-            pkt['Item Index 1'] = index
-            pkt['Target Index'] = npc.index
-            pkt['Number of Items'] = 1
-
-            packets.inject(pkt)
-            running = true
-            return
-        end
-    end
-
-    log('No more keys')
+    keysmith.GetUnlock('test', 'test')()
 end
 
 --------------------------------------------------------------------------------
@@ -91,12 +27,10 @@ function handle_command(cmd)
     local lcmd = cmd:lower()
     if lcmd == 'start' then
         log('Starting')
-        running = true
         run()
 
     elseif lcmd == 'stop' then
         log('Stopping')
-        running = false
 
     elseif lcmd == 'printlinks' then
         log('Turning printing links ' .. (settings.config.printlinks and 'off' or 'on'))
@@ -112,16 +46,9 @@ function handle_command(cmd)
 end
 
 --------------------------------------------------------------------------------
--- Handles addon load.  Gets the player id for the session.
+-- Handles addon load.
 --
 function handle_load()
-    local player = windower.ffxi.get_player()
-    if not player then
-        player_id = nil
-    else
-        player_id = player.id
-    end
-
     settings.load()
 end
 
@@ -153,4 +80,4 @@ end
 --------------------------------------------------------------------------------
 windower.register_event('load', handle_load)
 windower.register_event('addon command', handle_command)
-windower.register_event('incoming chunk', handle_incoming)
+--windower.register_event('incoming chunk', handle_incoming)

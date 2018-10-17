@@ -15,6 +15,10 @@ function LockType:LockType(lock_id)
     return o
 end
 
+function LockType:GetName()
+    return self._target_name
+end
+
 function LockType:_get_lock_type(lock_id)
     return LockTypes[lock_id and lock_id or '']
 end

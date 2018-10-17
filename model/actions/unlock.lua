@@ -17,19 +17,23 @@ function Unlock:__call()
     local target = EntityFactory.GetTarget(self._lock:GetName())
 
     if player:GetBag():GetOpenInv() <= 0 then
+        print('space')
         return false
     end
 
     if player:GetBag():GetNumItems(self._key:GetItem()) <= 0 then
+        print('items')
         return false
     end
 
     if target:GetDistance() > settings.config.maxdistance then
+        print('distance')
         return false
     end
 
     local pkt = Packets.new('outgoing', 0x036)
     if not pkt then
+        print('packets')
         return false
     end
 

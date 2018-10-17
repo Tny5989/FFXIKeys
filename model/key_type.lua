@@ -15,6 +15,10 @@ function KeyType:KeyType(key_id)
     return o
 end
 
+function KeyType:GetItem()
+    return self._item_id
+end
+
 function KeyType:_get_key_type(key_id)
     return KeyTypes[key_id and key_id or '']
 end
