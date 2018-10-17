@@ -12,6 +12,7 @@ function ValidUnlock:ValidUnlock(key, lock)
 end
 
 function ValidUnlock:__call()
+    -- TODO - may need to add logic to enforce once time use or move factory checks into this class
     local player = EntityFactory.GetPlayer()
     local target = EntityFactory.GetTarget(self._lock:GetName())
 

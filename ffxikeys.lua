@@ -6,13 +6,13 @@ _addon.commands = {'keys'}
 require('logger')
 settings = require('settings')
 packets = require('packets')
-local keysmith = require('keysmith')
+local LockSmith = require('locksmith')
 
 --------------------------------------------------------------------------------
 -- Validates game state before attempting to trade.
 --
-function run()
-    keysmith.GetUnlock('test', 'test')()
+function unlock()
+    return LockSmith.Unlock('test', 'test')
 end
 
 --------------------------------------------------------------------------------
@@ -28,7 +28,7 @@ function handle_command(cmd)
     local lcmd = cmd:lower()
     if lcmd == 'start' then
         log('Starting')
-        run()
+        unlock()
 
     elseif lcmd == 'stop' then
         log('Stopping')
@@ -63,7 +63,7 @@ function handle_incoming(id, _, pkt, _, _)
     if running and id == 0x037 then
         local pkt = packets.parse('incoming', pkt)
         if pkt and pkt['Status'] == 0 and pkt['Player'] == player_id then
-            run()
+            unlock()
         end
     elseif running and npc and id == 0x02A then
         local pkt = packets.parse('incoming', pkt)
