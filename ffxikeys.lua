@@ -11,7 +11,7 @@ local locksmith = require('locksmith')
 local running
 
 --------------------------------------------------------------------------------
--- Handles addon load.  Gets the player id for the session.
+-- Handles addon load.
 --
 function handle_load()
     settings.load()
@@ -31,9 +31,7 @@ function handle_command(cmd)
     local lcmd = cmd:lower()
     if lcmd == 'start' then
         log('Starting')
-        if locksmith.Unlock(8973, 17780998) then
-            running = true
-        end
+        running = locksmith.Unlock(8973, 17780998)
 
     elseif lcmd == 'stop' then
         log('Stopping')
