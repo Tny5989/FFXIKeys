@@ -6,13 +6,13 @@ local NpcLock = require('model/lock/npc_lock')
 NpcLockTests = {}
 
 --------------------------------------------------------------------------------
-function NpcLockTests:TestItemIdIsCorrect()
+function NpcLockTests:TestNpcIdIsCorrect()
     local key = NpcLock:NpcLock(1234)
-    LuaUnit.assertEquals(key:Item(), 1234)
+    LuaUnit.assertEquals(key:Npc(), 1234)
 end
 
 --------------------------------------------------------------------------------
-function NpcLockTests:TestTypeIsNilLock()
+function NpcLockTests:TestTypeIsNpcLock()
     local key = NpcLock:NpcLock(1234)
     LuaUnit.assertEquals(key:Type(), 'NpcLock')
 end

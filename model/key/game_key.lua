@@ -1,20 +1,23 @@
-local LuaUnit = require('luaunit')
 local ItemKey = require('model/key/item_key')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-ItemKeyTests = {}
+local GameKey = ItemKey:ItemKey()
+GameKey.__index = GameKey
 
 --------------------------------------------------------------------------------
-function ItemKeyTests:TestItemIdIsCorrect()
-    local key = ItemKey:ItemKey(1234)
-    LuaUnit.assertEquals(key:Item(), 1234)
+function GameKey:GameKey(id, entity)
+    local o = {}
+    setmetatable(o, self)
+    o._id = id
+    o._entity = entity
+    o._type = 'GameKey'
+    return o
 end
 
 --------------------------------------------------------------------------------
-function ItemKeyTests:TestTypeIsItemKey()
-    local key = ItemKey:ItemKey(1234)
-    LuaUnit.assertEquals(key:Type(), 'ItemKey')
+function GameKey:Entity()
+    return self._entity
 end
 
-LuaUnit.LuaUnit.run('ItemKeyTests')
+return GameKey

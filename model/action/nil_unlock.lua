@@ -1,8 +1,24 @@
---
--- Created by IntelliJ IDEA.
--- User: tony
--- Date: 10/17/18
--- Time: 4:45 PM
--- To change this template use File | Settings | File Templates.
---
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+local NilUnlock = {}
+NilUnlock.__index = NilUnlock
 
+--------------------------------------------------------------------------------
+function NilUnlock:NilUnlock()
+    local o = {}
+    setmetatable(o, self)
+    o._type = 'NilUnlock'
+    return o
+end
+
+--------------------------------------------------------------------------------
+function NilUnlock:Type()
+    return self._type
+end
+
+--------------------------------------------------------------------------------
+function NilUnlock:__call()
+    return false
+end
+
+return NilUnlock
