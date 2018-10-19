@@ -1,14 +1,12 @@
 local LuaUnit = require('luaunit')
-local KeyFactory = require('model/key/key_factory')
-local LockFactory = require('model/lock/lock_factory')
-local UnlockFactory = require('model/action/unlock_factory')
+local UnlockCommand = require('command/unlock_command')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-UnlockFactoryTests = {}
+UnlockCommandTests = {}
 
 --------------------------------------------------------------------------------
-function UnlockFactoryTests:SetUp()
+function UnlockCommandTests:SetUp()
     windower = {}
     windower.ffxi = {}
     function windower.ffxi.get_player()
@@ -36,27 +34,32 @@ function UnlockFactoryTests:SetUp()
 end
 
 --------------------------------------------------------------------------------
-function UnlockFactoryTests:TestNilUnlockCreatedWhenNilKey()
-    local key = KeyFactory.CreateKey()
-    local lock = LockFactory.CreateLock(1234)
-    local u = UnlockFactory.CreateUnlock(key, lock)
-    LuaUnit.assertEquals(u:Type(), 'NilUnlock')
+function UnlockCommandTests:TestUnlockCommandReturnTrue()
+    local state = {}
+    local u = UnlockCommand:UnlockCommand(0, 1234)
+    LuaUnit.assertTrue(u(state))
 end
 
 --------------------------------------------------------------------------------
-function UnlockFactoryTests:TestNilUnlockCreatedWhenNilLock()
-    local key = KeyFactory.CreateKey(1234)
-    local lock = LockFactory.CreateLock()
-    local u = UnlockFactory.CreateUnlock(key, lock)
-    LuaUnit.assertEquals(u:Type(), 'NilUnlock')
+function UnlockCommandTests:TestUnlockCommandUpdatesStateWhenGood()
+    local state = {}
+    local c = UnlockCommand:UnlockCommand(1, 1234)
+    c(state)
+    LuaUnit.assertEquals(state, {running = true, command = c})
 end
 
 --------------------------------------------------------------------------------
-function UnlockFactoryTests:TestValidUnlockCreatedWhenValidParams()
-    local key = KeyFactory.CreateKey(1)
-    local lock = LockFactory.CreateLock(4321)
-    local u = UnlockFactory.CreateUnlock(key, lock)
-    LuaUnit.assertEquals(u:Type(), 'ValidUnlock')
+function UnlockCommandTests:TestUnlockCommandUpdatesStateWhenBad()
+    local state = {}
+    local c = UnlockCommand:UnlockCommand(0, 1234)
+    c(state)
+    LuaUnit.assertEquals(state, {running = false, command = c})
 end
 
-LuaUnit.LuaUnit.run('UnlockFactoryTests')
+--------------------------------------------------------------------------------
+function UnlockCommandTests:TestTypeIsUnlockCommand()
+    local u = UnlockCommand:UnlockCommand(1, 1234)
+    LuaUnit.assertEquals(u:Type(), 'UnlockCommand')
+end
+
+LuaUnit.LuaUnit.run('UnlockCommandTests')
