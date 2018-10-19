@@ -18,11 +18,6 @@ end
 function FeatureToggleCommand:__call(state)
     settings.config[self._setting] = not settings.config[self._setting]
     settings.save()
-
-    if log then
-        log(self._setting .. ' is ' .. (settings.config[self._setting] and 'off' or 'on'))
-    end
-
     return true
 end
 

@@ -8,7 +8,7 @@ packets = require('packets')
 settings = require('settings')
 local CommandFactory = require('command/command_factory')
 
-local state = {running = false, command = {}}
+local state = {running = false, command = nil}
 
 --------------------------------------------------------------------------------
 function handle_load()
