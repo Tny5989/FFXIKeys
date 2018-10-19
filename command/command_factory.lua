@@ -1,5 +1,5 @@
-local FeatureToggleCommand = require('command/feature_toggle_command')
 local NilCommand = require('command/nil_command')
+local StopCommand = require('command/stop_command')
 local UnlockCommand = require('command/unlock_command')
 local Keys = require('data/keys')
 local Locks = require('data/locks')
@@ -14,8 +14,8 @@ function CommandFactory.CreateCommand(cmd, p1, p2)
         return NilCommand:NilCommand()
     end
 
-    if cmd == 'printlinks' or cmd == 'openlinks' then
-        return FeatureToggleCommand:FeatureToggleCommand(cmd)
+    if cmd == 'stop' then
+        return StopCommand:StopCommand(cmd)
     end
 
     if cmd == 'unlock' then

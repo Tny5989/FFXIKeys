@@ -18,21 +18,14 @@ function CommandFactoryTests:TestNilCommandCreatedWhenUnknownCommand()
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestFeatureToggleCommandCreatedForPrintlinks()
-    local c = CommandFactory.CreateCommand('printlinks', nil, nil)
-    LuaUnit.assertEquals(c:Type(), 'FeatureToggleCommand')
-end
-
---------------------------------------------------------------------------------
-function CommandFactoryTests:TestFeatureToggleCommandCreatedForOpenlinks()
-    local c = CommandFactory.CreateCommand('openlinks', nil, nil)
-    LuaUnit.assertEquals(c:Type(), 'FeatureToggleCommand')
-end
-
---------------------------------------------------------------------------------
 function CommandFactoryTests:TestUnlockCommmandCreatedForUnlock()
     local c = CommandFactory.CreateCommand('unlock', 0, 0)
     LuaUnit.assertEquals(c:Type(), 'UnlockCommand')
+end
+
+function CommandFactoryTests:TestStopCommandCreatedForStop()
+    local c = CommandFactory.CreateCommand('stop', 0, 0)
+    LuaUnit.assertEquals(c:Type(), 'StopCommand')
 end
 
 LuaUnit.LuaUnit.run('CommandFactoryTests')

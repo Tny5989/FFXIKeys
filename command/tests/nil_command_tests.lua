@@ -32,8 +32,8 @@ end
 
 --------------------------------------------------------------------------------
 function NilCommandTests:TestTypeIsNilCommand()
-    local u = NilCommand:NilCommand()
-    LuaUnit.assertEquals(u:Type(), 'NilCommand')
+    local c = NilCommand:NilCommand()
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 LuaUnit.LuaUnit.run('NilCommandTests')

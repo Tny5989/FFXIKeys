@@ -2,23 +2,24 @@ local NilCommand = require('command/nil_command')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local FeatureToggleCommand = NilCommand:NilCommand()
-FeatureToggleCommand.__index = FeatureToggleCommand
+local StopCommand = NilCommand:NilCommand()
+StopCommand.__index = StopCommand
 
 --------------------------------------------------------------------------------
-function FeatureToggleCommand:FeatureToggleCommand(setting)
+function StopCommand:StopCommand(key_id, lock_id)
     local o = {}
     setmetatable(o, self)
-    o._setting = setting
-    o._type = 'FeatureToggleCommand'
+    o._key = key_id
+    o._lock = lock_id
+    o._type = 'StopCommand'
     return o
 end
 
 --------------------------------------------------------------------------------
-function FeatureToggleCommand:__call(state)
-    settings.config[self._setting] = not settings.config[self._setting]
-    settings.save()
+function StopCommand:__call(state)
+    state.running = false
+    state.command = nil
     return true
 end
 
-return FeatureToggleCommand
+return StopCommand

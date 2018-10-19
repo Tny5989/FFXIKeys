@@ -1,12 +1,12 @@
 local LuaUnit = require('luaunit')
-local UnlockCommand = require('command/unlock_command')
+local StopCommand = require('command/stop_command')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-UnlockCommandTests = {}
+StopCommandTests = {}
 
 --------------------------------------------------------------------------------
-function UnlockCommandTests:SetUp()
+function StopCommandTests:SetUp()
     windower = {}
     windower.ffxi = {}
     function windower.ffxi.get_player()
@@ -34,32 +34,23 @@ function UnlockCommandTests:SetUp()
 end
 
 --------------------------------------------------------------------------------
-function UnlockCommandTests:TestUnlockCommandReturnTrue()
+function StopCommandTests:TestStopCommandReturnTrue()
     local state = {}
-    local c = UnlockCommand:UnlockCommand(0, 1234)
+    local c = StopCommand:StopCommand()
     LuaUnit.assertTrue(c(state))
 end
 
 --------------------------------------------------------------------------------
-function UnlockCommandTests:TestUnlockCommandUpdatesStateWhenGood()
+function StopCommandTests:TestStopCommandUpdatesState()
     local state = {}
-    local c = UnlockCommand:UnlockCommand(1, 1234)
-    c(state)
-    LuaUnit.assertEquals(state, {running = true, command = c})
+    StopCommand:StopCommand()(state)
+    LuaUnit.assertEquals(state, {running = false, command = nil})
 end
 
 --------------------------------------------------------------------------------
-function UnlockCommandTests:TestUnlockCommandUpdatesStateWhenBad()
-    local state = {}
-    local c = UnlockCommand:UnlockCommand(0, 1234)
-    c(state)
-    LuaUnit.assertEquals(state, {running = false, command = c})
+function StopCommandTests:TestTypeIsStopCommand()
+    local c = StopCommand:StopCommand()
+    LuaUnit.assertEquals(c:Type(), 'StopCommand')
 end
 
---------------------------------------------------------------------------------
-function UnlockCommandTests:TestTypeIsUnlockCommand()
-    local c = UnlockCommand:UnlockCommand(1, 1234)
-    LuaUnit.assertEquals(c:Type(), 'UnlockCommand')
-end
-
-LuaUnit.LuaUnit.run('UnlockCommandTests')
+LuaUnit.LuaUnit.run('StopCommandTests')
