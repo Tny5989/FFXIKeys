@@ -12,29 +12,7 @@ function KeyFactory.CreateKey(id)
         return NilKey:NilKey()
     end
 
-    local entity = EntityFactory.CreatePlayer()
-    if entity:Type() == 'NilEntity' then
-        if log then
-            log('Unable to find key')
-        end
-        return NilKey:NilKey()
-    end
-
-    if entity:Bag():FreeSlots() <= 0 then
-        if log then
-            log('Inventory full')
-        end
-        return NilKey:NilKey()
-    end
-
-    if entity:Bag():ItemCount(id) <= 0 then
-        if log then
-            log('No keys')
-        end
-        return NilKey:NilKey()
-    end
-
-    return GameKey:GameKey(id, entity)
+    return GameKey:GameKey(id, EntityFactory.CreatePlayer())
 end
 
 return KeyFactory

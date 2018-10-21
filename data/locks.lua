@@ -1,7 +1,7 @@
 local Locks = {}
 Locks.Values = {}
 Locks.Values['habitox'] = 0
-Locks.Values['mystrix'] = 0
+Locks.Values['mystrix'] = 17719641
 Locks.Values['Bountibox'] = 0
 Locks.Values['specilox'] = 0
 Locks.Values['arbitrix'] = 0

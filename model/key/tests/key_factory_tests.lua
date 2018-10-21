@@ -37,19 +37,19 @@ function KeyFactoryTests:TestNilKeyCreatedWhenBadPlayer()
 end
 
 --------------------------------------------------------------------------------
-function KeyFactoryTests:TestNilKeyCreatedWhenInvFull()
+function KeyFactoryTests:TestGameKeyCreatedWhenInvFull()
     function windower.ffxi.get_items()
         return {max = 2, count = 2, [1] = {id = 1, count = 1}, [2] = {id = 2, count = 4} }
     end
 
     local key = KeyFactory.CreateKey(1)
-    LuaUnit.assertEquals(key:Type(), 'NilKey')
+    LuaUnit.assertEquals(key:Type(), 'GameKey')
 end
 
 --------------------------------------------------------------------------------
-function KeyFactoryTests:TestNilKeyCreatedWhenNoKeys()
+function KeyFactoryTests:TestGameKeyCreatedWhenNoKeys()
     local key = KeyFactory.CreateKey(0)
-    LuaUnit.assertEquals(key:Type(), 'NilKey')
+    LuaUnit.assertEquals(key:Type(), 'GameKey')
 end
 
 --------------------------------------------------------------------------------
