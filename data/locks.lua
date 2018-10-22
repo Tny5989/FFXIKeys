@@ -1,16 +1,16 @@
 local Locks = {}
 Locks.Values = {}
-Locks.Values['habitox'] = 0
-Locks.Values['mystrix'] = 17719641
-Locks.Values['Bountibox'] = 0
-Locks.Values['specilox'] = 0
-Locks.Values['arbitrix'] = 0
-Locks.Values['funtrox'] = 0
-Locks.Values['sweepstox'] = 17780998
-Locks.Values['priztrix'] = 0
-Locks.Values['wondrix'] = 0
-Locks.Values['rewardox'] = 0
-Locks.Values['winrix'] = 0
+Locks.Values['habitox'] = {id = 0, menu = 0}
+Locks.Values['mystrix'] = {id = 17719641, menu = 0}
+Locks.Values['Bountibox'] = {id = 0, menu = 0}
+Locks.Values['specilox'] = {id = 0, menu = 0}
+Locks.Values['arbitrix'] = {id = 0, menu = 0}
+Locks.Values['funtrox'] = {id = 0, menu = 0}
+Locks.Values['sweepstox'] = {id = 17780998, menu = 0}
+Locks.Values['priztrix'] = {id = 0, menu = 0}
+Locks.Values['wondrix'] = {id = 0, menu = 0}
+Locks.Values['rewardox'] = {id = 0, menu = 0}
+Locks.Values['winrix'] = {id = 0, menu = 0}
 
 --------------------------------------------------------------------------------
 function Locks.GetLock(lock_str)
