@@ -1,3 +1,5 @@
+local NilEntity = require('model/entity/nil_entity')
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local NilKey = {}
@@ -8,6 +10,7 @@ function NilKey:NilKey()
     local o = {}
     setmetatable(o, self)
     o._id = 0
+    o._entity = NilEntity:NilEntity()
     o._type = 'NilKey'
     return o
 end
@@ -15,6 +18,11 @@ end
 --------------------------------------------------------------------------------
 function NilKey:Item()
     return self._id
+end
+
+--------------------------------------------------------------------------------
+function NilKey:Entity()
+    return self._entity
 end
 
 --------------------------------------------------------------------------------

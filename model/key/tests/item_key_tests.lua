@@ -12,6 +12,12 @@ function ItemKeyTests:TestItemIdIsCorrect()
 end
 
 --------------------------------------------------------------------------------
+function ItemKeyTests:TestEntityIsNil()
+    local key = ItemKey:ItemKey(1234)
+    LuaUnit.assertEquals(key:Entity():Type(), 'NilEntity')
+end
+
+--------------------------------------------------------------------------------
 function ItemKeyTests:TestTypeIsItemKey()
     local key = ItemKey:ItemKey(1234)
     LuaUnit.assertEquals(key:Type(), 'ItemKey')

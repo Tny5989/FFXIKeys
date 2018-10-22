@@ -15,9 +15,4 @@ function GameKey:GameKey(id, entity)
     return o
 end
 
---------------------------------------------------------------------------------
-function GameKey:Entity()
-    return self._entity
-end
-
 return GameKey
