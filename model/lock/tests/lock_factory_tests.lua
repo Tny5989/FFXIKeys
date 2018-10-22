@@ -30,7 +30,7 @@ function LockFactoryTests:TestNilLockCreatedWhenBadMob()
         return nil
     end
 
-    local key = LockFactory.CreateLock(0)
+    local key = LockFactory.CreateLock(0, 1)
     LuaUnit.assertEquals(key:Type(), 'NilLock')
 end
 
@@ -41,14 +41,14 @@ function LockFactoryTests:TestNilLockCreatedWhenFarAway()
     end
 
 
-    local lock = LockFactory.CreateLock(0)
+    local lock = LockFactory.CreateLock(0, 1)
     LuaUnit.assertEquals(lock:Type(), 'NilLock')
 end
 
 
 --------------------------------------------------------------------------------
 function LockFactoryTests:TestNpcLockCreatedWhenValidIdPassed()
-    local lock = LockFactory.CreateLock(0)
+    local lock = LockFactory.CreateLock(0, 1)
     LuaUnit.assertEquals(lock:Type(), 'GameLock')
 end
 

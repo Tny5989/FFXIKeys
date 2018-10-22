@@ -6,10 +6,11 @@ local GameLock = NpcLock:NpcLock()
 GameLock.__index = GameLock
 
 --------------------------------------------------------------------------------
-function GameLock:GameLock(id, entity)
+function GameLock:GameLock(id, option, entity)
     local o = {}
     setmetatable(o, self)
     o._id = id
+    o._option = option
     o._entity = entity
     o._type = 'GameLock'
     return o

@@ -38,7 +38,7 @@ end
 --------------------------------------------------------------------------------
 function UnlockFactoryTests:TestNilUnlockCreatedWhenNilKey()
     local key = KeyFactory.CreateKey()
-    local lock = LockFactory.CreateLock(1234)
+    local lock = LockFactory.CreateLock(1234, 1)
     local u = UnlockFactory.CreateUnlock(key, lock)
     LuaUnit.assertEquals(u:Type(), 'NilUnlock')
 end
@@ -54,7 +54,7 @@ end
 --------------------------------------------------------------------------------
 function UnlockFactoryTests:TestValidUnlockCreatedWhenValidParams()
     local key = KeyFactory.CreateKey(1)
-    local lock = LockFactory.CreateLock(4321)
+    local lock = LockFactory.CreateLock(4321, 1)
     local u = UnlockFactory.CreateUnlock(key, lock)
     LuaUnit.assertEquals(u:Type(), 'ValidUnlock')
 end
@@ -67,7 +67,7 @@ function UnlockFactoryTests:TestNilUnlockCreatedWhenNilLockEntity()
         return nil
     end
 
-    local lock = LockFactory.CreateLock(4321)
+    local lock = LockFactory.CreateLock(4321, 1)
     local u = UnlockFactory.CreateUnlock(key, lock)
     LuaUnit.assertEquals(u:Type(), 'NilUnlock')
 end
@@ -79,7 +79,7 @@ function UnlockFactoryTests:TestNilUnlockCreatedWhenFullBag()
     end
 
     local key = KeyFactory.CreateKey(1)
-    local lock = LockFactory.CreateLock(4321)
+    local lock = LockFactory.CreateLock(4321, 1)
     local u = UnlockFactory.CreateUnlock(key, lock)
     LuaUnit.assertEquals(u:Type(), 'NilUnlock')
 end
@@ -87,7 +87,7 @@ end
 --------------------------------------------------------------------------------
 function UnlockFactoryTests:TestNilUnlockCreatedWhenNoItems()
     local key = KeyFactory.CreateKey(43213)
-    local lock = LockFactory.CreateLock(4321)
+    local lock = LockFactory.CreateLock(4321, 1)
     local u = UnlockFactory.CreateUnlock(key, lock)
     LuaUnit.assertEquals(u:Type(), 'NilUnlock')
 end

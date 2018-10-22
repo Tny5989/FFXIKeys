@@ -19,9 +19,9 @@ function CommandFactory.CreateCommand(cmd, p1, p2)
     end
 
     if cmd == 'unlock' then
-        local key_id = Keys.GetKey(p1)
-        local lock_id = Locks.GetLock(p2)
-        return UnlockCommand:UnlockCommand(key_id.id, lock_id)
+        local key = Keys.GetKey(p1)
+        local lock = Locks.GetLock(p2)
+        return UnlockCommand:UnlockCommand(key.id, lock.id)
     end
 
     return NilCommand:NilCommand()

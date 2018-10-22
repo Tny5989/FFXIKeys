@@ -1,3 +1,0 @@
-local Vendors = {}
-
-return Vendors

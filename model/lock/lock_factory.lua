@@ -7,8 +7,8 @@ local GameLock = require('model/lock/game_lock')
 local LockFactory = {}
 
 --------------------------------------------------------------------------------
-function LockFactory.CreateLock(id)
-    if not id then
+function LockFactory.CreateLock(id, option)
+    if not id or not option then
         return NilLock:NilLock()
     end
 
@@ -28,7 +28,7 @@ function LockFactory.CreateLock(id)
     end
 
 
-    return GameLock:GameLock(id, entity)
+    return GameLock:GameLock(id, option, entity)
 end
 
 return LockFactory

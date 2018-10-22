@@ -21,7 +21,7 @@ end
 --------------------------------------------------------------------------------
 function UnlockCommand:__call(state)
     local key = KeyFactory.CreateKey(self._key)
-    local lock = LockFactory.CreateLock(self._lock)
+    local lock = LockFactory.CreateLock(self._lock, 0)
     state.running = UnlockFactory.CreateUnlock(key, lock)()
     state.command = self
     return true

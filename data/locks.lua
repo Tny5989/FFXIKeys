@@ -1,5 +1,6 @@
 local Locks = {}
 Locks.Values = {}
+Locks.Values[''] = {id = 0, menu = 0}
 Locks.Values['habitox'] = {id = 0, menu = 0}
 Locks.Values['mystrix'] = {id = 17719641, menu = 0}
 Locks.Values['Bountibox'] = {id = 0, menu = 0}
@@ -20,7 +21,7 @@ function Locks.GetLock(lock_str)
 
     local value = Locks.Values[lock_str]
     if not value then
-        return 0
+        return Locks.Values['']
     end
 
     return value

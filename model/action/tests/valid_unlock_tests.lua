@@ -36,20 +36,20 @@ end
 
 --------------------------------------------------------------------------------
 function ValidUnlockTests:TestReturnsTrue()
-    local u = ValidUnlock:ValidUnlock(KeyFactory.CreateKey(1), LockFactory.CreateLock(1234))
+    local u = ValidUnlock:ValidUnlock(KeyFactory.CreateKey(1), LockFactory.CreateLock(1234, 1))
     LuaUnit.assertTrue(u())
 end
 
 --------------------------------------------------------------------------------
 function ValidUnlockTests:TestPacketSent()
-    local u = ValidUnlock:ValidUnlock(KeyFactory.CreateKey(1), LockFactory.CreateLock(5555))
+    local u = ValidUnlock:ValidUnlock(KeyFactory.CreateKey(1), LockFactory.CreateLock(5555, 1))
     u()
     LuaUnit.assertTrue(packets.p ~= nil)
 end
 
 --------------------------------------------------------------------------------
 function ValidUnlockTests:TestPacketData()
-    local u = ValidUnlock:ValidUnlock(KeyFactory.CreateKey(2), LockFactory.CreateLock(5555))
+    local u = ValidUnlock:ValidUnlock(KeyFactory.CreateKey(2), LockFactory.CreateLock(5555, 1))
     u()
     LuaUnit.assertTrue(packets.p ~= nil)
     LuaUnit.assertEquals(packets.p['Target'], 5555)
