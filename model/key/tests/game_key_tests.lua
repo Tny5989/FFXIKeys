@@ -28,6 +28,12 @@ function GameKeyTests:TestItemIdIsCorrect()
 end
 
 --------------------------------------------------------------------------------
+function GameKeyTests:TestOptionIsZero()
+    local key = GameKey:GameKey(1234, EntityFactory.CreatePlayer())
+    LuaUnit.assertEquals(key:Option(), 0)
+end
+
+--------------------------------------------------------------------------------
 function GameKeyTests:TestItemIndexIsCorrect()
     local entity = EntityFactory.CreatePlayer()
     local key = GameKey:GameKey(2, entity)
@@ -36,7 +42,7 @@ end
 
 --------------------------------------------------------------------------------
 function GameKeyTests:TestTypeIsGameKey()
-    local key = GameKey:GameKey(1234)
+    local key = GameKey:GameKey(1234, EntityFactory.CreatePlayer())
     LuaUnit.assertEquals(key:Type(), 'GameKey')
 end
 

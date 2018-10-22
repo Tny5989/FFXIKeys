@@ -53,6 +53,12 @@ function KeyFactoryTests:TestGameKeyCreatedWhenNoKeys()
 end
 
 --------------------------------------------------------------------------------
+function KeyFactoryTests:TestItemKeyCreatedWhenOption()
+    local key = KeyFactory.CreateKey(0, 1)
+    LuaUnit.assertEquals(key:Type(), 'ItemKey')
+end
+
+--------------------------------------------------------------------------------
 function KeyFactoryTests:TestGameKeyCreatedWhenValidIdPassed()
     local key = KeyFactory.CreateKey(1)
     LuaUnit.assertEquals(key:Type(), 'GameKey')

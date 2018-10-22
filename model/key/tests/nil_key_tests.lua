@@ -18,6 +18,12 @@ function NilKeyTests:TestEntityIsNil()
 end
 
 --------------------------------------------------------------------------------
+function NilKeyTests:TestOptionIsZero()
+    local key = NilKey:NilKey()
+    LuaUnit.assertEquals(key:Option(), 0)
+end
+
+--------------------------------------------------------------------------------
 function NilKeyTests:TestTypeIsNilKey()
     local key = NilKey:NilKey()
     LuaUnit.assertEquals(key:Type(), 'NilKey')
