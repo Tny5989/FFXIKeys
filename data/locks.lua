@@ -1,6 +1,10 @@
 local Locks = {}
 Locks.Values = {}
-Locks.Values[''] = {id = 0, menu = 0, zone = 0}
+
+-- Null Key
+Locks.Values[''] = {id = 0, menu = 0, zone = 0 }
+
+-- Key Goblins
 Locks.Values['habitox'] = {id = 17727633, menu = 0, zone = 0}
 Locks.Values['mystrix'] = {id = 17719641, menu = 0, zone = 0}
 Locks.Values['bountibox'] = {id = 17735872, menu = 0, zone = 0}
@@ -13,7 +17,7 @@ Locks.Values['wondrix'] = {id = 16982639, menu = 0, zone = 0}
 Locks.Values['rewardox'] = {id = 17826176, menu = 0, zone = 0}
 Locks.Values['winrix'] = {id = 17830186, menu = 0, zone = 0}
 
-
+-- Key Vendors
 Locks.Values['urbiolaine'] = {id = 17719646, menu = 3529, zone = 230}
 Locks.Values['igsli'] = {id = 17739961, menu = 0, zone = 235}
 Locks.Values['teldrokesdrodo'] = {id = 17764611, menu = 879, zone = 241}
