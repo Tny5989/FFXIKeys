@@ -1,17 +1,17 @@
 local Locks = {}
 Locks.Values = {}
 Locks.Values[''] = {id = 0, menu = 0, zone = 0}
-Locks.Values['habitox'] = {id = 0, menu = 0, zone = 0}
+Locks.Values['habitox'] = {id = 17727633, menu = 0, zone = 0}
 Locks.Values['mystrix'] = {id = 17719641, menu = 0, zone = 0}
-Locks.Values['Bountibox'] = {id = 0, menu = 0, zone = 0}
-Locks.Values['specilox'] = {id = 0, menu = 0, zone = 0}
-Locks.Values['arbitrix'] = {id = 0, menu = 0, zone = 0}
+Locks.Values['bountibox'] = {id = 17735872, menu = 0, zone = 0}
+Locks.Values['specilox'] = {id = 17739956, menu = 0, zone = 0}
+Locks.Values['arbitrix'] = {id = 17756352, menu = 0, zone = 0}
 Locks.Values['funtrox'] = {id = 17764606, menu = 0, zone = 0}
 Locks.Values['sweepstox'] = {id = 17780998, menu = 0, zone = 0}
-Locks.Values['priztrix'] = {id = 0, menu = 0, zone = 0}
-Locks.Values['wondrix'] = {id = 0, menu = 0, zone = 0}
-Locks.Values['rewardox'] = {id = 0, menu = 0, zone = 0}
-Locks.Values['winrix'] = {id = 0, menu = 0, zone = 0}
+Locks.Values['priztrix'] = {id = 17776886, menu = 0, zone = 0}
+Locks.Values['wondrix'] = {id = 16982639, menu = 0, zone = 0}
+Locks.Values['rewardox'] = {id = 17826176, menu = 0, zone = 0}
+Locks.Values['winrix'] = {id = 17830186, menu = 0, zone = 0}
 
 
 Locks.Values['urbiolaine'] = {id = 17719646, menu = 3529, zone = 230}
