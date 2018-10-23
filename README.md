@@ -1,13 +1,14 @@
 # FFXIKeys
 A small windower addon to automate trading Special Gobbiedial Keys for rewards
 
-* //lua l ffxikeys  - Loads the addon
-* //lua u ffxikeys  - Unloads the addon
-  
-* //keys start      - Starts using keys
-* //keys stop       - Stops using keys
-  
-* //keys printlinks - Toggles printing ffxiah keys to chat
-* //keys openlinks  - Toggles opening ffxiah links in your default browser
+Action                | Addon Command
+--------------------- | -----------------------------
+Load                  | //lua l ffxikeys
+Unload                | //lua u ffxikeys
+Use                   | //keys unlock \<key\> \<target\>
+Buy                   | //keys buy \<key\> \<target\>
+Stop                  | //keys stop
+Toggle Printing Links | //keys printlinks
+Toggle Opening Links  | //keys openlinks
 
-* //keys printinfo  - Toggles printing remaining keys / open inventory slots
+\<key\> and \<target\> should be replaced with values from data/keys.lua and data/locks.lua
