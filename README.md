@@ -10,3 +10,5 @@ Buy                   | //keys buy \<key\> \<target\>
 Stop                  | //keys stop
 Toggle Printing Links | //keys printlinks
 Toggle Opening Links  | //keys openlinks
+
+\<key\> and \<target\> should be replaced with values from data/keys.lua and data/locks.lua
