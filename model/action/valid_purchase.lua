@@ -21,12 +21,12 @@ local function CreateDialogChoicePacket(target, option, zone, automated)
 end
 
 --------------------------------------------------------------------------------
-local function CreateDialogChoicePackets(target, item, count)
+local function CreateDialogChoicePackets(target, item, zone, count)
     local to_send = {}
-    to_send[1] = CreateDialogChoicePacket(target, 10, 241, true)
-    to_send[2] = CreateDialogChoicePacket(target, item:Option(), 241, true)
-    to_send[3] = CreateDialogChoicePacket(target, count * (2^13) + item:Option(), 241, true)
-    to_send[4] = CreateDialogChoicePacket(target, 0, 241, false)
+    to_send[1] = CreateDialogChoicePacket(target, 10, zone, true)
+    to_send[2] = CreateDialogChoicePacket(target, item:Option(), zone, true)
+    to_send[3] = CreateDialogChoicePacket(target, count * (2^13) + item:Option() + 1, zone, true)
+    to_send[4] = CreateDialogChoicePacket(target, 0, zone, false)
     return to_send
 end
 
@@ -36,12 +36,12 @@ local ValidPurchase = NilPurchase:NilPurchase()
 ValidPurchase.__index = ValidPurchase
 
 --------------------------------------------------------------------------------
-function ValidPurchase:ValidPurchase(key, vendor, count)
+function ValidPurchase:ValidPurchase(key, vendor, zone, count)
     local o = {}
     setmetatable(o, self)
     o._type = 'ValidPurchase'
     o._index = 1
-    o._packets = {[1] = {CreateActionPacket(vendor)}, [2] = CreateDialogChoicePackets(vendor, key, count), [3] = {}}
+    o._packets = {[1] = {CreateActionPacket(vendor)}, [2] = CreateDialogChoicePackets(vendor, key, zone, count), [3] = {}}
     return o
 end
 
@@ -57,7 +57,7 @@ function ValidPurchase:__call()
     for _, pkt in pairs(self:_get_packets()) do
         packets.inject(pkt)
     end
-    return true
+    return self._index < 3
 end
 
 return ValidPurchase

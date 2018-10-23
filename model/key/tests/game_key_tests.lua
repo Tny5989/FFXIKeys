@@ -23,26 +23,26 @@ end
 
 --------------------------------------------------------------------------------
 function GameKeyTests:TestItemIdIsCorrect()
-    local key = GameKey:GameKey(1234, EntityFactory.CreatePlayer())
+    local key = GameKey:GameKey(1234, 4321, EntityFactory.CreatePlayer())
     LuaUnit.assertEquals(key:Item(), 1234)
 end
 
 --------------------------------------------------------------------------------
-function GameKeyTests:TestOptionIsZero()
-    local key = GameKey:GameKey(1234, EntityFactory.CreatePlayer())
-    LuaUnit.assertEquals(key:Option(), 0)
+function GameKeyTests:TestOptionIsCorrect()
+    local key = GameKey:GameKey(1234, 4321, EntityFactory.CreatePlayer())
+    LuaUnit.assertEquals(key:Option(), 4321)
 end
 
 --------------------------------------------------------------------------------
 function GameKeyTests:TestItemIndexIsCorrect()
     local entity = EntityFactory.CreatePlayer()
-    local key = GameKey:GameKey(2, entity)
+    local key = GameKey:GameKey(2, 1, entity)
     LuaUnit.assertEquals(key:Entity(), entity)
 end
 
 --------------------------------------------------------------------------------
 function GameKeyTests:TestTypeIsGameKey()
-    local key = GameKey:GameKey(1234, EntityFactory.CreatePlayer())
+    local key = GameKey:GameKey(1234, 3, EntityFactory.CreatePlayer())
     LuaUnit.assertEquals(key:Type(), 'GameKey')
 end
 

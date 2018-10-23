@@ -13,6 +13,13 @@ Locks.Values['wondrix'] = {id = 0, menu = 0, zone = 0}
 Locks.Values['rewardox'] = {id = 0, menu = 0, zone = 0}
 Locks.Values['winrix'] = {id = 0, menu = 0, zone = 0}
 
+
+Locks.Values['urbiolaine'] = {id = 17719646, menu = 3529, zone = 230}
+Locks.Values['igsli'] = {id = 17739961, menu = 0, zone = 235}
+Locks.Values['teldrokesdrodo'] = {id = 17764611, menu = 879, zone = 241}
+Locks.Values['yonolala'] = {id = 17764612, menu = 879, zone = 241}
+Locks.Values['nunaarlbthtrogg'] = {id = 17826181, menu = 5149, zone = 256}
+
 --------------------------------------------------------------------------------
 function Locks.GetLock(lock_str)
     if not lock_str then

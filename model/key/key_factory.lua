@@ -9,15 +9,11 @@ local KeyFactory = {}
 
 --------------------------------------------------------------------------------
 function KeyFactory.CreateKey(id, option)
-    if not id then
+    if not id or id == 0 then
         return NilKey:NilKey()
     end
 
-    if not option then
-        return GameKey:GameKey(id, EntityFactory.CreatePlayer())
-    end
-
-    return ItemKey:ItemKey(id, option)
+    return GameKey:GameKey(id, option, EntityFactory.CreatePlayer())
 end
 
 return KeyFactory

@@ -48,14 +48,8 @@ end
 
 --------------------------------------------------------------------------------
 function KeyFactoryTests:TestGameKeyCreatedWhenNoKeys()
-    local key = KeyFactory.CreateKey(0)
+    local key = KeyFactory.CreateKey(5)
     LuaUnit.assertEquals(key:Type(), 'GameKey')
-end
-
---------------------------------------------------------------------------------
-function KeyFactoryTests:TestItemKeyCreatedWhenOption()
-    local key = KeyFactory.CreateKey(0, 1)
-    LuaUnit.assertEquals(key:Type(), 'ItemKey')
 end
 
 --------------------------------------------------------------------------------

@@ -16,13 +16,8 @@ function handle_load()
 end
 
 --------------------------------------------------------------------------------
-function handle_command(cmd, param1, param2)
-    CommandFactory.CreateCommand(cmd, param1, param2)(state)
-
---    local pkt = packets.new('outgoing', 0x01A)
---    pkt['Target'] = 17764611
---    pkt['Target Index'] = 259
---    packets.inject(pkt)
+function handle_command(cmd, param1, param2, param3)
+    CommandFactory.CreateCommand(cmd, param1, param2, param3)(state)
 end
 
 --------------------------------------------------------------------------------
@@ -52,49 +47,6 @@ function handle_incoming(id, _, pkt, b, i)
             return true
         end
     end
---    if id == 0x034 then
---            local pkt2 = packets.new('outgoing', 0x05B)
---            pkt2['Target'] = 17764611
---            pkt2['Option Index'] = 10
---            pkt2['Target Index'] = 259
---            pkt2['Automated Message'] = true
---            pkt2['Zone'] = 241
---            pkt2['Menu ID'] = 879
---            packets.inject(pkt2)
---
---            local pkt3 = packets.new('outgoing', 0x05B)
---            pkt3['Target'] = 17764611
---            pkt3['Option Index'] = 35
---            pkt3['Target Index'] = 259
---            pkt3['Automated Message'] = true
---            pkt3['Zone'] = 241
---            pkt3['Menu ID'] = 879
---            packets.inject(pkt3)
---
---            local count = 7
---            local unknown_parts = 36
---            local option = count * (2^13) + unknown_parts
---            print(option)
---
---            local pkt4 = packets.new('outgoing', 0x05B)
---            pkt4['Target'] = 17764611
---            pkt4['Option Index'] = option
---            pkt4['Target Index'] = 259
---            pkt4['Automated Message'] = true
---            pkt4['Zone'] = 241
---            pkt4['Menu ID'] = 879
---            packets.inject(pkt4)
---
---            local pkt5 = packets.new('outgoing', 0x05B)
---            pkt5['Target'] = 17764611
---            pkt5['Option Index'] = 0
---            pkt5['Target Index'] = 259
---            pkt5['Automated Message'] = false
---            pkt5['Zone'] = 241
---            pkt5['Menu ID'] = 879
---            packets.inject(pkt5)
---        return true
---    end
 end
 
 --------------------------------------------------------------------------------

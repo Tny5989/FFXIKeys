@@ -1,30 +1,29 @@
 local NilCommand = require('command/nil_command')
 local KeyFactory = require('model/key/key_factory')
 local LockFactory = require('model/lock/lock_factory')
-local UnlockFactory = require('model/action/unlock_factory')
+local PurchaseFactory = require('model/action/purchase_factory')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local UnlockCommand = NilCommand:NilCommand()
-UnlockCommand.__index = UnlockCommand
+local BuyCommand = NilCommand:NilCommand()
+BuyCommand.__index = BuyCommand
 
 --------------------------------------------------------------------------------
-function UnlockCommand:UnlockCommand(key_id, lock_id)
+function BuyCommand:BuyCommand(key_id, vendor_id, option_id, menu_id, zone_id, count)
     local o = {}
     setmetatable(o, self)
-    o._key = key_id
-    o._lock = lock_id
-    o._type = 'UnlockCommand'
+    local key = KeyFactory.CreateKey(key_id, option_id)
+    local lock = LockFactory.CreateLock(vendor_id, menu_id)
+    o._purchase = PurchaseFactory.CreatePurchase(key, lock, zone_id, count)
+    o._type = 'BuyCommand'
     return o
 end
 
 --------------------------------------------------------------------------------
-function UnlockCommand:__call(state)
-    local key = KeyFactory.CreateKey(self._key, 0)
-    local lock = LockFactory.CreateLock(self._lock, 0)
-    state.running = UnlockFactory.CreateUnlock(key, lock)()
+function BuyCommand:__call(state)
+    state.running = self._purchase(state)
     state.command = self
     return true
 end
 
-return UnlockCommand
+return BuyCommand

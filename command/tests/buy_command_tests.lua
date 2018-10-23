@@ -1,12 +1,12 @@
 local LuaUnit = require('luaunit')
-local CommandFactory = require('command/command_factory')
+local BuyCommand = require('command/buy_command')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-CommandFactoryTests = {}
+BuyCommandTests = {}
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:SetUp()
+function BuyCommandTests:SetUp()
     windower = {}
     windower.ffxi = {}
     function windower.ffxi.get_player()
@@ -33,36 +33,36 @@ function CommandFactoryTests:SetUp()
     settings.config.maxdistance = 20
 end
 
-
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestNilCommandCreatedWhenBadCommand()
-    local c = CommandFactory.CreateCommand(nil, '', '')
-    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+function BuyCommandTests:TestBuyCommandReturnTrue()
+    local state = {}
+    LuaUnit.assertEquals(BuyCommand:BuyCommand(1, 4444, 32, 23, 241, 6)(state), true)
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestNilCommandCreatedWhenUnknownCommand()
-    local c = CommandFactory.CreateCommand('', '', '')
-    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+function BuyCommandTests:TestBuyCommandUpdatesStateWhenGood()
+    local state = {}
+    local c = BuyCommand:BuyCommand(1, 4444, 32, 23, 241, 6)
+    c(state)
+    LuaUnit.assertEquals(state, {running = true, command = c})
+    c(state)
+    LuaUnit.assertEquals(state, {running = false, command = c})
+    c(state)
+    LuaUnit.assertEquals(state, {running = false, command = c})
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestUnlockCommmandCreatedForUnlock()
-    local c = CommandFactory.CreateCommand('unlock', 0, 0)
-    LuaUnit.assertEquals(c:Type(), 'UnlockCommand')
+function BuyCommandTests:TestBuyCommandUpdatesStateWhenBad()
+    local state = {}
+    local c = BuyCommand:BuyCommand(0, 1234)
+    c(state)
+    LuaUnit.assertEquals(state, {running = false, command = c})
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestStopCommandCreatedForStop()
-    local c = CommandFactory.CreateCommand('stop', 0, 0)
-    LuaUnit.assertEquals(c:Type(), 'StopCommand')
-end
-
---------------------------------------------------------------------------------
-function CommandFactoryTests:TestBuyCommandCreatedForBuy()
-    local c = CommandFactory.CreateCommand('buy', 0, 0, 1)
+function BuyCommandTests:TestTypeIsBuyCommand()
+    local c = BuyCommand:BuyCommand(1, 1234)
     LuaUnit.assertEquals(c:Type(), 'BuyCommand')
 end
 
-
-LuaUnit.LuaUnit.run('CommandFactoryTests')
+LuaUnit.LuaUnit.run('BuyCommandTests')
