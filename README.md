@@ -13,4 +13,4 @@ Toggle Opening Links  | //keys openlinks
 
 \<key\> and \<target\> should be replaced with values from data/keys.lua and data/locks.lua.
 
-\<count\> should be replaced with a number [0, 6].  If you specific an amount and don't have the required accolades nothing will be bought.
+\<count\> should be replaced with a number [0, 6].  This addon does not check your accolades.  It is up to you to verify your accolades amount before buying keys.
