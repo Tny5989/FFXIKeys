@@ -8,7 +8,7 @@ function NilLock:NilLock()
     local o = {}
     setmetatable(o, self)
     o._id = 0
-    o._option = 0
+    o._menu = 0
     o._type = 'NilLock'
     return o
 end
@@ -19,8 +19,8 @@ function NilLock:Npc()
 end
 
 --------------------------------------------------------------------------------
-function NilLock:Option()
-    return self._option
+function NilLock:Menu()
+    return self._menu
 end
 
 --------------------------------------------------------------------------------

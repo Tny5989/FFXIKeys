@@ -29,9 +29,9 @@ function GameLockTests:TestNpcIndexIsCorrect()
 end
 
 --------------------------------------------------------------------------------
-function GameLockTests:TestMenuOptionIsCorrect()
+function GameLockTests:TestMenuIsCorrect()
     local lock = GameLock:GameLock(1234, 4321, EntityFactory.CreateMob(1234))
-    LuaUnit.assertEquals(lock:Option(), 4321)
+    LuaUnit.assertEquals(lock:Menu(), 4321)
 end
 
 --------------------------------------------------------------------------------

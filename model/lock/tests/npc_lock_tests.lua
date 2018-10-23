@@ -12,9 +12,9 @@ function NpcLockTests:TestNpcIdIsCorrect()
 end
 
 --------------------------------------------------------------------------------
-function NpcLockTests:TestMenuOptionIsCorrect()
+function NpcLockTests:TestMenuMenuIsCorrect()
     local lock = NpcLock:NpcLock(1234, 4321)
-    LuaUnit.assertEquals(lock:Option(), 4321)
+    LuaUnit.assertEquals(lock:Menu(), 4321)
 end
 
 --------------------------------------------------------------------------------

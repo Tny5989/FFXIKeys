@@ -12,11 +12,7 @@ function Keys.GetKey(key_str)
     end
 
     local value = Keys.Values[key_str]
-    if not value then
-        return Keys.Values['']
-    end
-
-    return value
+    return value and value or Keys.Values['']
 end
 
 return Keys

@@ -12,9 +12,9 @@ function NilLockTests:TestNpcIdIsZero()
 end
 
 --------------------------------------------------------------------------------
-function NilLockTests:TestMenuOptionIsZero()
+function NilLockTests:TestMenuMenuIsZero()
     local lock = NilLock:NilLock()
-    LuaUnit.assertEquals(lock:Option(), 0)
+    LuaUnit.assertEquals(lock:Menu(), 0)
 end
 
 --------------------------------------------------------------------------------
