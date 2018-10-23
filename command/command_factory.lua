@@ -18,10 +18,24 @@ function CommandFactory.CreateCommand(cmd, p1, p2, p3)
     if cmd == 'stop' then
         return StopCommand:StopCommand(cmd)
     elseif cmd == 'unlock' then
+        if not p1 or not p2 then
+            if log then
+                log('Invalid Arguments')
+            end
+            return NilCommand:NilCommand()
+        end
+
         local key = Keys.GetKey(p1)
         local lock = Locks.GetLock(p2)
         return UnlockCommand:UnlockCommand(key.id, lock.id)
     elseif cmd == 'buy' then
+        if not p1 or not p2 or not p3 then
+            if log then
+                log('Invalid Arguments')
+            end
+            return NilCommand:NilCommand()
+        end
+
         local key = Keys.GetKey(p1)
         local lock = Locks.GetLock(p2)
         local count = p3 and tonumber(p3) or nil
