@@ -47,6 +47,28 @@ function CommandFactoryTests:TestNilCommandCreatedWhenUnknownCommand()
 end
 
 --------------------------------------------------------------------------------
+function CommandFactoryTests:TestNilCommandCreatedWhenNilUnlockParams()
+    local c = CommandFactory.CreateCommand('unlock', '')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    c = CommandFactory.CreateCommand('unlock', nil, '')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    c = CommandFactory.CreateCommand('unlock')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+end
+
+--------------------------------------------------------------------------------
+function CommandFactoryTests:TestNilCommandCreatedWhenNilBuyParams()
+    local c = CommandFactory.CreateCommand('buy', '', '')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    c = CommandFactory.CreateCommand('buy', '', nil, '')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    c = CommandFactory.CreateCommand('buy', nil, '', '')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    c = CommandFactory.CreateCommand('buy')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+end
+
+--------------------------------------------------------------------------------
 function CommandFactoryTests:TestUnlockCommmandCreatedForUnlock()
     local c = CommandFactory.CreateCommand('unlock', 0, 0)
     LuaUnit.assertEquals(c:Type(), 'UnlockCommand')
