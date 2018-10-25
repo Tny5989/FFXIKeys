@@ -12,7 +12,7 @@ Keys.Values['spgobbiekey'] = {id = 8973, option = 35}
 --------------------------------------------------------------------------------
 function Keys.GetKey(key_str)
     if not key_str then
-        return 0
+        return Keys.Values['']
     end
 
     local value = Keys.Values[key_str]
