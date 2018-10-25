@@ -7,12 +7,24 @@ require('logger')
 packets = require('packets')
 settings = require('settings')
 local CommandFactory = require('command/command_factory')
+local Locks = require('data/locks')
 
 local state = {running = false, command = nil}
 
 --------------------------------------------------------------------------------
 function handle_load()
     settings.load()
+
+    local info = windower.ffxi.get_info()
+    if info then
+        handle_zone_change(info.zone)
+    end
+end
+
+--------------------------------------------------------------------------------
+function handle_zone_change(zone_id, _)
+    windower.send_command('alias buykeys input //keys buy spgobbiekey ' .. Locks.GetLockIndexForZone(zone_id, true))
+    windower.send_command('alias usekeys input //keys unlock spgobbiekey ' .. Locks.GetLockIndexForZone(zone_id, false))
 end
 
 --------------------------------------------------------------------------------
@@ -51,5 +63,6 @@ end
 
 --------------------------------------------------------------------------------
 windower.register_event('load', handle_load)
+windower.register_event('zone change', handle_zone_change)
 windower.register_event('addon command', handle_command)
 windower.register_event('incoming chunk', handle_incoming)
