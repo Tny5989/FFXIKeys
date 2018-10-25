@@ -10,39 +10,54 @@ local Locks = require('data/locks')
 local CommandFactory = {}
 
 --------------------------------------------------------------------------------
-function CommandFactory.CreateCommand(cmd, p1, p2, p3)
+function CommandFactory.CreateCommand(cmd, p1, p2)
     if not cmd then
         return NilCommand:NilCommand()
     end
 
     if cmd == 'stop' then
-        return StopCommand:StopCommand()
+        return CommandFactory._create_stop_command()
     elseif cmd == 'unlock' then
-        if not p1 or not p2 then
-            if log then
-                log('Invalid Arguments')
-            end
-            return NilCommand:NilCommand()
-        end
-
-        local key = Keys.GetKey(p1)
-        local lock = Locks.GetLock(p2)
-        return UnlockCommand:UnlockCommand(key.id, lock.id)
+        return CommandFactory._create_unlock_command(p1)
     elseif cmd == 'buy' then
-        if not p1 or not p2 or not p3 then
-            if log then
-                log('Invalid Arguments')
-            end
-            return NilCommand:NilCommand()
-        end
-
-        local key = Keys.GetKey(p1)
-        local lock = Locks.GetLock(p2)
-        local count = p3 and tonumber(p3) or nil
-        return BuyCommand:BuyCommand(key.id, lock.id, key.option, lock.menu, lock.zone, count)
+        return CommandFactory._create_buy_command(p1, p2)
     end
 
     return NilCommand:NilCommand()
+end
+
+--------------------------------------------------------------------------------
+function CommandFactory._create_stop_command()
+    return StopCommand:StopCommand()
+end
+
+--------------------------------------------------------------------------------
+function CommandFactory._create_unlock_command(key_str)
+    if not key_str and log then
+        log('Using Default Key')
+    end
+
+    local key = Keys.GetKey(key_str and key_str or settings.config.key)
+    local lock = Locks.GetLockByZone(CommandFactory._get_current_zone(), false)
+    return UnlockCommand:UnlockCommand(key.id, lock.id)
+end
+
+--------------------------------------------------------------------------------
+function CommandFactory._create_buy_command(key_str, count_str)
+    if not key_str and log then
+        log('Using Default Key')
+    end
+
+    local key = Keys.GetKey(key_str and key_str or settings.config.key)
+    local lock = Locks.GetLockByZone(CommandFactory._get_current_zone(), true)
+    local count = count_str and tonumber(count_str) or nil
+    return BuyCommand:BuyCommand(key.id, lock.id, key.option, lock.menu, lock.zone, count)
+end
+
+--------------------------------------------------------------------------------
+function CommandFactory._get_current_zone()
+    local info = windower.ffxi.get_info()
+    return info and info.zone or 0
 end
 
 return CommandFactory

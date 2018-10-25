@@ -38,4 +38,19 @@ function Locks.GetLock(lock_str)
     return value
 end
 
+--------------------------------------------------------------------------------
+function Locks.GetLockByZone(zone_id, vendor)
+    if not zone_id then
+        return Locks.Values['']
+    end
+
+    for _, value in pairs(Locks.Values) do
+        if value.vendor == vendor and value.zone == zone_id then
+            return value
+        end
+    end
+
+    return Locks.Values['']
+end
+
 return Locks
