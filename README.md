@@ -11,7 +11,8 @@ Stop                  | //keys stop
 Toggle Printing Links | //keys printlinks
 Toggle Opening Links  | //keys openlinks
 
-Ease of Use Additions
+
+Ease of Use commands for 'SP Gobbie Keys'
 
 Action                | Addon Command
 --------------------- | -----------------------------
