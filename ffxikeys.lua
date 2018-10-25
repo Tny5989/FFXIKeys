@@ -1,18 +1,25 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '1.2.0'
+_addon.version = '1.3.1'
 _addon.commands = {'keys'}
 
 require('logger')
 packets = require('packets')
 settings = require('settings')
 local CommandFactory = require('command/command_factory')
+local Aliases = require('aliases')
 
 local state = {running = false, command = nil}
 
 --------------------------------------------------------------------------------
 function handle_load()
     settings.load()
+    Aliases.Update()
+end
+
+--------------------------------------------------------------------------------
+function handle_zone_change(zone_id, _)
+    Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
@@ -51,5 +58,6 @@ end
 
 --------------------------------------------------------------------------------
 windower.register_event('load', handle_load)
+windower.register_event('zone change', handle_zone_change)
 windower.register_event('addon command', handle_command)
 windower.register_event('incoming chunk', handle_incoming)

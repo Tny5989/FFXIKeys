@@ -6,11 +6,9 @@ local StopCommand = NilCommand:NilCommand()
 StopCommand.__index = StopCommand
 
 --------------------------------------------------------------------------------
-function StopCommand:StopCommand(key_id, lock_id)
+function StopCommand:StopCommand()
     local o = {}
     setmetatable(o, self)
-    o._key = key_id
-    o._lock = lock_id
     o._type = 'StopCommand'
     return o
 end

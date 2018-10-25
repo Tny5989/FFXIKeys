@@ -16,7 +16,7 @@ function CommandFactory.CreateCommand(cmd, p1, p2, p3)
     end
 
     if cmd == 'stop' then
-        return StopCommand:StopCommand(cmd)
+        return StopCommand:StopCommand()
     elseif cmd == 'unlock' then
         if not p1 or not p2 then
             if log then
