@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '1.3.1'
+_addon.version = '1.3.0'
 _addon.commands = {'keys'}
 
 require('logger')
