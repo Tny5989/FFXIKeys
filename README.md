@@ -1,5 +1,5 @@
 # FFXIKeys
-A small windower addon to automate trading Special Gobbiedial Keys for rewards
+A small windower addon to automate trading keys for rewards
 
 Action                | Addon Command
 --------------------- | -----------------------------
