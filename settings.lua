@@ -12,7 +12,6 @@ local function defaults()
     local defaults = {}
     defaults.printlinks = false
     defaults.openlinks = false
-    defaults.printinfo = false
     defaults.maxdistance = 25.0
 
     return defaults
