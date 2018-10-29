@@ -86,5 +86,16 @@ function CommandFactoryTests:TestBuyCommandCreatedForBuy()
     LuaUnit.assertEquals(c:Type(), 'BuyCommand')
 end
 
+--------------------------------------------------------------------------------
+function CommandFactoryTests:TestConfigCommandCreatedForPrintlinks()
+    local c = CommandFactory.CreateCommand('printlinks')
+    LuaUnit.assertEquals(c:Type(), 'ConfigCommand')
+end
+
+--------------------------------------------------------------------------------
+function CommandFactoryTests:TestConfigCommandCreatedForOpenlinks()
+    local c = CommandFactory.CreateCommand('openlinks')
+    LuaUnit.assertEquals(c:Type(), 'ConfigCommand')
+end
 
 LuaUnit.LuaUnit.run('CommandFactoryTests')
