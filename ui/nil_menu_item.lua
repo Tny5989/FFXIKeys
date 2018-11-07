@@ -54,6 +54,23 @@ function NilMenuItem:IsActive()
 end
 
 --------------------------------------------------------------------------------
+function NilMenuItem:Show()
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItem:Hide()
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItem:SetVisibility(_)
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItem:IsVisible()
+    return false
+end
+
+--------------------------------------------------------------------------------
 function NilMenuItem:Type()
     return self._type
 end

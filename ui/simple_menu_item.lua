@@ -1,6 +1,7 @@
 local NilMenuItem = require('ui/nil_menu_item')
 
 local default_settings = { flags = { draggable = false } }
+local default_dimensions = { width = 50, height = 20 } -- BOOOOO!
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -29,8 +30,7 @@ end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:Size()
-    local w, h = self._text_obj:extents()
-    return { width = w, height = h }
+    return { width = default_dimensions.width, height = default_dimensions.height }
 end
 
 --------------------------------------------------------------------------------
@@ -48,6 +48,30 @@ end
 --------------------------------------------------------------------------------
 function SimpleMenuItem:Activate()
     self._active = not self._active
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:Show()
+    self._text_obj:show()
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:Hide()
+    self._text_obj:hide()
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:SetVisibility(visibility)
+    if visibility then
+        self:Show()
+    else
+        self:Hide()
+    end
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:IsVisible()
+    return self._text_obj:visible()
 end
 
 return SimpleMenuItem

@@ -12,6 +12,7 @@ function ListMenu:ListMenu()
     o._type = 'ListMenu'
     o._position = { x = 0, y = 0 }
     o._items = {}
+    o._visible = false
     return o
 end
 
@@ -44,6 +45,7 @@ function ListMenu:Append(item)
         pos.y = pos.y + dim.height
     end
     item:MoveTo(pos.x, pos.y)
+    item:SetVisibility(self._visible)
     table.insert(self._items, item)
 end
 
@@ -53,6 +55,27 @@ function ListMenu:Clear()
         self._items[i]:Destroy()
     end
     self._items = {}
+end
+
+--------------------------------------------------------------------------------
+function ListMenu:Show()
+    self._visible = true
+    for i = 1, #self._items, 1 do
+        self._items[i]:Show()
+    end
+end
+
+--------------------------------------------------------------------------------
+function ListMenu:Hide()
+    self._visible = false
+    for i = 1, #self._items, 1 do
+        self._items[i]:Hide()
+    end
+end
+
+--------------------------------------------------------------------------------
+function ListMenu:IsVisible()
+    return self._visible
 end
 
 return ListMenu

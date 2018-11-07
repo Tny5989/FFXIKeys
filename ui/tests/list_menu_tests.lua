@@ -15,6 +15,7 @@ function TestMenuItem:TestMenuItem()
     o._destroy_count = 0
     o._active = false
     o._position = { x = 0, y = 0 }
+    o._visible = false
     return o
 end
 
@@ -31,6 +32,30 @@ end
 --------------------------------------------------------------------------------
 function TestMenuItem:Size()
     return { width = 10, height = 20 }
+end
+
+--------------------------------------------------------------------------------
+function TestMenuItem:Show()
+    self._visible = true
+end
+
+--------------------------------------------------------------------------------
+function TestMenuItem:Hide()
+    self._visible = false
+end
+
+--------------------------------------------------------------------------------
+function TestMenuItem:SetVisibility(visibility)
+    if visibility then
+        self:Show()
+    else
+        self:Hide()
+    end
+end
+
+--------------------------------------------------------------------------------
+function TestMenuItem:IsVisible()
+    return self._visible
 end
 
 --------------------------------------------------------------------------------
@@ -102,6 +127,19 @@ function ListMenuTests:TestListMenuAppendAddsNewItemsAtCorrectPosition()
 end
 
 --------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuAppendAddsNewItemsWithCorrectVisibility()
+    local i = ListMenu:ListMenu()
+    local item1 = TestMenuItem:TestMenuItem()
+    local item2 = TestMenuItem:TestMenuItem()
+    i:Append(item1)
+    LuaUnit.assertFalse(item1:IsVisible())
+    i:Show()
+    i:Append(item2)
+    LuaUnit.assertTrue(item1:IsVisible())
+    LuaUnit.assertTrue(item2:IsVisible())
+end
+
+--------------------------------------------------------------------------------
 function ListMenuTests:TestListMenuClearClearsAllItems()
     local i = ListMenu:ListMenu()
     i:Append(TestMenuItem:TestMenuItem())
@@ -120,6 +158,21 @@ function ListMenuTests:TestListMenuDestroysItems()
     i:Clear()
     LuaUnit.assertEquals(item1:DestroyCount(), 1)
     LuaUnit.assertEquals(item2:DestroyCount(), 1)
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuShowMakesItemsVisible()
+    local i = ListMenu:ListMenu()
+    i:Show()
+    LuaUnit.assertTrue(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuHideMakesItemsInvisible()
+    local i = ListMenu:ListMenu()
+    i:Show()
+    i:Hide()
+    LuaUnit.assertFalse(i:IsVisible())
 end
 
 --------------------------------------------------------------------------------

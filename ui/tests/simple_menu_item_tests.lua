@@ -13,10 +13,18 @@ function SimpleMenuItemTests:SetUp()
         textobj.count = textobj.count + 1
     end
 
-    function textobj.extents()
-        return 10, 20
+    textobj.v = false
+    function textobj.visible()
+        return textobj.v
     end
 
+    function textobj.show()
+        textobj.v = true
+    end
+
+    function textobj.hide()
+        textobj.v = false
+    end
 
     textobj.pos_count = 0
     function textobj.pos()
@@ -85,7 +93,7 @@ end
 --------------------------------------------------------------------------------
 function SimpleMenuItemTests:TestSimpleMenuItemSizeIsCorrect()
     local i = SimpleMenuItem:SimpleMenuItem()
-    LuaUnit.assertEquals(i:Size(), { width = 10, height = 20 })
+    LuaUnit.assertEquals(i:Size(), { width = 50, height = 20 })
 end
 
 --------------------------------------------------------------------------------
@@ -96,6 +104,30 @@ function SimpleMenuItemTests:TestSimpleMenuItemActivateTogglesState()
     LuaUnit.assertTrue(i:IsActive())
     i:Activate()
     LuaUnit.assertFalse(i:IsActive())
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItemTests:TestSimpleMenuItemShowMakesTextVisible()
+    local i = SimpleMenuItem:SimpleMenuItem()
+    i:Show()
+    LuaUnit.assertTrue(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItemTests:TestSimpleMenuItemHideMakesTextInvisible()
+    local i = SimpleMenuItem:SimpleMenuItem()
+    i:Show()
+    i:Hide()
+    LuaUnit.assertFalse(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItemTests:TestSimpleMenuItemSetVisibilityUpdatesVisibility()
+    local i = SimpleMenuItem:SimpleMenuItem()
+    i:SetVisibility(true)
+    LuaUnit.assertTrue(i:IsVisible())
+    i:SetVisibility(false)
+    LuaUnit.assertFalse(i:IsVisible())
 end
 
 --------------------------------------------------------------------------------

@@ -48,6 +48,23 @@ function NilMenuTests:TestNilMenuClearDoesNothing()
 end
 
 --------------------------------------------------------------------------------
+function NilMenuTests:TestNilMenuShowDoesNothing()
+    local i = NilMenu:NilMenu()
+    texts = nil
+    i:Show()
+    LuaUnit.assertFalse(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
+function NilMenuTests:TestNilMenuHideDoesNothing()
+    local i = NilMenu:NilMenu()
+    texts = nil
+    i:Show()
+    i:Hide()
+    LuaUnit.assertFalse(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
 function NilMenuTests:TestNilMenuTypeIsNilMenu()
     local i = NilMenu:NilMenu()
     LuaUnit.assertEquals(i:Type(), 'NilMenu')

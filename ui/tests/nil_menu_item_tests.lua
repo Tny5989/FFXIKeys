@@ -53,6 +53,31 @@ function NilMenuItemTests:TestNilMenuItemActivateDoesNothing()
 end
 
 --------------------------------------------------------------------------------
+function NilMenuItemTests:TestNilMenuItemShowDoesNothing()
+    local i = NilMenuItem:NilMenuItem()
+    texts = nil
+    i:Show()
+    LuaUnit.assertFalse(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItemTests:TestNilMenuItemHideDoesNothing()
+    local i = NilMenuItem:NilMenuItem()
+    texts = nil
+    i:Show()
+    i:Hide()
+    LuaUnit.assertFalse(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItemTests:TestNilMenuItemSetVisibilityDoesNothing()
+    local i = NilMenuItem:NilMenuItem()
+    texts = nil
+    i:SetVisibility(true)
+    LuaUnit.assertFalse(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
 function NilMenuItemTests:TestNilMenuItemTypeIsNilMenuItem()
     local i = NilMenuItem:NilMenuItem()
     LuaUnit.assertEquals(i:Type(), 'NilMenuItem')
