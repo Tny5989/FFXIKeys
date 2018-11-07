@@ -1,7 +1,5 @@
 local NilMenuItem = require('ui/nil_menu_item')
-
-local default_settings = { flags = { draggable = false } }
-local default_dimensions = { width = 50, height = 20 } -- BOOOOO!
+local WindowerText = require('ui/windower_text')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -13,51 +11,55 @@ function SimpleMenuItem:SimpleMenuItem()
     local o = {}
     setmetatable(o, self)
     o._type = 'SimpleMenuItem'
-    o._text_obj = texts.new('${display_name}', default_settings)
-    o._text_obj.display_name = 'DefaultText'
+    o._text = WindowerText:WindowerText('DefaultText')
     return o
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:Destroy()
-    self._text_obj:destroy()
+    self._text:Destroy()
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:DisplayText()
-    return self._text_obj.display_name
+    return self._text:DisplayText()
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:Size()
-    return { width = default_dimensions.width, height = default_dimensions.height }
+    return self._text:Size()
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:MoveTo(x, y)
     NilMenuItem.MoveTo(self, x, y)
-    self._text_obj:pos(self._position.x, self._position.y)
+    self._text:MoveTo(self._position.x, self._position.y)
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:DragBy(dx, dy)
     NilMenuItem.DragBy(self, dx, dy)
-    self._text_obj:pos(self._position.x, self._position.y)
+    self._text:MoveTo(self._position.x, self._position.y)
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:Activate()
-    self._active = not self._active
+    self._text:Activate()
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:IsActive()
+    return self._text:IsActive()
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:Show()
-    self._text_obj:show()
+    self._text:Show()
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:Hide()
-    self._text_obj:hide()
+    self._text:Hide()
 end
 
 --------------------------------------------------------------------------------
@@ -71,7 +73,7 @@ end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItem:IsVisible()
-    return self._text_obj:visible()
+    return self._text:IsVisible()
 end
 
 return SimpleMenuItem

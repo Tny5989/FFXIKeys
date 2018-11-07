@@ -8,7 +8,6 @@ function NilMenuItem:NilMenuItem()
     local o = {}
     setmetatable(o, self)
     o._type = 'NilMenuItem'
-    o._active = false
     o._position = { x = 0, y = 0 }
     return o
 end
@@ -50,7 +49,7 @@ end
 
 --------------------------------------------------------------------------------
 function NilMenuItem:IsActive()
-    return self._active
+    return false
 end
 
 --------------------------------------------------------------------------------

@@ -7,45 +7,78 @@ SimpleMenuItemTests = {}
 
 --------------------------------------------------------------------------------
 function SimpleMenuItemTests:SetUp()
-    textobj = {}
-    textobj.count = 0
-    function textobj.destroy()
-        textobj.count = textobj.count + 1
+    windower = {}
+    windower.text = {}
+
+    windower.text.createcount = 0
+    function windower.text.create()
+        windower.text.createcount = windower.text.createcount + 1
     end
 
-    textobj.v = false
-    function textobj.visible()
-        return textobj.v
+    windower.text.deletecount = 0
+    function windower.text.delete()
+        windower.text.deletecount = windower.text.deletecount + 1
     end
 
-    function textobj.show()
-        textobj.v = true
+    windower.text.settextcount = 0
+    function windower.text.set_text()
+        windower.text.settextcount = windower.text.settextcount + 1
     end
 
-    function textobj.hide()
-        textobj.v = false
+    windower.text.setlocationcount = 0
+    function windower.text.set_location()
+        windower.text.setlocationcount = windower.text.setlocationcount + 1
     end
 
-    textobj.pos_count = 0
-    function textobj.pos()
-        textobj.pos_count = textobj.pos_count + 1
+    windower.text.setvisibilitycount = 0
+    function windower.text.set_visibility()
+        windower.text.setvisibilitycount = windower.text.setvisibilitycount + 1
     end
 
-    texts = {}
-    texts.count = 0
-    function texts.new()
-        texts.count = texts.count + 1
-        return textobj
+    windower.text.setbgvisibilitycount = 0
+    function windower.text.set_bg_visibility()
+        windower.text.setbgvisibilitycount = windower.text.setbgvisibilitycount + 1
+    end
+
+    windower.text.setbgcolorcount = 0
+    function windower.text.set_bg_color()
+        windower.text.setbgcolorcount = windower.text.setbgcolorcount + 1
+    end
+
+    windower.text.setfontcount = 0
+    function windower.text.set_font()
+        windower.text.setfontcount = windower.text.setfontcount + 1
+    end
+
+    windower.text.setfontsizecount = 0
+    function windower.text.set_font_size()
+        windower.text.setfontsizecount = windower.text.setfontsizecount + 1
+    end
+
+    windower.text.setcolorcount = 0
+    function windower.text.set_color()
+        windower.text.setcolorcount = windower.text.setcolorcount + 1
+    end
+
+    windower.text.setstrokewidthcount = 0
+    function windower.text.set_stroke_width()
+        windower.text.setstrokewidthcount = windower.text.setstrokewidthcount + 1
+    end
+
+    windower.text.setstrokecolorcount = 0
+    function windower.text.set_stroke_color()
+        windower.text.setstrokecolorcount = windower.text.setstrokecolorcount + 1
     end
 end
 
 --------------------------------------------------------------------------------
 function SimpleMenuItemTests:TestSimpleMenuItemDestroy()
     local i = SimpleMenuItem:SimpleMenuItem()
-    LuaUnit.assertEquals(textobj.count, 0)
-    LuaUnit.assertEquals(texts.count, 1)
+    LuaUnit.assertEquals(windower.text.deletecount, 0)
+    LuaUnit.assertEquals(windower.text.createcount, 1)
+    LuaUnit.assertEquals(windower.text.settextcount, 1)
     i:Destroy()
-    LuaUnit.assertEquals(textobj.count, 1)
+    LuaUnit.assertEquals(windower.text.deletecount, 1)
 end
 
 --------------------------------------------------------------------------------
@@ -71,7 +104,7 @@ end
 function SimpleMenuItemTests:TestSimpleMenuItemMoveToUpdatesTextPosition()
     local i = SimpleMenuItem:SimpleMenuItem()
     i:MoveTo(10, 11)
-    LuaUnit.assertEquals(textobj.pos_count, 1)
+    LuaUnit.assertEquals(windower.text.setlocationcount, 1)
 end
 
 --------------------------------------------------------------------------------
@@ -87,7 +120,7 @@ function SimpleMenuItemTests:TestSimpleMenuItemDragByUpdatesTextPosition()
     local i = SimpleMenuItem:SimpleMenuItem()
     i:MoveTo(10, 11)
     i:DragBy(1, 1)
-    LuaUnit.assertEquals(textobj.pos_count, 2)
+    LuaUnit.assertEquals(windower.text.setlocationcount, 2)
 end
 
 --------------------------------------------------------------------------------
