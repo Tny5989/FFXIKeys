@@ -56,6 +56,11 @@ function NilMenu:IsVisible()
 end
 
 --------------------------------------------------------------------------------
+function NilMenu:ContainsPoint()
+    return false
+end
+
+--------------------------------------------------------------------------------
 function NilMenu:Type()
     return self._type
 end

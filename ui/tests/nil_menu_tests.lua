@@ -65,6 +65,12 @@ function NilMenuTests:TestNilMenuHideDoesNothing()
 end
 
 --------------------------------------------------------------------------------
+function NilMenuTests:TestNilMenuContainsNoPoints()
+    local i = NilMenu:NilMenu()
+    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
+end
+
+--------------------------------------------------------------------------------
 function NilMenuTests:TestNilMenuTypeIsNilMenu()
     local i = NilMenu:NilMenu()
     LuaUnit.assertEquals(i:Type(), 'NilMenu')
