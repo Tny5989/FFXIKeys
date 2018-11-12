@@ -57,6 +57,21 @@ end
 
 --------------------------------------------------------------------------------
 function NilMenu:ContainsPoint()
+    return 0
+end
+
+--------------------------------------------------------------------------------
+function NilMenu:OnMouseMove(x, y)
+    return false
+end
+
+--------------------------------------------------------------------------------
+function NilMenu:OnMouseLeftClick(x, y)
+    return false
+end
+
+--------------------------------------------------------------------------------
+function NilMenu:OnMouseLeftRelease(x, y)
     return false
 end
 

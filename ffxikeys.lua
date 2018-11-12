@@ -12,23 +12,23 @@ local Aliases = require('aliases')
 local state = {running = false, command = nil}
 
 --------------------------------------------------------------------------------
-function handle_load()
+local function handle_load()
     settings.load()
     Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
-function handle_zone_change(zone_id, _)
+local function handle_zone_change(zone_id, _)
     Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
-function handle_command(cmd, param1, param2, param3)
+local function handle_command(cmd, param1, param2, param3)
     CommandFactory.CreateCommand(cmd, param1, param2, param3)(state)
 end
 
 --------------------------------------------------------------------------------
-function handle_incoming(id, _, pkt, b, i)
+local function handle_incoming(id, _, pkt, b, i)
     if not state.running then
         return false
     end

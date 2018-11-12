@@ -184,7 +184,7 @@ end
 --------------------------------------------------------------------------------
 function ListMenuTests:TestListMenuContainsNoPointsWhenEmpty()
     local i = ListMenu:ListMenu()
-    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
+    LuaUnit.assertEquals(i:ContainsPoint(0, 0), 0)
 end
 
 --------------------------------------------------------------------------------
@@ -193,7 +193,7 @@ function ListMenuTests:TestListMenuContainsPointWhenChildContainsPoint()
     local item = TestMenuItem:TestMenuItem()
     item._contains = true
     i:Append(item)
-    LuaUnit.assertTrue(i:ContainsPoint(0, 0))
+    LuaUnit.assertEquals(i:ContainsPoint(0, 0), 1)
 end
 
 --------------------------------------------------------------------------------
@@ -201,7 +201,54 @@ function ListMenuTests:TestListMenuContainsPointIsFalseWhenChildDoesNot()
     local i = ListMenu:ListMenu()
     local item = TestMenuItem:TestMenuItem()
     i:Append(item)
-    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
+    LuaUnit.assertEquals(i:ContainsPoint(0, 0), 0)
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuLeftClickWhenNoItemsReturnsFalse()
+    local i = ListMenu:ListMenu()
+    LuaUnit.assertFalse(i:OnMouseLeftClick(0, 0))
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuLeftClickInItemReturnsTrue()
+    local i = ListMenu:ListMenu()
+    local item = TestMenuItem:TestMenuItem()
+    item._contains = true
+    i:Append(item)
+    LuaUnit.assertTrue(i:OnMouseLeftClick(0, 0))
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuLeftReleaseWhenNotSelectedReturnsFalse()
+    local i = ListMenu:ListMenu()
+    LuaUnit.assertFalse(i:OnMouseLeftRelease(0, 0))
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuLeftReleaseWhenSelectedReturnsTrue()
+    local i = ListMenu:ListMenu()
+    local item = TestMenuItem:TestMenuItem()
+    item._contains = true
+    i:Append(item)
+    i:OnMouseLeftClick(0, 0)
+    LuaUnit.assertTrue(i:OnMouseLeftRelease(0, 0))
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuMouseMoveWhenNotSelectedReturnsFalse()
+    local i = ListMenu:ListMenu()
+    LuaUnit.assertFalse(i:OnMouseMove(0, 0))
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuMouseMoveWhenSelectedReturnsTrue()
+    local i = ListMenu:ListMenu()
+    local item = TestMenuItem:TestMenuItem()
+    item._contains = true
+    i:Append(item)
+    i:OnMouseLeftClick(0, 0)
+    LuaUnit.assertTrue(i:OnMouseMove(0, 0))
 end
 
 --------------------------------------------------------------------------------

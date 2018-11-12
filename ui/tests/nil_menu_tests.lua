@@ -67,7 +67,15 @@ end
 --------------------------------------------------------------------------------
 function NilMenuTests:TestNilMenuContainsNoPoints()
     local i = NilMenu:NilMenu()
-    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
+    LuaUnit.assertEquals(i:ContainsPoint(0, 0), 0)
+end
+
+--------------------------------------------------------------------------------
+function NilMenuTests:TestNilMenuDoesNothingWithMouse()
+    local i = NilMenu:NilMenu()
+    LuaUnit.assertFalse(i:OnMouseLeftClick(0, 0))
+    LuaUnit.assertFalse(i:OnMouseMove(0, 0))
+    LuaUnit.assertFalse(i:OnMouseLeftRelease(0, 0))
 end
 
 --------------------------------------------------------------------------------

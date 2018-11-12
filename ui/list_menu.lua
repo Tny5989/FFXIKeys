@@ -13,6 +13,7 @@ function ListMenu:ListMenu()
     o._position = { x = 0, y = 0 }
     o._items = {}
     o._visible = false
+    o._selected = false
     return o
 end
 
@@ -82,11 +83,41 @@ end
 function ListMenu:ContainsPoint(x, y)
     for i = 1, #self._items, 1 do
         if self._items[i]:ContainsPoint(x, y) then
-            return true
+            return i
         end
     end
 
-    return false
+    return 0
+end
+
+--------------------------------------------------------------------------------
+function ListMenu:OnMouseMove(x, y)
+    if self._selected then
+        self:MoveTo(x, y)
+    end
+    return self._selected
+end
+
+--------------------------------------------------------------------------------
+function ListMenu:OnMouseLeftClick(x, y)
+    local idx = self:ContainsPoint(x, y)
+    if idx > 0 then
+        self._selected = true
+        return true
+    else
+        self._selected = false
+        return false
+    end
+end
+
+--------------------------------------------------------------------------------
+function ListMenu:OnMouseLeftRelease(x, y)
+    if self._selected then
+        self._selected = false
+        return true
+    else
+        return false
+    end
 end
 
 return ListMenu
