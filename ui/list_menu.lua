@@ -78,4 +78,15 @@ function ListMenu:IsVisible()
     return self._visible
 end
 
+--------------------------------------------------------------------------------
+function ListMenu:ContainsPoint(x, y)
+    for i = 1, #self._items, 1 do
+        if self._items[i]:ContainsPoint(x, y) then
+            return true
+        end
+    end
+
+    return false
+end
+
 return ListMenu

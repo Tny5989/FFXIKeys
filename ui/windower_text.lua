@@ -33,12 +33,12 @@ function WindowerText:WindowerText(text)
     setmetatable(o, self)
     o._id = uuid()
     o._text = ''
-    o._active = true -- Will be false after constructor finishes
+    o._active = false
     o._visible = false
 
     windower.text.create(o._id)
     o:SetDisplayText(text)
-    o:Activate()
+    o:ApplyPalette(default_settings[false])
 
     return o
 end
@@ -78,17 +78,7 @@ end
 --------------------------------------------------------------------------------
 function WindowerText:Activate()
     self._active = not self._active
-    local settings = default_settings[self._active]
-
-    windower.text.set_bg_color(self._id, settings.bg.alpha, settings.bg.red,
-        settings.bg.green, settings.bg.blue)
-    windower.text.set_font(self._id, settings.text.font)
-    windower.text.set_font_size(self._id, settings.text.size)
-    windower.text.set_color(self._id, settings.text.alpha, settings.text.red,
-        settings.text.green, settings.text.blue)
-    windower.text.set_stroke_width(self._id, settings.stroke.width)
-    windower.text.set_stroke_color(self._id, settings.stroke.alpha,
-        settings.stroke.red, settings.stroke.green, settings.stroke.blue)
+    self:ApplyPalette(default_settings[self._active])
 end
 
 --------------------------------------------------------------------------------
@@ -113,6 +103,30 @@ end
 --------------------------------------------------------------------------------
 function WindowerText:IsVisible()
     return self._visible
+end
+
+--------------------------------------------------------------------------------
+function WindowerText:ContainsPoint(x, y)
+    local pos = self:Position()
+    local size = self:Size()
+
+    local valid_x = x >= pos.x and x <= (pos.x + size.width)
+    local valid_y = y >= pos.y and y <= (pos.y + size.height)
+
+    return valid_x and valid_y
+end
+
+--------------------------------------------------------------------------------
+function WindowerText:ApplyPalette(settings)
+    windower.text.set_bg_color(self._id, settings.bg.alpha, settings.bg.red,
+        settings.bg.green, settings.bg.blue)
+    windower.text.set_font(self._id, settings.text.font)
+    windower.text.set_font_size(self._id, settings.text.size)
+    windower.text.set_color(self._id, settings.text.alpha, settings.text.red,
+        settings.text.green, settings.text.blue)
+    windower.text.set_stroke_width(self._id, settings.stroke.width)
+    windower.text.set_stroke_color(self._id, settings.stroke.alpha,
+        settings.stroke.red, settings.stroke.green, settings.stroke.blue)
 end
 
 return WindowerText

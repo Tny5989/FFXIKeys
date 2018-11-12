@@ -16,6 +16,7 @@ function TestMenuItem:TestMenuItem()
     o._active = false
     o._position = { x = 0, y = 0 }
     o._visible = false
+    o._contains = false
     return o
 end
 
@@ -56,6 +57,11 @@ end
 --------------------------------------------------------------------------------
 function TestMenuItem:IsVisible()
     return self._visible
+end
+
+--------------------------------------------------------------------------------
+function TestMenuItem:ContainsPoint(_, _)
+    return self._contains
 end
 
 --------------------------------------------------------------------------------
@@ -173,6 +179,29 @@ function ListMenuTests:TestListMenuHideMakesItemsInvisible()
     i:Show()
     i:Hide()
     LuaUnit.assertFalse(i:IsVisible())
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuContainsNoPointsWhenEmpty()
+    local i = ListMenu:ListMenu()
+    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuContainsPointWhenChildContainsPoint()
+    local i = ListMenu:ListMenu()
+    local item = TestMenuItem:TestMenuItem()
+    item._contains = true
+    i:Append(item)
+    LuaUnit.assertTrue(i:ContainsPoint(0, 0))
+end
+
+--------------------------------------------------------------------------------
+function ListMenuTests:TestListMenuContainsPointIsFalseWhenChildDoesNot()
+    local i = ListMenu:ListMenu()
+    local item = TestMenuItem:TestMenuItem()
+    i:Append(item)
+    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
 end
 
 --------------------------------------------------------------------------------
