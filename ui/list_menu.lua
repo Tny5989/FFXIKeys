@@ -91,9 +91,9 @@ function ListMenu:ContainsPoint(x, y)
 end
 
 --------------------------------------------------------------------------------
-function ListMenu:OnMouseMove(x, y)
+function ListMenu:OnMouseMove(x, y, dx, dy)
     if self._selected then
-        self:MoveTo(x, y)
+        self:DragBy(dx, dy)
     end
     return self._selected
 end

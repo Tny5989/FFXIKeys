@@ -61,7 +61,7 @@ function NilMenu:ContainsPoint()
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:OnMouseMove(x, y)
+function NilMenu:OnMouseMove(x, y, dx, dy)
     return false
 end
 

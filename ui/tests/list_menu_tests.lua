@@ -248,7 +248,7 @@ function ListMenuTests:TestListMenuMouseMoveWhenSelectedReturnsTrue()
     item._contains = true
     i:Append(item)
     i:OnMouseLeftClick(0, 0)
-    LuaUnit.assertTrue(i:OnMouseMove(0, 0))
+    LuaUnit.assertTrue(i:OnMouseMove(0, 0, 0, 0))
 end
 
 --------------------------------------------------------------------------------

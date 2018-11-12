@@ -1,7 +1,9 @@
 local ListMenu = require('ui/list_menu')
 local SimpleMenuItem = require('ui/simple_menu_item')
 
+--------------------------------------------------------------------------------
 local MainMenu = ListMenu:ListMenu()
+local LastMousePos = { x = 0, y = 0 }
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -20,13 +22,17 @@ function Ui.AppendItem()
 end
 
 --------------------------------------------------------------------------------
-local function handle_mouse(type, x, y, _, blocked)
+function Ui.OnMouseEvent(type, x, y, _, blocked)
     if blocked then
         return false
     end
 
+    local last_pos = { x = LastMousePos.x, y = LastMousePos.y }
+    LastMousePos = { x = x, y = y }
+
     if type == 0 then
-        return MainMenu:OnMouseMove(x, y)
+        return MainMenu:OnMouseMove(x, y, LastMousePos.x - last_pos.x,
+            LastMousePos.y - last_pos.y)
     elseif type == 1 then
         return MainMenu:OnMouseLeftClick(x, y)
     elseif type == 2 then
@@ -36,8 +42,5 @@ local function handle_mouse(type, x, y, _, blocked)
         return false
     end
 end
-
---------------------------------------------------------------------------------
-windower.register_event('mouse', handle_mouse)
 
 return Ui
