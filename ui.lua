@@ -10,6 +10,12 @@ local LastMousePos = { x = 0, y = 0 }
 local Ui = {}
 
 --------------------------------------------------------------------------------
+function Ui.Destory()
+    MainMenu:Hide()
+    MainMenu:Destory()
+end
+
+--------------------------------------------------------------------------------
 function Ui.Clear()
     MainMenu:Hide()
     MainMenu:Clear()

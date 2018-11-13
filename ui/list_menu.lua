@@ -20,6 +20,13 @@ function ListMenu:ListMenu()
 end
 
 --------------------------------------------------------------------------------
+function ListMenu:Destroy()
+    self:Clear()
+    self._header:Destroy()
+    self._header = NilMenuItem:NilMenuItem()
+end
+
+--------------------------------------------------------------------------------
 function ListMenu:MoveTo(x, y)
     NilMenu.MoveTo(self, x, y)
     local x = x
@@ -86,6 +93,14 @@ end
 --------------------------------------------------------------------------------
 function ListMenu:IsVisible()
     return self._visible
+end
+
+--------------------------------------------------------------------------------
+function ListMenu:SetHeader(item)
+    self._header:Destroy()
+    self._header = item
+    self._header:SetVisibility(self._visible)
+    self:MoveTo(self._position.x, self._position.y)
 end
 
 --------------------------------------------------------------------------------

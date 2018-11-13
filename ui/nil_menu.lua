@@ -13,6 +13,10 @@ function NilMenu:NilMenu()
 end
 
 --------------------------------------------------------------------------------
+function NilMenu:Destroy()
+end
+
+--------------------------------------------------------------------------------
 function NilMenu:Position()
     return { x = self._position.x, y = self._position.y }
 end
