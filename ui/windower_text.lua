@@ -1,16 +1,28 @@
 local default_dimensions = { width = 50, height = 20 } -- BOOOOO!
 
 --------------------------------------------------------------------------------
-local default_settings = {}
-default_settings[true] = {}
-default_settings[true].bg = { alpha = 255, red = 0, green = 0, blue = 0 }
-default_settings[true].text = { size = 12, font = 'Consolas', alpha = 255, red = 255, green = 255, blue = 255 }
-default_settings[true].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
+local Modes = { Pressed = 1, New = 2, Old = 3, Hovor = 4 }
 
-default_settings[false] = {}
-default_settings[false].bg = { alpha = 255, red = 100, green = 100, blue = 0 }
-default_settings[false].text = { size = 12, font = 'Consolas', alpha = 255, red = 255, green = 255, blue = 255 }
-default_settings[false].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
+local default_settings = {}
+default_settings[Modes.Pressed] = {}
+default_settings[Modes.Pressed].bg = { alpha = 255, red = 50, green = 50, blue = 50 }
+default_settings[Modes.Pressed].text = { size = 12, font = 'Consolas', alpha = 255, red = 225, green = 225, blue = 225 }
+default_settings[Modes.Pressed].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
+
+default_settings[Modes.New] = {}
+default_settings[Modes.New].bg = { alpha = 255, red = 100, green = 100, blue = 100 }
+default_settings[Modes.New].text = { size = 12, font = 'Consolas', alpha = 255, red = 255, green = 255, blue = 255 }
+default_settings[Modes.New].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
+
+default_settings[Modes.Old] = {}
+default_settings[Modes.Old].bg = { alpha = 255, red = 100, green = 100, blue = 100 }
+default_settings[Modes.Old].text = { size = 12, font = 'Consolas', alpha = 255, red = 225, green = 225, blue = 225 }
+default_settings[Modes.Old].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
+
+default_settings[Modes.Hovor] = {}
+default_settings[Modes.Hovor].bg = { alpha = 255, red = 150, green = 150, blue = 150 }
+default_settings[Modes.Hovor].text = { size = 12, font = 'Consolas', alpha = 255, red = 255, green = 255, blue = 255 }
+default_settings[Modes.Hovor].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
 
 --------------------------------------------------------------------------------
 local function uuid()
@@ -33,12 +45,14 @@ function WindowerText:WindowerText(text)
     setmetatable(o, self)
     o._id = uuid()
     o._text = ''
-    o._active = false
+    o._pressed = false
+    o._highlighted = false
+    o._new = true
     o._visible = false
 
     windower.text.create(o._id)
     o:SetDisplayText(text)
-    o:ApplyPalette(default_settings[false])
+    o:ApplyPalette()
 
     return o
 end
@@ -81,14 +95,28 @@ function WindowerText:MoveTo(x, y)
 end
 
 --------------------------------------------------------------------------------
-function WindowerText:Activate(a)
-    self._active = a == true
-    self:ApplyPalette(default_settings[self._active])
+function WindowerText:SetPressed(pressed)
+    self._pressed = (pressed == true)
+    if self._pressed then
+        self._new = false
+    end
+    self:ApplyPalette()
 end
 
 --------------------------------------------------------------------------------
-function WindowerText:IsActive()
-    return self._active
+function WindowerText:IsPressed()
+    return self._pressed
+end
+
+--------------------------------------------------------------------------------
+function WindowerText:SetHighlighted(highlighted)
+    self._highlighted = (highlighted == true)
+    self:ApplyPalette()
+end
+
+--------------------------------------------------------------------------------
+function WindowerText:IsHighlighted()
+    return self._highlighted
 end
 
 --------------------------------------------------------------------------------
@@ -122,7 +150,18 @@ function WindowerText:ContainsPoint(x, y)
 end
 
 --------------------------------------------------------------------------------
-function WindowerText:ApplyPalette(settings)
+function WindowerText:ApplyPalette()
+    local settings
+    if self._pressed then
+        settings = default_settings[Modes.Pressed]
+    elseif self._highlighted then
+        settings = default_settings[Modes.Hovor]
+    elseif self._new then
+        settings = default_settings[Modes.New]
+    else
+        settings = default_settings[Modes.Old]
+    end
+
     windower.text.set_bg_color(self._id, settings.bg.alpha, settings.bg.red,
         settings.bg.green, settings.bg.blue)
     windower.text.set_font(self._id, settings.text.font)
