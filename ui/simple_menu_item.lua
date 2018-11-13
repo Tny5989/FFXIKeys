@@ -7,11 +7,12 @@ local SimpleMenuItem = NilMenuItem:NilMenuItem()
 SimpleMenuItem.__index = SimpleMenuItem
 
 --------------------------------------------------------------------------------
-function SimpleMenuItem:SimpleMenuItem()
+function SimpleMenuItem:SimpleMenuItem(text)
     local o = {}
     setmetatable(o, self)
     o._type = 'SimpleMenuItem'
-    o._text = WindowerText:WindowerText('DefaultText')
+    o._text = WindowerText:WindowerText(text and text or 'DefaultText')
+    o._position = { x = 0, y = 0 }
     return o
 end
 
@@ -43,8 +44,8 @@ function SimpleMenuItem:DragBy(dx, dy)
 end
 
 --------------------------------------------------------------------------------
-function SimpleMenuItem:Activate()
-    self._text:Activate()
+function SimpleMenuItem:Activate(a)
+    self._text:Activate(a)
 end
 
 --------------------------------------------------------------------------------
@@ -74,6 +75,11 @@ end
 --------------------------------------------------------------------------------
 function SimpleMenuItem:IsVisible()
     return self._text:IsVisible()
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:ContainsPoint(x, y)
+    return self._text:ContainsPoint(x, y)
 end
 
 return SimpleMenuItem

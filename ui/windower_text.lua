@@ -4,12 +4,12 @@ local default_dimensions = { width = 50, height = 20 } -- BOOOOO!
 local default_settings = {}
 default_settings[true] = {}
 default_settings[true].bg = { alpha = 255, red = 0, green = 0, blue = 0 }
-default_settings[true].text = { size = 12, font = 'Arial', alpha = 255, red = 255, green = 255, blue = 255 }
+default_settings[true].text = { size = 12, font = 'Consolas', alpha = 255, red = 255, green = 255, blue = 255 }
 default_settings[true].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
 
 default_settings[false] = {}
-default_settings[false].bg = { alpha = 255, red = 0, green = 0, blue = 0 }
-default_settings[false].text = { size = 12, font = 'Arial', alpha = 255, red = 255, green = 255, blue = 255 }
+default_settings[false].bg = { alpha = 255, red = 100, green = 100, blue = 0 }
+default_settings[false].text = { size = 12, font = 'Consolas', alpha = 255, red = 255, green = 255, blue = 255 }
 default_settings[false].stroke = { width = 0, alpha = 255, red = 0, green = 0, blue = 0 }
 
 --------------------------------------------------------------------------------
@@ -67,7 +67,12 @@ end
 
 --------------------------------------------------------------------------------
 function WindowerText:Size()
-    return { width = default_dimensions.width, height = default_dimensions.height }
+    local w, h = windower.text.get_extents(self._id)
+    if w == h == 0 then
+        return { width = default_dimensions.width, height = default_dimensions.height }
+    else
+        return { width = w, height = h }
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -76,8 +81,8 @@ function WindowerText:MoveTo(x, y)
 end
 
 --------------------------------------------------------------------------------
-function WindowerText:Activate()
-    self._active = not self._active
+function WindowerText:Activate(a)
+    self._active = a == true
     self:ApplyPalette(default_settings[self._active])
 end
 

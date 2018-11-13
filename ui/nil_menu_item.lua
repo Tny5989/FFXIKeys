@@ -44,7 +44,7 @@ function NilMenuItem:DragBy(dx, dy)
 end
 
 --------------------------------------------------------------------------------
-function NilMenuItem:Activate()
+function NilMenuItem:Activate(_)
 end
 
 --------------------------------------------------------------------------------
@@ -66,6 +66,11 @@ end
 
 --------------------------------------------------------------------------------
 function NilMenuItem:IsVisible()
+    return false
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItem:ContainsPoint(x, y)
     return false
 end
 

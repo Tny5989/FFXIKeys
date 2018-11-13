@@ -67,7 +67,7 @@ end
 
 --------------------------------------------------------------------------------
 local function OnMouseEvent(type, x, y, delta, blocked)
-    Ui.OnMouseEvent(type, x, y, delta, blocked)
+    return Ui.OnMouseEvent(type, x, y, delta, blocked)
 end
 
 --------------------------------------------------------------------------------

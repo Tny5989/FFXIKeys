@@ -13,15 +13,18 @@ function ListMenu:ListMenu()
     o._position = { x = 0, y = 0 }
     o._items = {}
     o._visible = false
-    o._selected = false
+    o._selected = 0
     return o
 end
 
 --------------------------------------------------------------------------------
 function ListMenu:MoveTo(x, y)
     NilMenu.MoveTo(self, x, y)
+    local x = x
+    local y = y
     for i = 1, #self._items, 1 do
         self._items[i]:MoveTo(x, y)
+        x = x + self._items[i]:Size().height
     end
 end
 
@@ -92,28 +95,32 @@ end
 
 --------------------------------------------------------------------------------
 function ListMenu:OnMouseMove(x, y, dx, dy)
-    if self._selected then
+    if self._selected > 0 then
         self:DragBy(dx, dy)
+    else
+        for i = 1, #self._items, 1 do
+            self._items[i]:Activate(self._items[i]:ContainsPoint(x, y))
+        end
     end
-    return self._selected
+    return self._selected > 0
 end
 
 --------------------------------------------------------------------------------
 function ListMenu:OnMouseLeftClick(x, y)
     local idx = self:ContainsPoint(x, y)
     if idx > 0 then
-        self._selected = true
+        self._selected = idx
         return true
     else
-        self._selected = false
+        self._selected = idx
         return false
     end
 end
 
 --------------------------------------------------------------------------------
 function ListMenu:OnMouseLeftRelease(x, y)
-    if self._selected then
-        self._selected = false
+    if self._selected > 0 then
+        self._selected = 0
         return true
     else
         return false
