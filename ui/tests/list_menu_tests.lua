@@ -184,7 +184,7 @@ end
 --------------------------------------------------------------------------------
 function ListMenuTests:TestListMenuContainsNoPointsWhenEmpty()
     local i = ListMenu:ListMenu()
-    LuaUnit.assertEquals(i:ContainsPoint(0, 0), 0)
+    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
 end
 
 --------------------------------------------------------------------------------
@@ -193,7 +193,7 @@ function ListMenuTests:TestListMenuContainsPointWhenChildContainsPoint()
     local item = TestMenuItem:TestMenuItem()
     item._contains = true
     i:Append(item)
-    LuaUnit.assertEquals(i:ContainsPoint(0, 0), 1)
+    LuaUnit.assertTrue(i:ContainsPoint(0, 0))
 end
 
 --------------------------------------------------------------------------------
@@ -201,7 +201,7 @@ function ListMenuTests:TestListMenuContainsPointIsFalseWhenChildDoesNot()
     local i = ListMenu:ListMenu()
     local item = TestMenuItem:TestMenuItem()
     i:Append(item)
-    LuaUnit.assertEquals(i:ContainsPoint(0, 0), 0)
+    LuaUnit.assertFalse(i:ContainsPoint(0, 0))
 end
 
 --------------------------------------------------------------------------------

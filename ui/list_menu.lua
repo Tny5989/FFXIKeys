@@ -1,4 +1,5 @@
 local NilMenu = require('ui/nil_menu')
+local NilMenuItem = require('ui/nil_menu_item')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -12,6 +13,7 @@ function ListMenu:ListMenu()
     o._type = 'ListMenu'
     o._position = { x = 0, y = 0 }
     o._items = {}
+    o._header = NilMenuItem:NilMenuItem()
     o._visible = false
     o._selected = false
     return o
@@ -22,6 +24,10 @@ function ListMenu:MoveTo(x, y)
     NilMenu.MoveTo(self, x, y)
     local x = x
     local y = y
+
+    self._header:MoveTo(x, y)
+    x = x + self._header:Size().height
+
     for i = 1, #self._items, 1 do
         self._items[i]:MoveTo(x, y)
         x = x + self._items[i]:Size().height
@@ -86,11 +92,11 @@ end
 function ListMenu:ContainsPoint(x, y)
     for i = 1, #self._items, 1 do
         if self._items[i]:ContainsPoint(x, y) then
-            return i
+            return true
         end
     end
 
-    return 0
+    return self._header:ContainsPoint(x, y)
 end
 
 --------------------------------------------------------------------------------
@@ -104,15 +110,19 @@ function ListMenu:OnMouseMove(x, y, dx, dy)
             self._items[i]:SetPressed(false)
         end
     end
+
+    if self._header:ContainsPoint(x - dx, y - dy) and self._selected then
+        self:DragBy(dx, dy)
+    end
+
     return false
 end
 
 --------------------------------------------------------------------------------
 function ListMenu:OnMouseLeftClick(x, y)
-    local idx = self:ContainsPoint(x, y)
-    if idx > 0 then
-        self._items[idx]:SetPressed(true)
+    if self:ContainsPoint(x, y) then
         self._selected = true
+        self:OnMouseMove(x, y, 0, 0)
         return true
     else
         self._selected = false
