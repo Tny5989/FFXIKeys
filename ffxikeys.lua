@@ -19,6 +19,7 @@ local state = {running = false, command = nil}
 local function OnLoad()
     settings.load()
     Aliases.Update()
+    Ui.Create()
 end
 
 --------------------------------------------------------------------------------

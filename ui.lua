@@ -2,12 +2,18 @@ local ListMenu = require('ui/list_menu')
 local SimpleMenuItem = require('ui/simple_menu_item')
 
 --------------------------------------------------------------------------------
-local MainMenu = ListMenu:ListMenu()
+local MainMenu
 local LastMousePos = { x = 0, y = 0 }
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local Ui = {}
+
+--------------------------------------------------------------------------------
+function Ui.Create()
+    MainMenu = ListMenu:ListMenu()
+    MainMenu:SetHeader(SimpleMenuItem:SimpleMenuItem('Items'))
+end
 
 --------------------------------------------------------------------------------
 function Ui.Destory()
