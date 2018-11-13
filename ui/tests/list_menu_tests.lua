@@ -242,13 +242,13 @@ function ListMenuTests:TestListMenuMouseMoveWhenNotSelectedReturnsFalse()
 end
 
 --------------------------------------------------------------------------------
-function ListMenuTests:TestListMenuMouseMoveWhenSelectedReturnsTrue()
+function ListMenuTests:TestListMenuMouseMoveWhenSelectedReturnsFalse()
     local i = ListMenu:ListMenu()
     local item = TestMenuItem:TestMenuItem()
     item._contains = true
     i:Append(item)
     i:OnMouseLeftClick(0, 0)
-    LuaUnit.assertTrue(i:OnMouseMove(0, 0, 0, 0))
+    LuaUnit.assertFalse(i:OnMouseMove(0, 0, 0, 0))
 end
 
 --------------------------------------------------------------------------------

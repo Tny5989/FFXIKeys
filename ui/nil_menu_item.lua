@@ -44,11 +44,20 @@ function NilMenuItem:DragBy(dx, dy)
 end
 
 --------------------------------------------------------------------------------
-function NilMenuItem:Activate(_)
+function NilMenuItem:SetPressed(_)
 end
 
 --------------------------------------------------------------------------------
-function NilMenuItem:IsActive()
+function NilMenuItem:IsPressed()
+    return false
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItem:SetHighlighted(_)
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItem:IsHighlighted()
     return false
 end
 

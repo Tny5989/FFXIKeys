@@ -45,11 +45,23 @@ function NilMenuItemTests:TestNilMenuItemSizeIsZero()
 end
 
 --------------------------------------------------------------------------------
-function NilMenuItemTests:TestNilMenuItemActivateDoesNothing()
+function NilMenuItemTests:TestNilMenuItemSetPressedDoesNothing()
     local i = NilMenuItem:NilMenuItem()
-    LuaUnit.assertFalse(i:IsActive())
-    i:Activate()
-    LuaUnit.assertFalse(i:IsActive())
+    LuaUnit.assertFalse(i:IsPressed())
+    i:SetPressed(true)
+    LuaUnit.assertFalse(i:IsPressed())
+    i:SetPressed(false)
+    LuaUnit.assertFalse(i:IsPressed())
+end
+
+--------------------------------------------------------------------------------
+function NilMenuItemTests:TestNilMenuItemSetHighlightedDoesNothing()
+    local i = NilMenuItem:NilMenuItem()
+    LuaUnit.assertFalse(i:IsHighlighted())
+    i:SetHighlighted(true)
+    LuaUnit.assertFalse(i:IsHighlighted())
+    i:SetHighlighted(false)
+    LuaUnit.assertFalse(i:IsHighlighted())
 end
 
 --------------------------------------------------------------------------------

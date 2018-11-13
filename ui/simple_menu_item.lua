@@ -44,13 +44,23 @@ function SimpleMenuItem:DragBy(dx, dy)
 end
 
 --------------------------------------------------------------------------------
-function SimpleMenuItem:Activate(a)
-    self._text:Activate(a)
+function SimpleMenuItem:SetPressed(p)
+    self._text:SetPressed(p)
 end
 
 --------------------------------------------------------------------------------
-function SimpleMenuItem:IsActive()
-    return self._text:IsActive()
+function SimpleMenuItem:IsPressed()
+    return self._text:IsPressed()
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:SetHighlighted(h)
+    self._text:SetHighlighted(h)
+end
+
+--------------------------------------------------------------------------------
+function SimpleMenuItem:IsHighlighted()
+    return self._text:IsHighlighted()
 end
 
 --------------------------------------------------------------------------------

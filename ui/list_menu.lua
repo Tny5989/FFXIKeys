@@ -13,7 +13,7 @@ function ListMenu:ListMenu()
     o._position = { x = 0, y = 0 }
     o._items = {}
     o._visible = false
-    o._selected = 0
+    o._selected = false
     return o
 end
 
@@ -95,32 +95,35 @@ end
 
 --------------------------------------------------------------------------------
 function ListMenu:OnMouseMove(x, y, dx, dy)
-    if self._selected > 0 then
-        self:DragBy(dx, dy)
-    else
-        for i = 1, #self._items, 1 do
-            self._items[i]:Activate(self._items[i]:ContainsPoint(x, y))
+    for i = 1, #self._items, 1 do
+        if self._items[i]:ContainsPoint(x, y) then
+            self._items[i]:SetHighlighted(true)
+            self._items[i]:SetPressed(self._selected)
+        else
+            self._items[i]:SetHighlighted(false)
+            self._items[i]:SetPressed(false)
         end
     end
-    return self._selected > 0
+    return false
 end
 
 --------------------------------------------------------------------------------
 function ListMenu:OnMouseLeftClick(x, y)
     local idx = self:ContainsPoint(x, y)
     if idx > 0 then
-        self._selected = idx
+        self._items[idx]:SetPressed(true)
+        self._selected = true
         return true
     else
-        self._selected = idx
+        self._selected = false
         return false
     end
 end
 
 --------------------------------------------------------------------------------
 function ListMenu:OnMouseLeftRelease(x, y)
-    if self._selected > 0 then
-        self._selected = 0
+    if self._selected then
+        self._selected = false
         return true
     else
         return false

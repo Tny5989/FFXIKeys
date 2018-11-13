@@ -69,6 +69,12 @@ function SimpleMenuItemTests:SetUp()
     function windower.text.set_stroke_color()
         windower.text.setstrokecolorcount = windower.text.setstrokecolorcount + 1
     end
+
+    windower.text.getextentscount = 0
+    function windower.text.get_extents()
+        windower.text.getextentscount = windower.text.getextentscount + 1
+        return 50, 20
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -130,14 +136,24 @@ function SimpleMenuItemTests:TestSimpleMenuItemSizeIsCorrect()
 end
 
 --------------------------------------------------------------------------------
-function SimpleMenuItemTests:TestSimpleMenuItemActivateTogglesState()
+function SimpleMenuItemTests:TestSimpleMenuItemSetPressedChangesState()
     local i = SimpleMenuItem:SimpleMenuItem()
-    LuaUnit.assertFalse(i:IsActive())
-    i:Activate()
-    LuaUnit.assertTrue(i:IsActive())
-    i:Activate()
-    LuaUnit.assertFalse(i:IsActive())
+    LuaUnit.assertFalse(i:IsPressed())
+    i:SetPressed(true)
+    LuaUnit.assertTrue(i:IsPressed())
+    i:SetPressed(false)
+    LuaUnit.assertFalse(i:IsPressed())
 end
+--------------------------------------------------------------------------------
+function SimpleMenuItemTests:TestSimpleMenuItemSetHighlightedChangesState()
+    local i = SimpleMenuItem:SimpleMenuItem()
+    LuaUnit.assertFalse(i:IsHighlighted())
+    i:SetHighlighted(true)
+    LuaUnit.assertTrue(i:IsHighlighted())
+    i:SetHighlighted(false)
+    LuaUnit.assertFalse(i:IsHighlighted())
+end
+
 
 --------------------------------------------------------------------------------
 function SimpleMenuItemTests:TestSimpleMenuItemShowMakesTextVisible()
