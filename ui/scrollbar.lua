@@ -67,7 +67,14 @@ end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetPageCount(count)
-    self._page_count = count
+    self._page_count = math.max(1, count)
+    self:_update_bar()
+end
+
+--------------------------------------------------------------------------------
+function Scrollbar:SetCurrentPage(idx)
+    self._page_idx = math.max(1, idx)
+    self._page_idx = math.min(self._page_count, self._page_idx)
     self:_update_bar()
 end
 
@@ -99,6 +106,11 @@ end
 --------------------------------------------------------------------------------
 function Scrollbar:PageCount()
     return self._page_count
+end
+
+--------------------------------------------------------------------------------
+function Scrollbar:CurrentPage()
+    return self._page_idx
 end
 
 --------------------------------------------------------------------------------

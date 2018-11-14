@@ -60,9 +60,15 @@ function ScrollbarTests:TestDefaultVisibilityIsFalse()
 end
 
 --------------------------------------------------------------------------------
-function ScrollbarTests:TestDefaultPagecountIsOne()
+function ScrollbarTests:TestDefaultPageCountIsOne()
     local sb = Scrollbar:Scrollbar()
     LuaUnit.assertEquals(sb:PageCount(), 1)
+end
+
+--------------------------------------------------------------------------------
+function ScrollbarTests:TestDefaultPageIndexIsOne()
+    local sb = Scrollbar:Scrollbar()
+    LuaUnit.assertEquals(sb:CurrentPage(), 1)
 end
 
 --------------------------------------------------------------------------------
@@ -120,6 +126,14 @@ function ScrollbarTests:TestSetPagecountUpdatesCount()
     local sb = Scrollbar:Scrollbar()
     sb:SetPageCount(2)
     LuaUnit.assertEquals(sb:PageCount(), 2)
+end
+
+--------------------------------------------------------------------------------
+function ScrollbarTests:TestSetCurrentPageUpdatesPage()
+    local sb = Scrollbar:Scrollbar()
+    sb:SetPageCount(10)
+    sb:SetCurrentPage(5)
+    LuaUnit.assertEquals(sb:CurrentPage(), 5)
 end
 
 --------------------------------------------------------------------------------
@@ -206,6 +220,15 @@ function ScrollbarTests:TestSetPageCountUpdatesPrim()
     sb:SetPageCount(2)
     LuaUnit.assertEquals(windower.prim.setsizecount, 1)
     LuaUnit.assertEquals(windower.prim.setlocationcount, 1)
+end
+
+--------------------------------------------------------------------------------
+function ScrollbarTests:TestSetCurrentPageUpdatesPrim()
+    local sb = Scrollbar:Scrollbar()
+    sb:SetPageCount(10)
+    sb:SetCurrentPage(5)
+    LuaUnit.assertEquals(windower.prim.setsizecount, 2)
+    LuaUnit.assertEquals(windower.prim.setlocationcount, 2)
 end
 
 --------------------------------------------------------------------------------
