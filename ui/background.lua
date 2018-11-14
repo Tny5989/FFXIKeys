@@ -1,6 +1,9 @@
+local Component = require('ui/component')
+local UUID = require('util/uuid')
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local Background = {}
+local Background = Component:Component()
 Background.__index = Background
 
 --------------------------------------------------------------------------------
@@ -12,79 +15,52 @@ function Background:Background()
     o._visible = false
     o._color = { a = 255, r = 0, g = 0, b = 0 }
     o._type = 'Background'
+
+    o._id = windower.prim.create(UUID.uuid())
+
     return o
 end
 
 --------------------------------------------------------------------------------
 function Background:Destroy()
+    Component.Destroy(self)
+    windower.prim.delete(self._id)
 end
 
 --------------------------------------------------------------------------------
 function Background:MoveTo(x, y)
-    self._position.x = x
-    self._position.y = y
+    Component.MoveTo(self, x, y)
+    windower.prim.set_location(self._id, self._position.x, self._position.y)
 end
 
 --------------------------------------------------------------------------------
 function Background:DragBy(dx, dy)
-    self._position.x = self._position.x + dx
-    self._position.y = self._position.y + dy
+    Component.DragBy(self, dx, dy)
+    windower.prim.set_location(self._id, self._position.x, self._position.y)
 end
 
 --------------------------------------------------------------------------------
 function Background:SetSize(w, h)
-    self._size.w = w
-    self._size.h = h
+    Component.SetSize(self, w, h)
+    windower.prim.set_size(self._id, self._size.w, self._size.h)
 end
 
 --------------------------------------------------------------------------------
 function Background:Show()
-    self._visible = true
+    Component.Show(self)
+    windower.prim.set_visibility(self._id, self._visible)
 end
 
 --------------------------------------------------------------------------------
 function Background:Hide()
-    self._visible = false
+    Component.Hide(self)
+    windower.prim.set_visibility(self._id, self._visible)
 end
 
 --------------------------------------------------------------------------------
 function Background:SetColor(alpha, red, green, blue)
-    self._color.a = alpha
-    self._color.r = red
-    self._color.g = green
-    self._color.b = blue
-end
-
---------------------------------------------------------------------------------
-function Background:Position()
-    return { x = self._position.x, y = self._position.y }
-end
-
---------------------------------------------------------------------------------
-function Background:Size()
-    return { w = self._size.w, h = self._size.h }
-end
-
---------------------------------------------------------------------------------
-function Background:IsVisible()
-    return self._visible
-end
-
---------------------------------------------------------------------------------
-function Background:Color()
-    return { a = self._color.a, r = self._color.r, g = self._color.g, b = self._color.b }
-end
-
---------------------------------------------------------------------------------
-function Background:ContainsPoint(x, y)
-    local valid_x = x >= self._position.x and x <= (self._position.x + self._size.w)
-    local valid_y = y >= self._position.y and y <= (self._position.y + self._size.h)
-    return valid_x and valid_y
-end
-
---------------------------------------------------------------------------------
-function Background:Type()
-    return self._type
+    Component.SetColor(self, alpha, red, green, blue)
+    windower.prim.set_color(self._id, self._color.a, self._color.r, self._color.g, self._color.b)
 end
 
 return Background

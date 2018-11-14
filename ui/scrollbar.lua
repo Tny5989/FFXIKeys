@@ -1,4 +1,4 @@
-local PrimBackground = require('ui/prim_background')
+local Background = require('ui/background')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -9,8 +9,8 @@ Scrollbar.__index = Scrollbar
 function Scrollbar:Scrollbar()
     local o = {}
     setmetatable(o, self)
-    o._background = PrimBackground:PrimBackground()
-    o._foreground = PrimBackground:PrimBackground()
+    o._background = Background:Background()
+    o._foreground = Background:Background()
     o._page_count = 1
     o._page_idx = 1
     o._type = 'Scrollbar'
