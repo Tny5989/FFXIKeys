@@ -1,87 +1,90 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local NilMenu = {}
-NilMenu.__index = NilMenu
+local Background = {}
+Background.__index = Background
 
 --------------------------------------------------------------------------------
-function NilMenu:NilMenu()
+function Background:Background()
     local o = {}
     setmetatable(o, self)
-    o._type = 'NilMenu'
     o._position = { x = 0, y = 0 }
+    o._size = { w = 0, h = 0 }
+    o._visible = false
+    o._color = { a = 255, r = 0, g = 0, b = 0 }
+    o._type = 'Background'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:Destroy()
+function Background:Destroy()
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:Position()
-    return { x = self._position.x, y = self._position.y }
-end
-
---------------------------------------------------------------------------------
-function NilMenu:MoveTo(x, y)
+function Background:MoveTo(x, y)
     self._position.x = x
     self._position.y = y
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:DragBy(dx, dy)
+function Background:DragBy(dx, dy)
     self._position.x = self._position.x + dx
     self._position.y = self._position.y + dy
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:Size()
-    return 0
+function Background:SetSize(w, h)
+    self._size.w = w
+    self._size.h = h
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:Append()
+function Background:Show()
+    self._visible = true
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:Clear()
+function Background:Hide()
+    self._visible = false
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:Show()
+function Background:SetColor(alpha, red, green, blue)
+    self._color.a = alpha
+    self._color.r = red
+    self._color.g = green
+    self._color.b = blue
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:Hide()
+function Background:Position()
+    return { x = self._position.x, y = self._position.y }
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:IsVisible()
-    return false
+function Background:Size()
+    return { w = self._size.w, h = self._size.h }
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:ContainsPoint()
-    return 0
+function Background:IsVisible()
+    return self._visible
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:OnMouseMove(x, y, dx, dy)
-    return false
+function Background:Color()
+    return { a = self._color.a, r = self._color.r, g = self._color.g, b = self._color.b }
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:OnMouseLeftClick(x, y)
-    return false
+function Background:ContainsPoint(x, y)
+    local valid_x = x >= self._position.x and x <= (self._position.x + self._size.w)
+    local valid_y = y >= self._position.y and y <= (self._position.y + self._size.h)
+    return valid_x and valid_y
 end
 
 --------------------------------------------------------------------------------
-function NilMenu:OnMouseLeftRelease(x, y)
-    return false
-end
-
---------------------------------------------------------------------------------
-function NilMenu:Type()
+function Background:Type()
     return self._type
 end
 
-return NilMenu
+return Background
