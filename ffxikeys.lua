@@ -10,7 +10,6 @@ settings = require('settings')
 
 local CommandFactory = require('command/command_factory')
 local Aliases = require('aliases')
-local Ui = require('ui')
 
 --------------------------------------------------------------------------------
 local state = {running = false, command = nil}
@@ -19,12 +18,10 @@ local state = {running = false, command = nil}
 local function OnLoad()
     settings.load()
     Aliases.Update()
-    Ui.Create()
 end
 
 --------------------------------------------------------------------------------
 local function OnUnload()
-    Ui.Destory()
 end
 
 --------------------------------------------------------------------------------
@@ -68,7 +65,6 @@ end
 
 --------------------------------------------------------------------------------
 local function OnMouseEvent(type, x, y, delta, blocked)
-    return Ui.OnMouseEvent(type, x, y, delta, blocked)
 end
 
 --------------------------------------------------------------------------------
