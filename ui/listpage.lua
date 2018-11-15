@@ -49,6 +49,11 @@ function ListPage:InsertItem(item, idx)
 end
 
 --------------------------------------------------------------------------------
+function ListPage:AppendItem(item)
+    self:InsertItem(item, self:Count() + 1)
+end
+
+--------------------------------------------------------------------------------
 function ListPage:RemoveItem(idx)
     table.remove(self._items, idx):Destroy()
 end
