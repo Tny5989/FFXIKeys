@@ -20,9 +20,9 @@ function BackgroundTests:SetUp()
         windower.prim.deletecount = windower.prim.deletecount + 1
     end
 
-    windower.prim.setlocationcount = 0
-    function windower.prim.set_location()
-        windower.prim.setlocationcount = windower.prim.setlocationcount + 1
+    windower.prim.setpositioncount = 0
+    function windower.prim.set_position()
+        windower.prim.setpositioncount = windower.prim.setpositioncount + 1
     end
 
     windower.prim.setsizecount = 0
@@ -59,9 +59,15 @@ function BackgroundTests:TestDefaultVisibilityIsFalse()
 end
 
 --------------------------------------------------------------------------------
-function BackgroundTests:TestDefaultColorIsBlack()
+function BackgroundTests:TestDefaultBackgroundColorIsBlack()
     local bg = Background:Background()
-    LuaUnit.assertEquals(bg:Color(), { a = 255, r = 0, g = 0, b = 0 })
+    LuaUnit.assertEquals(bg:BackgroundColor(), { a = 255, r = 0, g = 0, b = 0 })
+end
+
+--------------------------------------------------------------------------------
+function BackgroundTests:TestDefaultForegroundColorIsBlack()
+    local bg = Background:Background()
+    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 0, g = 0, b = 0 })
 end
 
 --------------------------------------------------------------------------------
@@ -102,10 +108,17 @@ function BackgroundTests:TestHideUpdatesVisibility()
 end
 
 --------------------------------------------------------------------------------
-function BackgroundTests:TestSetColorUpdatesColor()
+function BackgroundTests:TestSetBackgroundColorUpdatesColor()
     local bg = Background:Background()
-    bg:SetColor(100, 101, 102, 103)
-    LuaUnit.assertEquals(bg:Color(), { a = 100, r = 101, g = 102, b = 103 })
+    bg:SetBackgroundColor(100, 101, 102, 103)
+    LuaUnit.assertEquals(bg:BackgroundColor(), { a = 100, r = 101, g = 102, b = 103 })
+end
+
+--------------------------------------------------------------------------------
+function BackgroundTests:TestSetForegroundColorUpdatesColor()
+    local bg = Background:Background()
+    bg:SetForegroundColor(100, 101, 102, 103)
+    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 100, r = 101, g = 102, b = 103 })
 end
 
 --------------------------------------------------------------------------------
@@ -147,7 +160,7 @@ end
 function BackgroundTests:TestMoveToUpdatesPrim()
     local bg = Background:Background()
     bg:MoveTo(11, 12)
-    LuaUnit.assertEquals(windower.prim.setlocationcount, 1)
+    LuaUnit.assertEquals(windower.prim.setpositioncount, 1)
 end
 
 --------------------------------------------------------------------------------
@@ -155,7 +168,7 @@ function BackgroundTests:TestDragByUpdatesPrim()
     local bg = Background:Background()
     bg:MoveTo(11, 12)
     bg:DragBy(2, 1)
-    LuaUnit.assertEquals(windower.prim.setlocationcount, 2)
+    LuaUnit.assertEquals(windower.prim.setpositioncount, 2)
 end
 
 --------------------------------------------------------------------------------
@@ -180,10 +193,17 @@ function BackgroundTests:TestHideUpdatesPrim()
 end
 
 --------------------------------------------------------------------------------
-function BackgroundTests:TestSetColorUpdatesPrim()
+function BackgroundTests:TestSetBackgroundColorUpdatesPrim()
     local bg = Background:Background()
-    bg:SetColor(100, 101, 102, 103)
+    bg:SetBackgroundColor(100, 101, 102, 103)
     LuaUnit.assertEquals(windower.prim.setcolorcount, 1)
+end
+
+--------------------------------------------------------------------------------
+function BackgroundTests:TestSetForegroundColorDoesNotUpdatePrim()
+    local bg = Background:Background()
+    bg:SetForegroundColor(100, 101, 102, 103)
+    LuaUnit.assertEquals(windower.prim.setcolorcount, 0)
 end
 
 LuaUnit.LuaUnit.run('BackgroundTests')

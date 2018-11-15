@@ -10,7 +10,8 @@ function Component:Component()
     o._position = { x = 0, y = 0 }
     o._size = { w = 0, h = 0 }
     o._visible = false
-    o._color = { a = 255, r = 0, g = 0, b = 0 }
+    o._fg_color = { a = 255, r = 0, g = 0, b = 0 }
+    o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
     o._type = 'Component'
     return o
 end
@@ -48,11 +49,19 @@ function Component:Hide()
 end
 
 --------------------------------------------------------------------------------
-function Component:SetColor(alpha, red, green, blue)
-    self._color.a = alpha
-    self._color.r = red
-    self._color.g = green
-    self._color.b = blue
+function Component:SetForegroundColor(alpha, red, green, blue)
+    self._fg_color.a = alpha
+    self._fg_color.r = red
+    self._fg_color.g = green
+    self._fg_color.b = blue
+end
+
+--------------------------------------------------------------------------------
+function Component:SetBackgroundColor(alpha, red, green, blue)
+    self._bg_color.a = alpha
+    self._bg_color.r = red
+    self._bg_color.g = green
+    self._bg_color.b = blue
 end
 
 --------------------------------------------------------------------------------
@@ -71,8 +80,13 @@ function Component:IsVisible()
 end
 
 --------------------------------------------------------------------------------
-function Component:Color()
-    return { a = self._color.a, r = self._color.r, g = self._color.g, b = self._color.b }
+function Component:ForegroundColor()
+    return { a = self._fg_color.a, r = self._fg_color.r, g = self._fg_color.g, b = self._fg_color.b }
+end
+
+--------------------------------------------------------------------------------
+function Component:BackgroundColor()
+    return { a = self._bg_color.a, r = self._bg_color.r, g = self._bg_color.g, b = self._bg_color.b }
 end
 
 --------------------------------------------------------------------------------

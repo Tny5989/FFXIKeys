@@ -57,12 +57,12 @@ end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetBackgroundColor(alpha, red, green, blue)
-    self._background:SetColor(alpha, red, green, blue)
+    self._background:SetBackgroundColor(alpha, red, green, blue)
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetForegroundColor(alpha, red, green, blue)
-    self._foreground:SetColor(alpha, red, green, blue)
+    self._foreground:SetBackgroundColor(alpha, red, green, blue)
 end
 
 --------------------------------------------------------------------------------
@@ -95,12 +95,12 @@ end
 
 --------------------------------------------------------------------------------
 function Scrollbar:BackgroundColor()
-    return self._background:Color()
+    return self._background:BackgroundColor()
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:ForegroundColor()
-    return self._foreground:Color()
+    return self._foreground:BackgroundColor()
 end
 
 --------------------------------------------------------------------------------

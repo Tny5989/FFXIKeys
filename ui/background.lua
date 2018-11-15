@@ -59,9 +59,10 @@ function Background:Hide()
 end
 
 --------------------------------------------------------------------------------
-function Background:SetColor(alpha, red, green, blue)
-    Component.SetColor(self, alpha, red, green, blue)
-    windower.prim.set_color(self._id, self._color.a, self._color.r, self._color.g, self._color.b)
+function Background:SetBackgroundColor(alpha, red, green, blue)
+    Component.SetBackgroundColor(self, alpha, red, green, blue)
+    local color = self:BackgroundColor()
+    windower.prim.set_color(self._id, color.a, color.r, color.g, color.b)
 end
 
 return Background

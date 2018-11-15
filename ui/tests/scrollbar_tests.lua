@@ -20,9 +20,9 @@ function ScrollbarTests:SetUp()
         windower.prim.deletecount = windower.prim.deletecount + 1
     end
 
-    windower.prim.setlocationcount = 0
-    function windower.prim.set_location()
-        windower.prim.setlocationcount = windower.prim.setlocationcount + 1
+    windower.prim.setpositioncount = 0
+    function windower.prim.set_position()
+        windower.prim.setpositioncount = windower.prim.setpositioncount + 1
     end
 
     windower.prim.setsizecount = 0
@@ -169,14 +169,14 @@ end
 function ScrollbarTests:TestMoveToMovesPrims()
     local sb = Scrollbar:Scrollbar()
     sb:MoveTo(10, 11)
-    LuaUnit.assertEquals(windower.prim.setlocationcount, 2)
+    LuaUnit.assertEquals(windower.prim.setpositioncount, 2)
 end
 
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestDragByMovesPrims()
     local sb = Scrollbar:Scrollbar()
     sb:DragBy(10, 11)
-    LuaUnit.assertEquals(windower.prim.setlocationcount, 2)
+    LuaUnit.assertEquals(windower.prim.setpositioncount, 2)
 end
 
 --------------------------------------------------------------------------------
@@ -219,7 +219,7 @@ function ScrollbarTests:TestSetPageCountUpdatesPrim()
     local sb = Scrollbar:Scrollbar()
     sb:SetPageCount(2)
     LuaUnit.assertEquals(windower.prim.setsizecount, 1)
-    LuaUnit.assertEquals(windower.prim.setlocationcount, 1)
+    LuaUnit.assertEquals(windower.prim.setpositioncount, 1)
 end
 
 --------------------------------------------------------------------------------
@@ -228,7 +228,7 @@ function ScrollbarTests:TestSetCurrentPageUpdatesPrim()
     sb:SetPageCount(10)
     sb:SetCurrentPage(5)
     LuaUnit.assertEquals(windower.prim.setsizecount, 2)
-    LuaUnit.assertEquals(windower.prim.setlocationcount, 2)
+    LuaUnit.assertEquals(windower.prim.setpositioncount, 2)
 end
 
 --------------------------------------------------------------------------------

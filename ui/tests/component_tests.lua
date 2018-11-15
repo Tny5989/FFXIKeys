@@ -23,9 +23,15 @@ function ComponentTests:TestDefaultVisibilityIsFalse()
 end
 
 --------------------------------------------------------------------------------
-function ComponentTests:TestDefaultColorIsBlack()
+function ComponentTests:TestDefaultBackgroundColorIsBlack()
     local bg = Component:Component()
-    LuaUnit.assertEquals(bg:Color(), { a = 255, r = 0, g = 0, b = 0 })
+    LuaUnit.assertEquals(bg:BackgroundColor(), { a = 255, r = 0, g = 0, b = 0 })
+end
+
+--------------------------------------------------------------------------------
+function ComponentTests:TestDefaultForegroundColorIsBlack()
+    local bg = Component:Component()
+    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 0, g = 0, b = 0 })
 end
 
 --------------------------------------------------------------------------------
@@ -66,10 +72,17 @@ function ComponentTests:TestHideUpdatesVisibility()
 end
 
 --------------------------------------------------------------------------------
-function ComponentTests:TestSetColorUpdatesColor()
+function ComponentTests:TestSetBackgroundColorUpdatesColor()
     local bg = Component:Component()
-    bg:SetColor(100, 101, 102, 103)
-    LuaUnit.assertEquals(bg:Color(), { a = 100, r = 101, g = 102, b = 103 })
+    bg:SetBackgroundColor(100, 101, 102, 103)
+    LuaUnit.assertEquals(bg:BackgroundColor(), { a = 100, r = 101, g = 102, b = 103 })
+end
+
+--------------------------------------------------------------------------------
+function ComponentTests:TestSetForegroundColorUpdatesColor()
+    local bg = Component:Component()
+    bg:SetForegroundColor(100, 101, 102, 103)
+    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 100, r = 101, g = 102, b = 103 })
 end
 
 --------------------------------------------------------------------------------
