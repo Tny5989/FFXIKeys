@@ -13,7 +13,8 @@ function Background:Background()
     o._position = { x = 0, y = 0 }
     o._size = { w = 0, h = 0 }
     o._visible = false
-    o._color = { a = 255, r = 0, g = 0, b = 0 }
+    o._fg_color = { a = 255, r = 0, g = 0, b = 0 }
+    o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
     o._type = 'Background'
 
     o._id = UUID.uuid()
