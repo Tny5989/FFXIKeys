@@ -35,6 +35,18 @@ function ComponentTests:TestDefaultForegroundColorIsBlack()
 end
 
 --------------------------------------------------------------------------------
+function ComponentTests:TestDefaultFontIsConsolas()
+    local bg = Component:Component()
+    LuaUnit.assertEquals(bg:Font(), 'Consolas')
+end
+
+--------------------------------------------------------------------------------
+function ComponentTests:TestDefaultFontSizeIs12()
+    local bg = Component:Component()
+    LuaUnit.assertEquals(bg:FontSize(), 12)
+end
+
+--------------------------------------------------------------------------------
 function ComponentTests:TestMoveToUpdatesPosition()
     local bg = Component:Component()
     bg:MoveTo(11, 12)
@@ -83,6 +95,20 @@ function ComponentTests:TestSetForegroundColorUpdatesColor()
     local bg = Component:Component()
     bg:SetForegroundColor(100, 101, 102, 103)
     LuaUnit.assertEquals(bg:ForegroundColor(), { a = 100, r = 101, g = 102, b = 103 })
+end
+
+--------------------------------------------------------------------------------
+function ComponentTests:TestSetFontUpdatesFont()
+    local bg = Component:Component()
+    bg:SetFont('Arial')
+    LuaUnit.assertEquals(bg:Font(), 'Arial')
+end
+
+--------------------------------------------------------------------------------
+function ComponentTests:TestSetFontSizeUpdatesFontSize()
+    local bg = Component:Component()
+    bg:SetFontSize(20)
+    LuaUnit.assertEquals(bg:FontSize(), 20)
 end
 
 --------------------------------------------------------------------------------

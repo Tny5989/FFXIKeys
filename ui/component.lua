@@ -12,6 +12,8 @@ function Component:Component()
     o._visible = false
     o._fg_color = { a = 255, r = 0, g = 0, b = 0 }
     o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
+    o._font = 'Consolas'
+    o._font_size = 12
     o._type = 'Component'
     return o
 end
@@ -65,6 +67,16 @@ function Component:SetBackgroundColor(alpha, red, green, blue)
 end
 
 --------------------------------------------------------------------------------
+function Component:SetFont(font_name)
+    self._font = font_name
+end
+
+--------------------------------------------------------------------------------
+function Component:SetFontSize(font_size)
+    self._font_size = font_size
+end
+
+--------------------------------------------------------------------------------
 function Component:Position()
     return { x = self._position.x, y = self._position.y }
 end
@@ -87,6 +99,16 @@ end
 --------------------------------------------------------------------------------
 function Component:BackgroundColor()
     return { a = self._bg_color.a, r = self._bg_color.r, g = self._bg_color.g, b = self._bg_color.b }
+end
+
+--------------------------------------------------------------------------------
+function Component:Font()
+    return self._font
+end
+
+--------------------------------------------------------------------------------
+function Component:FontSize()
+    return self._font_size
 end
 
 --------------------------------------------------------------------------------
