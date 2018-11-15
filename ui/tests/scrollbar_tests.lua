@@ -168,6 +168,7 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestMoveToMovesPrims()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setpositioncount = 0
     sb:MoveTo(10, 11)
     LuaUnit.assertEquals(windower.prim.setpositioncount, 2)
 end
@@ -175,6 +176,7 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestDragByMovesPrims()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setpositioncount = 0
     sb:DragBy(10, 11)
     LuaUnit.assertEquals(windower.prim.setpositioncount, 2)
 end
@@ -182,6 +184,7 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestSetSizeUpdatesPrim()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setsizecount = 0
     sb:SetSize(5, 7)
     LuaUnit.assertEquals(windower.prim.setsizecount, 2)
 end
@@ -189,6 +192,7 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestShowUpdatesPrimVisibility()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setvisibilitycount = 0
     sb:Show()
     LuaUnit.assertEquals(windower.prim.setvisibilitycount, 2)
 end
@@ -196,6 +200,7 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestHideUpdatesPrimVisibility()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setvisibilitycount = 0
     sb:Hide()
     LuaUnit.assertEquals(windower.prim.setvisibilitycount, 2)
 end
@@ -203,6 +208,7 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestSetBackgroundColorUpdatesPrim()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setcolorcount = 0
     sb:SetBackgroundColor(100, 101, 102, 103)
     LuaUnit.assertEquals(windower.prim.setcolorcount, 1)
 end
@@ -210,6 +216,7 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestSetForegroundColorUpdatesPrim()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setcolorcount = 0
     sb:SetForegroundColor(100, 101, 102, 103)
     LuaUnit.assertEquals(windower.prim.setcolorcount, 1)
 end
@@ -217,6 +224,8 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestSetPageCountUpdatesPrim()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setsizecount = 0
+    windower.prim.setpositioncount = 0
     sb:SetPageCount(2)
     LuaUnit.assertEquals(windower.prim.setsizecount, 1)
     LuaUnit.assertEquals(windower.prim.setpositioncount, 1)
@@ -225,6 +234,8 @@ end
 --------------------------------------------------------------------------------
 function ScrollbarTests:TestSetCurrentPageUpdatesPrim()
     local sb = Scrollbar:Scrollbar()
+    windower.prim.setsizecount = 0
+    windower.prim.setpositioncount = 0
     sb:SetPageCount(10)
     sb:SetCurrentPage(5)
     LuaUnit.assertEquals(windower.prim.setsizecount, 2)

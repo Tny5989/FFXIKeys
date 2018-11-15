@@ -14,6 +14,9 @@ function Scrollbar:Scrollbar()
     o._page_count = 1
     o._page_idx = 1
     o._type = 'Scrollbar'
+
+    o:_update_bar()
+
     return o
 end
 
