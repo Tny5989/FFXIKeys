@@ -18,6 +18,7 @@ function ListItem:ListItem()
     o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
     o._font = 'Consolas'
     o._font_size = 12
+    o._text = ''
     o._type = 'ListItem'
 
     windower.text.create(o._id)
@@ -27,6 +28,7 @@ function ListItem:ListItem()
     o:SetForegroundColor(o._fg_color.a, o._fg_color.r, o._fg_color.g, o._fg_color.b)
     o:SetFont(o._font)
     o:SetFontSize(o._font_size)
+    o:SetText(o._text)
 
     return o
 end
@@ -87,6 +89,17 @@ end
 function ListItem:SetFontSize(font_size)
     Component.SetFontSize(self, font_size)
     windower.text.set_font_size(self._id, self._font_size)
+end
+
+--------------------------------------------------------------------------------
+function ListItem:SetText(text)
+    self._text = text
+    windower.text.set_text(self._id, self._text)
+end
+
+--------------------------------------------------------------------------------
+function ListItem:Text()
+    return self._text
 end
 
 return ListItem

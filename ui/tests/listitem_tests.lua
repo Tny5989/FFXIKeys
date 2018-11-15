@@ -54,6 +54,11 @@ function ListItemTests:SetUp()
     function windower.text.set_font_size()
         windower.text.setfontsizecount = windower.text.setfontsizecount + 1
     end
+
+    windower.text.settextcount = 0
+    function windower.text.set_text()
+        windower.text.settextcount = windower.text.settextcount + 1
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -95,6 +100,12 @@ end
 function ListItemTests:TestDefaultFontSizeIs12()
     local bg = ListItem:ListItem()
     LuaUnit.assertEquals(bg:FontSize(), 12)
+end
+
+--------------------------------------------------------------------------------
+function ListItemTests:TestDefaultTextIsEmpty()
+    local bg = ListItem:ListItem()
+    LuaUnit.assertEquals(bg:Text(), '')
 end
 
 --------------------------------------------------------------------------------
@@ -160,6 +171,13 @@ function ListItemTests:TestSetFontSizeUpdatesFontSize()
     local bg = ListItem:ListItem()
     bg:SetFontSize(20)
     LuaUnit.assertEquals(bg:FontSize(), 20)
+end
+
+--------------------------------------------------------------------------------
+function ListItemTests:TestSetTextUpdatesDisplayText()
+    local bg = ListItem:ListItem()
+    bg:SetText('Testing')
+    LuaUnit.assertEquals(bg:Text(), 'Testing')
 end
 
 --------------------------------------------------------------------------------
@@ -264,6 +282,14 @@ function ListItemTests:TestSetFontSizeUpdatesText()
     windower.text.setfontsizecount = 0
     bg:SetFontSize(20)
     LuaUnit.assertEquals(windower.text.setfontsizecount, 1)
+end
+
+--------------------------------------------------------------------------------
+function ListItemTests:TestSetTextUpdatesText()
+    local bg = ListItem:ListItem()
+    windower.text.settextcount = 0
+    bg:SetText('Testing')
+    LuaUnit.assertEquals(windower.text.settextcount, 1)
 end
 
 LuaUnit.LuaUnit.run('ListItemTests')
