@@ -7,7 +7,7 @@ local ListItem = Component:Component()
 ListItem.__index = ListItem
 
 --------------------------------------------------------------------------------
-function ListItem:ListItem()
+function ListItem:ListItem(t)
     local o = {}
     setmetatable(o, self)
     o._id = UUID.uuid()
@@ -18,7 +18,7 @@ function ListItem:ListItem()
     o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
     o._font = 'Consolas'
     o._font_size = 12
-    o._text = ''
+    o._text = t and t or ''
     o._type = 'ListItem'
 
     windower.text.create(o._id)
