@@ -16,7 +16,8 @@ function Background:Background()
     o._color = { a = 255, r = 0, g = 0, b = 0 }
     o._type = 'Background'
 
-    o._id = windower.prim.create(UUID.uuid())
+    o._id = UUID.uuid()
+    windower.prim.create(o._id)
 
     return o
 end
@@ -30,13 +31,13 @@ end
 --------------------------------------------------------------------------------
 function Background:MoveTo(x, y)
     Component.MoveTo(self, x, y)
-    windower.prim.set_location(self._id, self._position.x, self._position.y)
+    windower.prim.set_position(self._id, self._position.x, self._position.y)
 end
 
 --------------------------------------------------------------------------------
 function Background:DragBy(dx, dy)
     Component.DragBy(self, dx, dy)
-    windower.prim.set_location(self._id, self._position.x, self._position.y)
+    windower.prim.set_position(self._id, self._position.x, self._position.y)
 end
 
 --------------------------------------------------------------------------------
