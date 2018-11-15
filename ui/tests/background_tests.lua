@@ -171,6 +171,7 @@ end
 --------------------------------------------------------------------------------
 function BackgroundTests:TestMoveToUpdatesPrim()
     local bg = Background:Background()
+    windower.prim.setpositioncount = 0
     bg:MoveTo(11, 12)
     LuaUnit.assertEquals(windower.prim.setpositioncount, 1)
 end
@@ -179,13 +180,15 @@ end
 function BackgroundTests:TestDragByUpdatesPrim()
     local bg = Background:Background()
     bg:MoveTo(11, 12)
+    windower.prim.setpositioncount = 0
     bg:DragBy(2, 1)
-    LuaUnit.assertEquals(windower.prim.setpositioncount, 2)
+    LuaUnit.assertEquals(windower.prim.setpositioncount, 1)
 end
 
 --------------------------------------------------------------------------------
 function BackgroundTests:TestSetSizeUpdatesPrim()
     local bg = Background:Background()
+    windower.prim.setsizecount = 0
     bg:SetSize(10, 10)
     LuaUnit.assertEquals(windower.prim.setsizecount, 1)
 end
@@ -193,6 +196,7 @@ end
 --------------------------------------------------------------------------------
 function BackgroundTests:TestShowUpdatesPrim()
     local bg = Background:Background()
+    windower.prim.setvisibilitycount = 0
     bg:Show()
     LuaUnit.assertEquals(windower.prim.setvisibilitycount, 1)
 end
@@ -200,6 +204,7 @@ end
 --------------------------------------------------------------------------------
 function BackgroundTests:TestHideUpdatesPrim()
     local bg = Background:Background()
+    windower.prim.setvisibilitycount = 0
     bg:Hide()
     LuaUnit.assertEquals(windower.prim.setvisibilitycount, 1)
 end
@@ -207,6 +212,7 @@ end
 --------------------------------------------------------------------------------
 function BackgroundTests:TestSetBackgroundColorUpdatesPrim()
     local bg = Background:Background()
+    windower.prim.setcolorcount = 0
     bg:SetBackgroundColor(100, 101, 102, 103)
     LuaUnit.assertEquals(windower.prim.setcolorcount, 1)
 end
@@ -214,6 +220,7 @@ end
 --------------------------------------------------------------------------------
 function BackgroundTests:TestSetForegroundColorDoesNotUpdatePrim()
     local bg = Background:Background()
+    windower.prim.setcolorcount = 0
     bg:SetForegroundColor(100, 101, 102, 103)
     LuaUnit.assertEquals(windower.prim.setcolorcount, 0)
 end

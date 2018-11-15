@@ -10,6 +10,7 @@ Background.__index = Background
 function Background:Background()
     local o = {}
     setmetatable(o, self)
+    o._id = UUID.uuid()
     o._position = { x = 0, y = 0 }
     o._size = { w = 0, h = 0 }
     o._visible = false
@@ -19,8 +20,13 @@ function Background:Background()
     o._font_size = 12
     o._type = 'Background'
 
-    o._id = UUID.uuid()
     windower.prim.create(o._id)
+    o:MoveTo(o._position.x, o._position.y)
+    o:SetSize(o._size.w, o._size.h)
+    o:SetBackgroundColor(o._bg_color.a, o._bg_color.r, o._bg_color.g, o._bg_color.b)
+    o:SetForegroundColor(o._fg_color.a, o._fg_color.r, o._fg_color.g, o._fg_color.b)
+    o:SetFont(o._font)
+    o:SetFontSize(o._font_size)
 
     return o
 end
