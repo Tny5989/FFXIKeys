@@ -15,6 +15,8 @@ function Background:Background()
     o._visible = false
     o._fg_color = { a = 255, r = 0, g = 0, b = 0 }
     o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
+    o._font = 'Consolas'
+    o._font_size = 12
     o._type = 'Background'
 
     o._id = UUID.uuid()

@@ -71,6 +71,18 @@ function BackgroundTests:TestDefaultForegroundColorIsBlack()
 end
 
 --------------------------------------------------------------------------------
+function BackgroundTests:TestDefaultFontIsConsolas()
+    local bg = Background:Background()
+    LuaUnit.assertEquals(bg:Font(), 'Consolas')
+end
+
+--------------------------------------------------------------------------------
+function BackgroundTests:TestDefaultFontSizeIs12()
+    local bg = Background:Background()
+    LuaUnit.assertEquals(bg:FontSize(), 12)
+end
+
+--------------------------------------------------------------------------------
 function BackgroundTests:TestMoveToUpdatesPosition()
     local bg = Background:Background()
     bg:MoveTo(11, 12)
