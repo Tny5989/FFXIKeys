@@ -4,17 +4,17 @@ local UUID = require('util/uuid')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local ListItem = Component:Component()
-ListItem.__index = ListItem
+local Label = Component:Component()
+Label.__index = Label
 
 --------------------------------------------------------------------------------
-function ListItem:ListItem(t)
+function Label:Label(t)
     local o = {}
     setmetatable(o, self)
     o._id = UUID.uuid()
     o._text = t and t or ''
     o._palatte = Palatte:Palatte()
-    o._type = 'ListItem'
+    o._type = 'Label'
 
     windower.text.create(o._id)
 
@@ -36,74 +36,74 @@ function ListItem:ListItem(t)
 end
 
 --------------------------------------------------------------------------------
-function ListItem:Destroy()
+function Label:Destroy()
     Component.Destroy(self)
     windower.text.delete(self._id)
 end
 
 --------------------------------------------------------------------------------
-function ListItem:MoveTo(x, y)
+function Label:MoveTo(x, y)
     Component.MoveTo(self, x, y)
     local p = self:Position()
     windower.text.set_location(self._id, p.x, p.y)
 end
 
 --------------------------------------------------------------------------------
-function ListItem:DragBy(dx, dy)
+function Label:DragBy(dx, dy)
     Component.DragBy(self, dx, dy)
     local p = self:Position()
     windower.text.set_location(self._id, p.x, p.y)
 end
 
 --------------------------------------------------------------------------------
-function ListItem:Show()
+function Label:Show()
     Component.Show(self)
     windower.text.set_visibility(self._id, self:IsVisible())
     windower.text.set_bg_visibility(self._id, self:IsVisible())
 end
 
 --------------------------------------------------------------------------------
-function ListItem:Hide()
+function Label:Hide()
     Component.Hide(self)
     windower.text.set_visibility(self._id, self:IsVisible())
     windower.text.set_bg_visibility(self._id, self:IsVisible())
 end
 
 --------------------------------------------------------------------------------
-function ListItem:SetBackgroundColor(alpha, red, green, blue)
+function Label:SetBackgroundColor(alpha, red, green, blue)
     Component.SetBackgroundColor(self, alpha, red, green, blue)
     local color = self:BackgroundColor()
     windower.text.set_bg_color(self._id, color.a, color.r, color.g, color.b)
 end
 
 --------------------------------------------------------------------------------
-function ListItem:SetForegroundColor(alpha, red, green, blue)
+function Label:SetForegroundColor(alpha, red, green, blue)
     Component.SetForegroundColor(self, alpha, red, green, blue)
     local color = self:ForegroundColor()
     windower.text.set_color(self._id, color.a, color.r, color.g, color.b)
 end
 
 --------------------------------------------------------------------------------
-function ListItem:SetFont(font_name)
+function Label:SetFont(font_name)
     Component.SetFont(self, font_name)
     windower.text.set_font(self._id, self:Font('default'))
 end
 
 --------------------------------------------------------------------------------
-function ListItem:SetFontSize(font_size)
+function Label:SetFontSize(font_size)
     Component.SetFontSize(self, font_size)
     windower.text.set_font_size(self._id, self:FontSize('default'))
 end
 
 --------------------------------------------------------------------------------
-function ListItem:SetText(text)
+function Label:SetText(text)
     self._text = text
     windower.text.set_text(self._id, self._text)
 end
 
 --------------------------------------------------------------------------------
-function ListItem:Text()
+function Label:Text()
     return self._text
 end
 
-return ListItem
+return Label

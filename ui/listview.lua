@@ -1,6 +1,6 @@
 local Component = require('ui/component')
 local Palatte = require('ui/style/palatte')
-local ListItem = require('ui/listitem')
+local Label = require('ui/label')
 local Scrollbar = require('ui/scrollbar')
 
 --------------------------------------------------------------------------------
@@ -128,7 +128,7 @@ end
 
 --------------------------------------------------------------------------------
 function ListView:AppendItem(item_text)
-    local item = ListItem:ListItem(item_text)
+    local item = Label:Label(item_text)
     self:_style_item(item)
     table.insert(self._items, item)
     self:Update()
