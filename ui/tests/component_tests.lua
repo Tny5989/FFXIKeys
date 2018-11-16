@@ -29,7 +29,7 @@ function ComponentTests:TestDefaultBackgroundColorIsBlack()
 end
 
 --------------------------------------------------------------------------------
-function ComponentTests:TestDefaultForegroundColorIsBlack()
+function ComponentTests:TestDefaultForegroundColorIsWhite()
     local bg = Component:Component()
     LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 255, g = 255, b = 255 })
 end

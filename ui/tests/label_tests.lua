@@ -85,7 +85,7 @@ function LabelTests:TestDefaultBackgroundColorIsBlack()
 end
 
 --------------------------------------------------------------------------------
-function LabelTests:TestDefaultForegroundColorIsBlack()
+function LabelTests:TestDefaultForegroundColorIsWhite()
     local bg = Label:Label()
     LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 255, g = 255, b = 255 })
 end
