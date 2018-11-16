@@ -1,8 +1,10 @@
 local Background = require('ui/background')
+local Palatte = require('ui/style/palatte')
+local Component = require('ui/component')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local Scrollbar = {}
+local Scrollbar = Component:Component()
 Scrollbar.__index = Scrollbar
 
 --------------------------------------------------------------------------------
@@ -13,7 +15,20 @@ function Scrollbar:Scrollbar()
     o._foreground = Background:Background()
     o._page_count = 1
     o._page_idx = 1
+    o._palatte = Palatte:Palatte()
     o._type = 'Scrollbar'
+
+    o:MoveTo(0, 0)
+    o:SetSize(0, 0)
+
+    local color = o:BackgroundColor()
+    o:SetBackgroundColor(color.a, color.r, color.g, color.b)
+
+    color = o:ForegroundColor()
+    o:SetForegroundColor(color.a, color.r, color.g, color.b)
+
+    o:SetPageCount(o:PageCount())
+    o:SetCurrentPage(o:CurrentPage())
 
     o:_update_bar()
 
@@ -28,43 +43,48 @@ end
 
 --------------------------------------------------------------------------------
 function Scrollbar:MoveTo(x, y)
-    local last_bg_pos = self._background:Position()
-    self._background:DragBy(x - last_bg_pos.x, y - last_bg_pos.y)
-    local last_fg_pos = self._foreground:Position()
-    self._foreground:DragBy(x - last_fg_pos.x, y - last_fg_pos.y)
+    Component.MoveTo(self, x, y)
+    self._background:MoveTo(x, y)
+    self._foreground:MoveTo(x, y)
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:DragBy(dx, dy)
+    Component.DragBy(self, dx, dy)
     self._background:DragBy(dx, dy)
     self._foreground:DragBy(dx, dy)
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetSize(w, h)
+    Component.SetSize(self, w, h)
     self._background:SetSize(w, h)
     self:_update_bar()
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:Show()
+    Component.Show(self)
     self._background:Show()
     self._foreground:Show()
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:Hide()
+    Component.Hide(self)
     self._background:Hide()
     self._foreground:Hide()
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetBackgroundColor(alpha, red, green, blue)
+    Component.SetBackgroundColor(self, alpha, red, green, blue)
     self._background:SetBackgroundColor(alpha, red, green, blue)
 end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetForegroundColor(alpha, red, green, blue)
+    Component.SetForegroundColor(self, alpha, red, green, blue)
     self._foreground:SetBackgroundColor(alpha, red, green, blue)
 end
 
@@ -82,31 +102,6 @@ function Scrollbar:SetCurrentPage(idx)
 end
 
 --------------------------------------------------------------------------------
-function Scrollbar:Position()
-    return self._background:Position()
-end
-
---------------------------------------------------------------------------------
-function Scrollbar:Size()
-    return self._background:Size()
-end
-
---------------------------------------------------------------------------------
-function Scrollbar:IsVisible()
-    return self._background:IsVisible() or self._foreground:IsVisible()
-end
-
---------------------------------------------------------------------------------
-function Scrollbar:BackgroundColor()
-    return self._background:BackgroundColor()
-end
-
---------------------------------------------------------------------------------
-function Scrollbar:ForegroundColor()
-    return self._foreground:BackgroundColor()
-end
-
---------------------------------------------------------------------------------
 function Scrollbar:PageCount()
     return self._page_count
 end
@@ -117,21 +112,11 @@ function Scrollbar:CurrentPage()
 end
 
 --------------------------------------------------------------------------------
-function Scrollbar:ContainsPoint(x, y)
-    return self._background:ContainsPoint(x, y) or self._foreground:ContainsPoint(x, y)
-end
-
---------------------------------------------------------------------------------
-function Scrollbar:Type()
-    return self._type
-end
-
---------------------------------------------------------------------------------
 function Scrollbar:_update_bar()
     local max_height = self._background:Size().h
-    local bar_height = max_height / self._page_count
+    local bar_height = max_height / self:PageCount()
     local min_y = self._background:Position().y
-    local bar_y = min_y + (bar_height * (self._page_idx - 1))
+    local bar_y = min_y + (bar_height * (self:CurrentPage() - 1))
     self._foreground:SetSize(self._background:Size().w, bar_height)
     self._foreground:MoveTo(self._background:Position().x, bar_y)
 end

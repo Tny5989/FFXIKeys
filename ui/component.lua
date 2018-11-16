@@ -1,3 +1,5 @@
+local Palatte = require('ui/style/palatte')
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local Component = {}
@@ -10,10 +12,9 @@ function Component:Component()
     o._position = { x = 0, y = 0 }
     o._size = { w = 0, h = 0 }
     o._visible = false
-    o._fg_color = { a = 255, r = 0, g = 0, b = 0 }
-    o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
-    o._font = 'Consolas'
-    o._font_size = 12
+
+    o._palatte = Palatte:Palatte()
+
     o._type = 'Component'
     return o
 end
@@ -52,28 +53,22 @@ end
 
 --------------------------------------------------------------------------------
 function Component:SetForegroundColor(alpha, red, green, blue)
-    self._fg_color.a = alpha
-    self._fg_color.r = red
-    self._fg_color.g = green
-    self._fg_color.b = blue
+    self._palatte:SetColor('fg', { a = alpha, r = red, g = green, b = blue })
 end
 
 --------------------------------------------------------------------------------
 function Component:SetBackgroundColor(alpha, red, green, blue)
-    self._bg_color.a = alpha
-    self._bg_color.r = red
-    self._bg_color.g = green
-    self._bg_color.b = blue
+    self._palatte:SetColor('bg', { a = alpha, r = red, g = green, b = blue })
 end
 
 --------------------------------------------------------------------------------
 function Component:SetFont(font_name)
-    self._font = font_name
+    self._palatte:SetFont('default', font_name, self._palatte:Font('default').fs)
 end
 
 --------------------------------------------------------------------------------
 function Component:SetFontSize(font_size)
-    self._font_size = font_size
+    self._palatte:SetFont('default', self._palatte:Font('default').fn, font_size)
 end
 
 --------------------------------------------------------------------------------
@@ -93,22 +88,24 @@ end
 
 --------------------------------------------------------------------------------
 function Component:ForegroundColor()
-    return { a = self._fg_color.a, r = self._fg_color.r, g = self._fg_color.g, b = self._fg_color.b }
+    local color = self._palatte:Color('fg')
+    return { a = color.a, r = color.r, g = color.g, b = color.b }
 end
 
 --------------------------------------------------------------------------------
 function Component:BackgroundColor()
-    return { a = self._bg_color.a, r = self._bg_color.r, g = self._bg_color.g, b = self._bg_color.b }
+    local color = self._palatte:Color('bg')
+    return { a = color.a, r = color.r, g = color.g, b = color.b }
 end
 
 --------------------------------------------------------------------------------
 function Component:Font()
-    return self._font
+    return self._palatte:Font('default').fn
 end
 
 --------------------------------------------------------------------------------
 function Component:FontSize()
-    return self._font_size
+    return self._palatte:Font('default').fs
 end
 
 --------------------------------------------------------------------------------

@@ -1,4 +1,5 @@
 local Component = require('ui/component')
+local Palatte = require('ui/style/palatte')
 local UUID = require('util/uuid')
 
 --------------------------------------------------------------------------------
@@ -11,22 +12,16 @@ function Background:Background()
     local o = {}
     setmetatable(o, self)
     o._id = UUID.uuid()
-    o._position = { x = 0, y = 0 }
-    o._size = { w = 0, h = 0 }
-    o._visible = false
-    o._fg_color = { a = 255, r = 0, g = 0, b = 0 }
-    o._bg_color = { a = 255, r = 0, g = 0, b = 0 }
-    o._font = 'Consolas'
-    o._font_size = 12
+    o._palatte = Palatte:Palatte()
     o._type = 'Background'
 
     windower.prim.create(o._id)
-    o:MoveTo(o._position.x, o._position.y)
-    o:SetSize(o._size.w, o._size.h)
-    o:SetBackgroundColor(o._bg_color.a, o._bg_color.r, o._bg_color.g, o._bg_color.b)
-    o:SetForegroundColor(o._fg_color.a, o._fg_color.r, o._fg_color.g, o._fg_color.b)
-    o:SetFont(o._font)
-    o:SetFontSize(o._font_size)
+
+    o:MoveTo(0, 0)
+    o:SetSize(0, 0)
+
+    local color = o:BackgroundColor()
+    o:SetBackgroundColor(color.a, color.r, color.g, color.b)
 
     return o
 end
@@ -40,31 +35,34 @@ end
 --------------------------------------------------------------------------------
 function Background:MoveTo(x, y)
     Component.MoveTo(self, x, y)
-    windower.prim.set_position(self._id, self._position.x, self._position.y)
+    local p = self:Position()
+    windower.prim.set_position(self._id, p.x, p.y)
 end
 
 --------------------------------------------------------------------------------
 function Background:DragBy(dx, dy)
     Component.DragBy(self, dx, dy)
-    windower.prim.set_position(self._id, self._position.x, self._position.y)
+    local p = self:Position()
+    windower.prim.set_position(self._id, p.x, p.y)
 end
 
 --------------------------------------------------------------------------------
 function Background:SetSize(w, h)
     Component.SetSize(self, w, h)
-    windower.prim.set_size(self._id, self._size.w, self._size.h)
+    local s = self:Size()
+    windower.prim.set_size(self._id, s.w, s.h)
 end
 
 --------------------------------------------------------------------------------
 function Background:Show()
     Component.Show(self)
-    windower.prim.set_visibility(self._id, self._visible)
+    windower.prim.set_visibility(self._id, self:IsVisible())
 end
 
 --------------------------------------------------------------------------------
 function Background:Hide()
     Component.Hide(self)
-    windower.prim.set_visibility(self._id, self._visible)
+    windower.prim.set_visibility(self._id, self:IsVisible())
 end
 
 --------------------------------------------------------------------------------

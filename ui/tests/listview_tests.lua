@@ -6,6 +6,42 @@ local ListView = require('ui/listview')
 ListViewTests = {}
 
 --------------------------------------------------------------------------------
+function ListViewTests:SetUp()
+    windower = {}
+    windower.prim = {}
+
+    windower.prim.createcount = 0
+    function windower.prim.create()
+        windower.prim.createcount = windower.prim.createcount + 1
+    end
+
+    windower.prim.deletecount = 0
+    function windower.prim.delete()
+        windower.prim.deletecount = windower.prim.deletecount + 1
+    end
+
+    windower.prim.setpositioncount = 0
+    function windower.prim.set_position()
+        windower.prim.setpositioncount = windower.prim.setpositioncount + 1
+    end
+
+    windower.prim.setsizecount = 0
+    function windower.prim.set_size()
+        windower.prim.setsizecount = windower.prim.setsizecount + 1
+    end
+
+    windower.prim.setvisibilitycount = 0
+    function windower.prim.set_visibility()
+        windower.prim.setvisibilitycount = windower.prim.setvisibilitycount + 1
+    end
+
+    windower.prim.setcolorcount = 0
+    function windower.prim.set_color()
+        windower.prim.setcolorcount = windower.prim.setcolorcount + 1
+    end
+end
+
+--------------------------------------------------------------------------------
 function ListViewTests:TestDefaultPositionIs00()
     local bg = ListView:ListView()
     LuaUnit.assertEquals(bg:Position(), { x = 0, y = 0 })
@@ -29,9 +65,9 @@ function ListViewTests:TestDefaultBackgroundColorIsBlack()
 end
 
 --------------------------------------------------------------------------------
-function ListViewTests:TestDefaultForegroundColorIsBlack()
+function ListViewTests:TestDefaultForegroundColorIsWhite()
     local bg = ListView:ListView()
-    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 0, g = 0, b = 0 })
+    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 255, g = 255, b = 255 })
 end
 
 --------------------------------------------------------------------------------

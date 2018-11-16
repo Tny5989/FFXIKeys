@@ -67,7 +67,7 @@ end
 --------------------------------------------------------------------------------
 function BackgroundTests:TestDefaultForegroundColorIsBlack()
     local bg = Background:Background()
-    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 0, g = 0, b = 0 })
+    LuaUnit.assertEquals(bg:ForegroundColor(), { a = 255, r = 255, g = 255, b = 255 })
 end
 
 --------------------------------------------------------------------------------
