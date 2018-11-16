@@ -24,6 +24,7 @@ function ListView:ListView()
     o._items = {}
     o._items_per_page = 1
     o._scrollbar = Scrollbar:Scrollbar()
+    o._scrollbar:SetSize(10, 1)
 
     o:MoveTo(o._position.x, o._position.y)
     o:SetSize(o._size.w, o._size.h)
