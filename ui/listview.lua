@@ -18,11 +18,13 @@ function ListView:ListView()
     o._palatte = Palatte:Palatte()
     o._type = 'ListView'
 
-    o._item_height = ITEM_HEIGHT
     o._items = {}
 
     o._scrollbar = Scrollbar:Scrollbar()
     o._scrollbar:SetSize(10, 1)
+
+    o._header = Label:Label('FFXIKeys')
+    o._header:SetSize(0, ITEM_HEIGHT)
 
     o:MoveTo(0, 0)
     o:SetSize(0, 0)
@@ -49,6 +51,7 @@ function ListView:MoveTo(x, y)
     Component.MoveTo(self, x, y)
     local p = self:Position()
     local s = self:Size()
+    self._header:MoveTo(p.x, p.y)
     self._scrollbar:MoveTo(p.x + s.w, p.y)
     self:Update()
 end
@@ -58,6 +61,7 @@ function ListView:DragBy(dx, dy)
     Component.DragBy(self, dx, dy)
     local p = self:Position()
     local s = self:Size()
+    self._header:Moveto(p.x, p.y)
     self._scrollbar:MoveTo(p.x + s.w, p.y)
     self:Update()
 end
@@ -67,6 +71,7 @@ function ListView:SetSize(w, h)
     Component.SetSize(self, w, h)
     local p = self:Position()
     local s = self:Size()
+    self._header:SetSize(s.w, ITEM_HEIGHT)
     self._scrollbar:SetSize(self._scrollbar:Size().w, s.h)
     self._scrollbar:MoveTo(p.x + s.w, p.y)
     self:Update()
@@ -78,6 +83,8 @@ function ListView:Show()
     for i = 1, #self._items, 1 do
         self._items[i]:Show()
     end
+    self._scrollbar:Show()
+    self._header:Show()
 end
 
 --------------------------------------------------------------------------------
@@ -86,6 +93,8 @@ function ListView:Hide()
     for i = 1, #self._items, 1 do
         self._items[i]:Hide()
     end
+    self._scrollbar:Hide()
+    self._header:Hide()
 end
 
 --------------------------------------------------------------------------------
@@ -96,6 +105,7 @@ function ListView:SetForegroundColor(alpha, red, green, blue)
         self._items[i]:SetForegroundColor(color.a, color.r, color.g, color.b)
     end
     self._scrollbar:SetForegroundColor(color.a, color.r, color.g, color.b)
+    -- TODO - update header?
 end
 
 --------------------------------------------------------------------------------
@@ -106,6 +116,7 @@ function ListView:SetBackgroundColor(alpha, red, green, blue)
         self._items[i]:SetBackgroundColor(color.a, color.r, color.g, color.b)
     end
     self._scrollbar:SetBackgroundColor(color.a, color.r, color.g, color.b)
+    -- TODO - update header?
 end
 
 --------------------------------------------------------------------------------
@@ -139,6 +150,7 @@ function ListView:Clear()
     while #self._items > 0 do
         table.remove(self._items):Destroy()
     end
+    self:Update()
 end
 
 --------------------------------------------------------------------------------
@@ -149,6 +161,7 @@ function ListView:_style_item(item)
     item:SetForegroundColor(fg.a, fg.r, fg.g, fg)
     item:SetFontSize(self:FontSize())
     item:SetFont(self:Font())
+    item:SetSize(self:Size().w, ITEM_HEIGHT)
     item:Hide()
 end
 
@@ -165,10 +178,11 @@ function ListView:Update()
     end
 
     local p = self:Position()
+    p.y = p.y + self._header:Size().h -- TODO add a spacer?
     for i = starting_idx, stopping_idx, 1 do
-        self._items[i]:MoveTo(self._position.x, p.y)
+        self._items[i]:MoveTo(p.x, p.y)
         self._items[i]:Show()
-        p.y = p.y + self._item_height
+        p.y = p.y + ITEM_HEIGHT
     end
 end
 
