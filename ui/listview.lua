@@ -160,7 +160,7 @@ function ListView:_style_item(item)
     local bg = self:BackgroundColor()
     item:SetBackgroundColor(bg.a, bg.r, bg.g, bg.b)
     local fg = self:ForegroundColor()
-    item:SetForegroundColor(fg.a, fg.r, fg.g, fg)
+    item:SetForegroundColor(fg.a, fg.r, fg.g, fg.b)
     item:SetFontSize(self:FontSize())
     item:SetFont(self:Font())
     item:SetSize(self:Size().w, ITEM_HEIGHT)
@@ -169,7 +169,7 @@ end
 
 --------------------------------------------------------------------------------
 function ListView:Update()
-    local items_per_page = self:Size().h / ITEM_HEIGHT
+    local items_per_page = self:Size().h / ITEM_HEIGHT - 1
     self._scrollbar:SetPageCount(math.ceil(#self._items / items_per_page))
 
     local starting_idx = (self._scrollbar:CurrentPage() - 1) * items_per_page + 1
@@ -184,7 +184,7 @@ function ListView:Update()
     for i = starting_idx, stopping_idx, 1 do
         self._items[i]:MoveTo(p.x, p.y)
         self._items[i]:Show()
-        p.y = p.y + ITEM_HEIGHT
+        p.y = p.y + self._items[i]:Size().h
     end
 end
 
