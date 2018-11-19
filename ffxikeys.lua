@@ -21,10 +21,6 @@ local function OnLoad()
 end
 
 --------------------------------------------------------------------------------
-local function OnUnload()
-end
-
---------------------------------------------------------------------------------
 local function OnZoneChange(_, _)
     Aliases.Update()
 end
@@ -64,13 +60,7 @@ local function OnIncomingData(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
-local function OnMouseEvent(type, x, y, delta, blocked)
-end
-
---------------------------------------------------------------------------------
 windower.register_event('load', OnLoad)
-windower.register_event('unload', OnUnload)
 windower.register_event('zone change', OnZoneChange)
 windower.register_event('addon command', OnCommand)
 windower.register_event('incoming chunk', OnIncomingData)
-windower.register_event('mouse', OnMouseEvent)
