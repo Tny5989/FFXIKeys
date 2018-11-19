@@ -1,5 +1,4 @@
 local Component = require('ui/component')
-local Palatte = require('ui/style/palatte')
 local UUID = require('util/uuid')
 
 --------------------------------------------------------------------------------
@@ -9,20 +8,11 @@ Background.__index = Background
 
 --------------------------------------------------------------------------------
 function Background:Background()
-    local o = {}
+    local o = Component:Component()
     setmetatable(o, self)
     o._id = UUID.uuid()
-    o._palatte = Palatte:Palatte()
     o._type = 'Background'
-
     windower.prim.create(o._id)
-
-    o:MoveTo(0, 0)
-    o:SetSize(0, 0)
-
-    local color = o:BackgroundColor()
-    o:SetBackgroundColor(color.a, color.r, color.g, color.b)
-
     return o
 end
 

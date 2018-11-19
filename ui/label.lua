@@ -9,7 +9,7 @@ Label.__index = Label
 
 --------------------------------------------------------------------------------
 function Label:Label(t)
-    local o = {}
+    local o = Component:Component()
     setmetatable(o, self)
     o._id = UUID.uuid()
     o._text = t and t or ''
@@ -17,18 +17,6 @@ function Label:Label(t)
     o._type = 'Label'
 
     windower.text.create(o._id)
-
-    o:MoveTo(0, 0)
-    o:SetSize(0, 0)
-
-    local color = o:BackgroundColor()
-    o:SetBackgroundColor(color.a, color.r, color.g, color.b)
-
-    color = o:ForegroundColor()
-    o:SetForegroundColor(color.a, color.r, color.g, color.b)
-
-    o:SetFont(o:Font())
-    o:SetFontSize(o:FontSize())
 
     o:SetText(o._text)
 

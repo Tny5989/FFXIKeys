@@ -9,7 +9,7 @@ Scrollbar.__index = Scrollbar
 
 --------------------------------------------------------------------------------
 function Scrollbar:Scrollbar()
-    local o = {}
+    local o = Component:Component()
     setmetatable(o, self)
     o._background = Background:Background()
     o._foreground = Background:Background()
@@ -18,19 +18,7 @@ function Scrollbar:Scrollbar()
     o._palatte = Palatte:Palatte()
     o._type = 'Scrollbar'
 
-    o:MoveTo(0, 0)
-    o:SetSize(0, 0)
-
-    local color = o:BackgroundColor()
-    o:SetBackgroundColor(color.a, color.r, color.g, color.b)
-
-    color = o:ForegroundColor()
-    o:SetForegroundColor(color.a, color.r, color.g, color.b)
-
     o:SetPageCount(o:PageCount())
-    o:SetCurrentPage(o:CurrentPage())
-
-    o:_update_bar()
 
     return o
 end
