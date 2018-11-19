@@ -10,7 +10,6 @@ settings = require('settings')
 
 local CommandFactory = require('command/command_factory')
 local Aliases = require('aliases')
-local Ui = require('ui')
 
 --------------------------------------------------------------------------------
 local state = {running = false, command = nil}
@@ -19,12 +18,6 @@ local state = {running = false, command = nil}
 local function OnLoad()
     settings.load()
     Aliases.Update()
-    Ui.Create()
-end
-
---------------------------------------------------------------------------------
-local function OnUnload()
-    Ui.Destory()
 end
 
 --------------------------------------------------------------------------------
@@ -67,14 +60,7 @@ local function OnIncomingData(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
-local function OnMouseEvent(type, x, y, delta, blocked)
-    return Ui.OnMouseEvent(type, x, y, delta, blocked)
-end
-
---------------------------------------------------------------------------------
 windower.register_event('load', OnLoad)
-windower.register_event('unload', OnUnload)
 windower.register_event('zone change', OnZoneChange)
 windower.register_event('addon command', OnCommand)
 windower.register_event('incoming chunk', OnIncomingData)
-windower.register_event('mouse', OnMouseEvent)
