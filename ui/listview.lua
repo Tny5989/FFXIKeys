@@ -105,7 +105,7 @@ function ListView:SetForegroundColor(alpha, red, green, blue)
         self._items[i]:SetForegroundColor(color.a, color.r, color.g, color.b)
     end
     self._scrollbar:SetForegroundColor(color.a, color.r, color.g, color.b)
-    -- TODO - update header?
+    self._header:SetForegroundColor(color.a, color.r, color.g, color.b)
 end
 
 --------------------------------------------------------------------------------
@@ -116,7 +116,7 @@ function ListView:SetBackgroundColor(alpha, red, green, blue)
         self._items[i]:SetBackgroundColor(color.a, color.r, color.g, color.b)
     end
     self._scrollbar:SetBackgroundColor(color.a, color.r, color.g, color.b)
-    -- TODO - update header?
+    self._header:SetBackgroundColor(color.a, color.r, color.g, color.b)
 end
 
 --------------------------------------------------------------------------------
@@ -178,7 +178,7 @@ function ListView:Update()
     end
 
     local p = self:Position()
-    p.y = p.y + self._header:Size().h -- TODO add a spacer?
+    p.y = p.y + self._header:Size().h + 1
     for i = starting_idx, stopping_idx, 1 do
         self._items[i]:MoveTo(p.x, p.y)
         self._items[i]:Show()
