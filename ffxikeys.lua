@@ -1,34 +1,37 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '1.4.1'
+_addon.version = '1.4.2'
 _addon.commands = {'keys'}
 
+--------------------------------------------------------------------------------
 require('logger')
 packets = require('packets')
 settings = require('settings')
+
 local CommandFactory = require('command/command_factory')
 local Aliases = require('aliases')
 
+--------------------------------------------------------------------------------
 local state = {running = false, command = nil}
 
 --------------------------------------------------------------------------------
-function handle_load()
+local function OnLoad()
     settings.load()
     Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
-function handle_zone_change(zone_id, _)
+local function OnZoneChange(_, _)
     Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
-function handle_command(cmd, param1, param2, param3)
+local function OnCommand(cmd, param1, param2, param3)
     CommandFactory.CreateCommand(cmd, param1, param2, param3)(state)
 end
 
 --------------------------------------------------------------------------------
-function handle_incoming(id, _, pkt, b, i)
+local function OnIncomingData(id, _, pkt, b, i)
     if not state.running then
         return false
     end
@@ -57,7 +60,7 @@ function handle_incoming(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
-windower.register_event('load', handle_load)
-windower.register_event('zone change', handle_zone_change)
-windower.register_event('addon command', handle_command)
-windower.register_event('incoming chunk', handle_incoming)
+windower.register_event('load', OnLoad)
+windower.register_event('zone change', OnZoneChange)
+windower.register_event('addon command', OnCommand)
+windower.register_event('incoming chunk', OnIncomingData)

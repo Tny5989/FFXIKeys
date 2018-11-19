@@ -18,7 +18,8 @@ function UnlockFactory.CreateUnlock(key, lock)
         return NilUnlock:NilUnlock()
     end
 
-    if key:Entity():Bag():FreeSlots() <= 0 then
+    -- Require two free slots as a workaround for a bug.
+    if key:Entity():Bag():FreeSlots() <= 1 then
         if log then
             log('Inventory full')
         end
