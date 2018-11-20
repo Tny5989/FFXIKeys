@@ -13,6 +13,7 @@ function Background:Background()
     o._id = UUID.uuid()
     o._type = 'Background'
     windower.prim.create(o._id)
+    o:Hide()
     return o
 end
 

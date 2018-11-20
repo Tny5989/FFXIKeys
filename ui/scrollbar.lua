@@ -1,6 +1,6 @@
 local Background = require('ui/background')
 local Component = require('ui/component')
-local PalatteFactory = require('u/style/palatte_factory')
+local PalatteFactory = require('ui/style/palatte_factory')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -18,7 +18,7 @@ function Scrollbar:Scrollbar()
     o._background = Background:Background()
     o._background:SetPalatte(PalatteFactory.Get('scrollbar_bg'))
     o._foreground = Background:Background()
-    o._foreground.SetPalatte(PalatteFactory.Get('scrollbar_fg'))
+    o._foreground:SetPalatte(PalatteFactory.Get('scrollbar_fg'))
 
     o:SetPageCount(o:PageCount())
 

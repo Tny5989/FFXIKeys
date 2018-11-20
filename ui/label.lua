@@ -15,6 +15,7 @@ function Label:Label(t)
     o._type = 'Label'
 
     windower.text.create(o._id)
+    o:Hide()
 
     o:SetText(o._text)
 
@@ -62,8 +63,8 @@ function Label:SetPalatte(palatte)
     windower.text.set_bg_color(self._id, color.a, color.r, color.g, color.b)
     color = self:Palatte():Color('fg')
     windower.text.set_color(self._id, color.a, color.r, color.g, color.b)
-    windower.text.set_font(self._id, self:Palatte():Font('defualt').fn)
-    windower.text.set_font_size(self._id, self:Palatte():Font('defualt').fs)
+    windower.text.set_font(self._id, self:Palatte():Font('default').fn)
+    windower.text.set_font_size(self._id, self:Palatte():Font('default').fs)
 end
 
 --------------------------------------------------------------------------------

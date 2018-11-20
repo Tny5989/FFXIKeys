@@ -1,5 +1,5 @@
 local ListView = require('ui/listview')
-local Palatte = require('ui/palatte')
+local Palatte = require('ui/style/palatte')
 local PalatteFactory = require('ui/style/palatte_factory')
 
 --------------------------------------------------------------------------------
@@ -13,33 +13,33 @@ local Ui = {}
 --------------------------------------------------------------------------------
 function Ui.Create()
     local p = Palatte:Palatte()
-    p:SetColor('bg', { a = 255, r = 0, g = 0, b = 0 })
+    p:SetColor('bg', { a = 155, r = 0, g = 0, b = 0 })
     p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
     PalatteFactory.Insert('list_normal', p)
 
     p = Palatte:Palatte()
-    p:SetColor('bg', { a = 255, r = 100, g = 100, b = 100 })
+    p:SetColor('bg', { a = 155, r = 100, g = 100, b = 100 })
     p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
     PalatteFactory.Insert('list_highlight', p)
 
     p = Palatte:Palatte()
-    p:SetColor('bg', { a = 255, r = 50, g = 50, b = 50 })
+    p:SetColor('bg', { a = 155, r = 50, g = 50, b = 50 })
     p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
     PalatteFactory.Insert('list_select', p)
 
     p = Palatte:Palatte()
-    p:SetColor('bg', { a = 255, r = 255, g = 255, b = 255 })
-    p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
-    PalatteFactory.Insert('scrollbox_fg', p)
+    p:SetColor('bg', { a = 155, r = 255, g = 255, b = 255 })
+    p:SetColor('fg', { a = 155, r = 255, g = 255, b = 255 })
+    PalatteFactory.Insert('scrollbar_fg', p)
 
     p = Palatte:Palatte()
-    p:SetColor('bg', { a = 255, r = 0, g = 0, b = 0 })
-    p:SetColor('fg', { a = 255, r = 0, g = 0, b = 0 })
-    PalatteFactory.Insert('scrollbox_bg', p)
+    p:SetColor('bg', { a = 155, r = 0, g = 0, b = 0 })
+    p:SetColor('fg', { a = 155, r = 0, g = 0, b = 0 })
+    PalatteFactory.Insert('scrollbar_bg', p)
 
     p = Palatte:Palatte()
-    p:SetColor('bg', { a = 255, r = 255, g = 255, b = 255 })
-    p:SetColor('fg', { a = 255, r = 0, g = 0, b = 0 })
+    p:SetColor('bg', { a = 155, r = 255, g = 255, b = 255 })
+    p:SetColor('fg', { a = 155, r = 0, g = 0, b = 0 })
     PalatteFactory.Insert('header', p)
 
     MainMenu = ListView:ListView()

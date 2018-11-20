@@ -2,7 +2,7 @@ local Component = require('ui/component')
 local Label = require('ui/label')
 local List = require('ui/list')
 local Scrollbar = require('ui/scrollbar')
-local PalatteFactory = require('u/style/palatte_factory')
+local PalatteFactory = require('ui/style/palatte_factory')
 
 --------------------------------------------------------------------------------
 local ITEM_HEIGHT = 20

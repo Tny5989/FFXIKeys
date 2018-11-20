@@ -1,6 +1,6 @@
 local Component = require('ui/component')
 local Label = require('ui/label')
-local PalatteFactory = require('u/style/palatte_factory')
+local PalatteFactory = require('ui/style/palatte_factory')
 
 --------------------------------------------------------------------------------
 local ITEM_HEIGHT = 20
@@ -133,6 +133,7 @@ end
 
 --------------------------------------------------------------------------------
 function List:Highlight(x, y)
+    self._highlight_idx = 0
     for i = 1, #self._display_items, 1 do
         if self._display_items[i]:ContainsPoint(x, y) then
             self._highlight_idx = i
