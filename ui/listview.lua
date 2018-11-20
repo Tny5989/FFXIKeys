@@ -4,6 +4,9 @@ local List = require('ui/list')
 local Scrollbar = require('ui/scrollbar')
 
 --------------------------------------------------------------------------------
+local ITEM_HEIGHT = 20
+
+--------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local ListView = Component:Component()
 ListView.__index = ListView
@@ -12,17 +15,16 @@ ListView.__index = ListView
 function ListView:ListView()
     local o = Component:Component()
     setmetatable(o, self)
+    o._mouse_button = false
     o._type = 'ListView'
 
     o._header = Label:Label('FFXIKeys')
+    o._header:SetSize(0, ITEM_HEIGHT)
 
     o._scrollbar = Scrollbar:Scrollbar()
     o._scrollbar:SetSize(10, 0)
 
     o._list = List:List()
-
-    o:SetSize(0, 0)
-    o:MoveTo(0, 0)
 
     return o
 end
@@ -65,7 +67,7 @@ function ListView:SetSize(w, h)
     self._list:SetSize(s.w, s.h - self._header:Size().h)
     self:MoveTo(p.x, p.y)
 
-    self._scrollbar:SetPagecount(self._list:PageCount())
+    self._scrollbar:SetPageCount(self._list:PageCount())
     self._scrollbar:SetCurrentPage(self._list:CurrentPage())
 end
 
@@ -123,7 +125,7 @@ end
 function ListView:AppendItem(item_text)
     self._list:Append(item_text)
 
-    self._scrollbar:SetPagecount(self._list:PageCount())
+    self._scrollbar:SetPageCount(self._list:PageCount())
     self._scrollbar:SetCurrentPage(self._list:CurrentPage())
 end
 
@@ -131,8 +133,60 @@ end
 function ListView:Clear()
     self._list:Clear()
 
-    self._scrollbar:SetPagecount(self._list:PageCount())
+    self._scrollbar:SetPageCount(self._list:PageCount())
     self._scrollbar:SetCurrentPage(self._list:CurrentPage())
+end
+
+--------------------------------------------------------------------------------
+function ListView:OnMouseMove(x, y, dx, dy)
+    if self._mouse_button then
+        self:DragBy(dx, dy)
+    end
+    return false
+end
+
+--------------------------------------------------------------------------------
+function ListView:OnMouseLeftClick(x, y)
+    if self._header:ContainsPoint(x, y) then
+        self._mouse_button = true
+        self:OnMouseMove(x, y, 0, 0)
+        return true
+    else
+        self._mouse_button = false
+        return false
+    end
+end
+
+--------------------------------------------------------------------------------
+function ListView:OnMouseLeftRelease(x, y)
+    if self._mouse_button then
+        self._mouse_button = false
+        return true
+    else
+        return false
+    end
+end
+
+--------------------------------------------------------------------------------
+function ListView:OnMouseWheelUp(x, y)
+    if self:ContainsPoint(x, y) then
+        self._list:SetCurrentPage(self._list:CurrentPage() - 1)
+        self._scrollbar:SetCurrentPage(self._list:CurrentPage())
+        return true
+    else
+        return false
+    end
+end
+
+--------------------------------------------------------------------------------
+function ListView:OnMouseWheelDown(x, y)
+    if self:ContainsPoint(x, y) then
+        self._list:SetCurrentPage(self._list:CurrentPage() + 1)
+        self._scrollbar:SetCurrentPage(self._list:CurrentPage())
+        return true
+    else
+        return false
+    end
 end
 
 return ListView

@@ -1,5 +1,4 @@
 local Component = require('ui/component')
-local Palatte = require('ui/style/palatte')
 local UUID = require('util/uuid')
 
 --------------------------------------------------------------------------------
@@ -13,7 +12,6 @@ function Label:Label(t)
     setmetatable(o, self)
     o._id = UUID.uuid()
     o._text = t and t or ''
-    o._palatte = Palatte:Palatte()
     o._type = 'Label'
 
     windower.text.create(o._id)

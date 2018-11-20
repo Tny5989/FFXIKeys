@@ -175,7 +175,7 @@ function List:Update()
         self._display_items[i]:Hide()
     end
 
-    self._page_count = math.ceil(#self._items / items_per_page)
+    self._page_count = math.max(math.ceil(#self._items / items_per_page), 1)
     self._current_page = math.max(math.min(self._page_count, self._current_page), 1)
 
     local start_idx = (self._current_page - 1) * items_per_page + 1
