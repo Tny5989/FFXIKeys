@@ -15,13 +15,13 @@ local ListView = Component:Component()
 ListView.__index = ListView
 
 --------------------------------------------------------------------------------
-function ListView:ListView()
+function ListView:ListView(header_text)
     local o = Component:Component()
     setmetatable(o, self)
     o._mouse = MOUSE_ACTIONS.None
     o._type = 'ListView'
 
-    o._header = Label:Label('FFXIKeys')
+    o._header = Label:Label(header_text)
     o._header:SetSize(0, ITEM_HEIGHT)
     o._header:SetPalatte(PalatteFactory.Get('header'))
 

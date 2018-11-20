@@ -1,10 +1,22 @@
 local ListView = require('ui/listview')
 local Palatte = require('ui/style/palatte')
 local PalatteFactory = require('ui/style/palatte_factory')
+local Resources = require('resources')
 
 --------------------------------------------------------------------------------
 local MainMenu
 local LastMousePos = { x = 0, y = 0 }
+local MaxItem = ''
+
+for _, value in pairs(Resources.items) do
+    if #value.en > #MaxItem then
+        MaxItem = value.en
+    end
+end
+
+local function PadString(str, len)
+    return str .. string.rep(' ', math.max(len - #str, 0))
+end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -42,7 +54,7 @@ function Ui.Create()
     p:SetColor('fg', { a = 155, r = 0, g = 0, b = 0 })
     PalatteFactory.Insert('header', p)
 
-    MainMenu = ListView:ListView()
+    MainMenu = ListView:ListView(PadString('FFXIKeys', #MaxItem))
     MainMenu:MoveTo(1000, 500)
     MainMenu:SetSize(191, 200)
 end
@@ -61,7 +73,7 @@ end
 
 --------------------------------------------------------------------------------
 function Ui.AppendItem(text)
-    MainMenu:AppendItem(text)
+    MainMenu:AppendItem(PadString(text, #MaxItem))
     MainMenu:Show()
 end
 
