@@ -56,29 +56,14 @@ function Label:Hide()
 end
 
 --------------------------------------------------------------------------------
-function Label:SetBackgroundColor(alpha, red, green, blue)
-    Component.SetBackgroundColor(self, alpha, red, green, blue)
-    local color = self:BackgroundColor()
+function Label:SetPalatte(palatte)
+    Component.SetPalatte(self, palatte)
+    local color = self:Palatte():Color('bg')
     windower.text.set_bg_color(self._id, color.a, color.r, color.g, color.b)
-end
-
---------------------------------------------------------------------------------
-function Label:SetForegroundColor(alpha, red, green, blue)
-    Component.SetForegroundColor(self, alpha, red, green, blue)
-    local color = self:ForegroundColor()
+    color = self:Palatte():Color('fg')
     windower.text.set_color(self._id, color.a, color.r, color.g, color.b)
-end
-
---------------------------------------------------------------------------------
-function Label:SetFont(font_name)
-    Component.SetFont(self, font_name)
-    windower.text.set_font(self._id, self:Font('default'))
-end
-
---------------------------------------------------------------------------------
-function Label:SetFontSize(font_size)
-    Component.SetFontSize(self, font_size)
-    windower.text.set_font_size(self._id, self:FontSize('default'))
+    windower.text.set_font(self._id, self:Palatte():Font('defualt').fn)
+    windower.text.set_font_size(self._id, self:Palatte():Font('defualt').fs)
 end
 
 --------------------------------------------------------------------------------

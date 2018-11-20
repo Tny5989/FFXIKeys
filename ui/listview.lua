@@ -2,6 +2,7 @@ local Component = require('ui/component')
 local Label = require('ui/label')
 local List = require('ui/list')
 local Scrollbar = require('ui/scrollbar')
+local PalatteFactory = require('u/style/palatte_factory')
 
 --------------------------------------------------------------------------------
 local ITEM_HEIGHT = 20
@@ -20,6 +21,7 @@ function ListView:ListView()
 
     o._header = Label:Label('FFXIKeys')
     o._header:SetSize(0, ITEM_HEIGHT)
+    o._header:SetPalatte(PalatteFactory.Get('header'))
 
     o._scrollbar = Scrollbar:Scrollbar()
     o._scrollbar:SetSize(10, 0)
@@ -85,40 +87,6 @@ function ListView:Hide()
     self._header:Hide()
     self._scrollbar:Hide()
     self._list:Hide()
-end
-
---------------------------------------------------------------------------------
-function ListView:SetForegroundColor(alpha, red, green, blue)
-    Component.SetForegroundColor(self, alpha, red, green, blue)
-    local color = self:ForegroundColor()
-    self._header:SetForegroundColor(color.a, color.r, color.g, color.b)
-    self._scrollbar:SetForegroundColor(color.a, color.r, color.g, color.b)
-    self._list:SetForegroundColor(color.a, color.r, color.g, color.b)
-end
-
---------------------------------------------------------------------------------
-function ListView:SetBackgroundColor(alpha, red, green, blue)
-    Component.SetBackgroundColor(self, alpha, red, green, blue)
-    local color = self:BackgroundColor()
-    self._header:SetBackgroundColor(color.a, color.r, color.g, color.b)
-    self._scrollbar:SetBackgroundColor(color.a, color.r, color.g, color.b)
-    self._list:SetBackgroundColor(color.a, color.r, color.g, color.b)
-end
-
---------------------------------------------------------------------------------
-function ListView:SetFont(font_name)
-    Component.SetFont(self, font_name)
-    self._header:SetFont(font_name)
-    self._scrollbar:SetFont(font_name)
-    self._list:SetFont(font_name)
-end
-
---------------------------------------------------------------------------------
-function ListView:SetFontSize(font_size)
-    Component.SetFontSize(self, font_size)
-    self._header:SetFontSize(font_size)
-    self._scrollbar:SetFontSize(font_size)
-    self._list:SetFontSize(font_size)
 end
 
 --------------------------------------------------------------------------------

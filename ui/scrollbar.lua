@@ -1,6 +1,6 @@
 local Background = require('ui/background')
-local Palatte = require('ui/style/palatte')
 local Component = require('ui/component')
+local PalatteFactory = require('u/style/palatte_factory')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -11,12 +11,14 @@ Scrollbar.__index = Scrollbar
 function Scrollbar:Scrollbar()
     local o = Component:Component()
     setmetatable(o, self)
-    o._background = Background:Background()
-    o._foreground = Background:Background()
     o._page_count = 1
     o._page_idx = 1
-    o._palatte = Palatte:Palatte()
     o._type = 'Scrollbar'
+
+    o._background = Background:Background()
+    o._background:SetPalatte(PalatteFactory.Get('scrollbar_bg'))
+    o._foreground = Background:Background()
+    o._foreground.SetPalatte(PalatteFactory.Get('scrollbar_fg'))
 
     o:SetPageCount(o:PageCount())
 
@@ -64,17 +66,17 @@ function Scrollbar:Hide()
     self._foreground:Hide()
 end
 
---------------------------------------------------------------------------------
-function Scrollbar:SetBackgroundColor(alpha, red, green, blue)
-    Component.SetBackgroundColor(self, alpha, red, green, blue)
-    self._background:SetBackgroundColor(alpha, red, green, blue)
-end
-
---------------------------------------------------------------------------------
-function Scrollbar:SetForegroundColor(alpha, red, green, blue)
-    Component.SetForegroundColor(self, alpha, red, green, blue)
-    self._foreground:SetBackgroundColor(alpha, red, green, blue)
-end
+----------------------------------------------------------------------------------
+--function Scrollbar:SetBackgroundColor(alpha, red, green, blue)
+--    Component.SetBackgroundColor(self, alpha, red, green, blue)
+--    self._background:SetBackgroundColor(alpha, red, green, blue)
+--end
+--
+----------------------------------------------------------------------------------
+--function Scrollbar:SetForegroundColor(alpha, red, green, blue)
+--    Component.SetForegroundColor(self, alpha, red, green, blue)
+--    self._foreground:SetBackgroundColor(alpha, red, green, blue)
+--end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetPageCount(count)

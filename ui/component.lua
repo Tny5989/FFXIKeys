@@ -52,23 +52,13 @@ function Component:Hide()
 end
 
 --------------------------------------------------------------------------------
-function Component:SetForegroundColor(alpha, red, green, blue)
-    self._palatte:SetColor('fg', { a = alpha, r = red, g = green, b = blue })
+function Component:SetPalatte(palatte)
+    self._palatte = palatte
 end
 
 --------------------------------------------------------------------------------
-function Component:SetBackgroundColor(alpha, red, green, blue)
-    self._palatte:SetColor('bg', { a = alpha, r = red, g = green, b = blue })
-end
-
---------------------------------------------------------------------------------
-function Component:SetFont(font_name)
-    self._palatte:SetFont('default', font_name, self._palatte:Font('default').fs)
-end
-
---------------------------------------------------------------------------------
-function Component:SetFontSize(font_size)
-    self._palatte:SetFont('default', self._palatte:Font('default').fn, font_size)
+function Component:Palatte()
+    return self._palatte
 end
 
 --------------------------------------------------------------------------------
@@ -84,28 +74,6 @@ end
 --------------------------------------------------------------------------------
 function Component:IsVisible()
     return self._visible
-end
-
---------------------------------------------------------------------------------
-function Component:ForegroundColor()
-    local color = self._palatte:Color('fg')
-    return { a = color.a, r = color.r, g = color.g, b = color.b }
-end
-
---------------------------------------------------------------------------------
-function Component:BackgroundColor()
-    local color = self._palatte:Color('bg')
-    return { a = color.a, r = color.r, g = color.g, b = color.b }
-end
-
---------------------------------------------------------------------------------
-function Component:Font()
-    return self._palatte:Font('default').fn
-end
-
---------------------------------------------------------------------------------
-function Component:FontSize()
-    return self._palatte:Font('default').fs
 end
 
 --------------------------------------------------------------------------------

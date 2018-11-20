@@ -1,6 +1,7 @@
 local Palatte = {}
 Palatte.__index = Palatte
 
+--------------------------------------------------------------------------------
 function Palatte:Palatte()
     local o = {}
     setmetatable(o, self)
@@ -14,18 +15,22 @@ function Palatte:Palatte()
     return o
 end
 
+--------------------------------------------------------------------------------
 function Palatte:SetColor(idx, color)
     self._colors[idx] = color
 end
 
+--------------------------------------------------------------------------------
 function Palatte:Color(idx)
     return self._colors[idx]
 end
 
+--------------------------------------------------------------------------------
 function Palatte:SetFont(idx, font_name, font_size)
     self._fonts[idx] = { fn = font_name, fs = font_size }
 end
 
+--------------------------------------------------------------------------------
 function Palatte:Font(idx)
     return self._fonts[idx]
 end

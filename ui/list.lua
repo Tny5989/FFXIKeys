@@ -1,5 +1,6 @@
 local Component = require('ui/component')
 local Label = require('ui/label')
+local PalatteFactory = require('u/style/palatte_factory')
 
 --------------------------------------------------------------------------------
 local ITEM_HEIGHT = 20
@@ -66,40 +67,6 @@ function List:Hide()
     Component.Hide(self)
     for i = 1, #self._display_items, 1 do
         self._display_items[i]:Hide()
-    end
-end
-
---------------------------------------------------------------------------------
-function List:SetForegroundColor(alpha, red, green, blue)
-    Component.SetForegroundColor(self, alpha, red, green, blue)
-    local color = self:ForegroundColor()
-    for i = 1, #self._display_items, 1 do
-        self._display_items[i]:SetForegroundColor(color.a, color.r, color.g, color.b)
-    end
-end
-
---------------------------------------------------------------------------------
-function List:SetBackgroundColor(alpha, red, green, blue)
-    Component.SetBackgroundColor(self, alpha, red, green, blue)
-    local color = self:BackgroundColor()
-    for i = 1, #self._display_items, 1 do
-        self._display_items[i]:SetBackgroundColor(color.a, color.r, color.g, color.b)
-    end
-end
-
---------------------------------------------------------------------------------
-function List:SetFont(font_name)
-    Component.SetFont(self, font_name)
-    for i = 1, #self._display_items, 1 do
-        self._display_items[i]:SetFont(font_name)
-    end
-end
-
---------------------------------------------------------------------------------
-function List:SetFontSize(font_size)
-    Component.SetFontSize(self, font_size)
-    for i = 1, #self._display_items, 1 do
-        self._display_items[i]:SetFontSize(font_size)
     end
 end
 
@@ -181,18 +148,13 @@ function List:Update()
     local start_idx = (self._current_page - 1) * items_per_page + 1
     local stop_idx = math.min(start_idx + items_per_page - 1, #self._items)
 
-    local bg = self:BackgroundColor()
-    local fg = self:ForegroundColor()
     local p = self:Position()
     local idx = start_idx
     for i = 1, #self._display_items, 1 do
         if idx <= stop_idx then
             self._display_items[i]:SetText(self._items[idx])
+            self._display_items[i]:SetPalatte(PalatteFactory.Get('list_normal'))
             self._display_items[i]:MoveTo(p.x, p.y)
-            self._display_items[i]:SetBackgroundColor(bg.a, bg.r, bg.g, bg.b)
-            self._display_items[i]:SetForegroundColor(fg.a, fg.r, fg.g, fg.b)
-            self._display_items[i]:SetFontSize(self:FontSize())
-            self._display_items[i]:SetFont(self:Font())
             self._display_items[i]:SetSize(self:Size().w, ITEM_HEIGHT)
             if self:IsVisible() then
                 self._display_items[i]:Show()
