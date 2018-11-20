@@ -1,4 +1,6 @@
 local ListView = require('ui/listview')
+local Palatte = require('ui/palatte')
+local PalatteFactory = require('ui/style/palatte_factory')
 
 --------------------------------------------------------------------------------
 local MainMenu
@@ -10,13 +12,39 @@ local Ui = {}
 
 --------------------------------------------------------------------------------
 function Ui.Create()
+    local p = Palatte:Palatte()
+    p:SetColor('bg', { a = 255, r = 0, g = 0, b = 0 })
+    p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
+    PalatteFactory.Insert('list_normal', p)
+
+    p = Palatte:Palatte()
+    p:SetColor('bg', { a = 255, r = 100, g = 100, b = 100 })
+    p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
+    PalatteFactory.Insert('list_highlight', p)
+
+    p = Palatte:Palatte()
+    p:SetColor('bg', { a = 255, r = 50, g = 50, b = 50 })
+    p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
+    PalatteFactory.Insert('list_select', p)
+
+    p = Palatte:Palatte()
+    p:SetColor('bg', { a = 255, r = 255, g = 255, b = 255 })
+    p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
+    PalatteFactory.Insert('scrollbox_fg', p)
+
+    p = Palatte:Palatte()
+    p:SetColor('bg', { a = 255, r = 0, g = 0, b = 0 })
+    p:SetColor('fg', { a = 255, r = 0, g = 0, b = 0 })
+    PalatteFactory.Insert('scrollbox_bg', p)
+
+    p = Palatte:Palatte()
+    p:SetColor('bg', { a = 255, r = 255, g = 255, b = 255 })
+    p:SetColor('fg', { a = 255, r = 0, g = 0, b = 0 })
+    PalatteFactory.Insert('header', p)
+
     MainMenu = ListView:ListView()
     MainMenu:MoveTo(1000, 500)
     MainMenu:SetSize(191, 200)
-    MainMenu:SetFontSize(12)
-    MainMenu:SetFont('Consolas')
-    MainMenu:SetForegroundColor(255, 255, 255, 255)
-    MainMenu:SetBackgroundColor(255, 0, 0, 0)
 end
 
 --------------------------------------------------------------------------------

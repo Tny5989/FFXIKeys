@@ -18,6 +18,8 @@ function List:List()
     o._display_items = {}
     o._current_page = 1
     o._page_count = 1
+    o._highlight_idx = 0
+    o._select_idx = 0
     o._type = 'List'
     return o
 end
@@ -130,6 +132,37 @@ function List:CurrentPage()
 end
 
 --------------------------------------------------------------------------------
+function List:Highlight(x, y)
+    for i = 1, #self._display_items, 1 do
+        if self._display_items[i]:ContainsPoint(x, y) then
+            self._highlight_idx = i
+        end
+    end
+    self:Update()
+end
+
+--------------------------------------------------------------------------------
+function List:Select(x, y)
+    for i = 1, #self._display_items, 1 do
+        if self._display_items[i]:ContainsPoint(x, y) then
+            self._select_idx = i
+        end
+    end
+    self:Update()
+end
+
+--------------------------------------------------------------------------------
+function List:Activate(x, y)
+    for i = 1, #self._display_items, 1 do
+        if self._display_items[i]:ContainsPoint(x, y) then
+            -- TODO activate
+        end
+    end
+    self._select_idx = 0
+    self:Update()
+end
+
+--------------------------------------------------------------------------------
 function List:Update()
     local items_per_page = self:Size().h / ITEM_HEIGHT
     while #self._display_items > items_per_page do
@@ -163,6 +196,18 @@ function List:Update()
             p.y = p.y + ITEM_HEIGHT
         end
         idx = idx + 1
+    end
+
+    if self._highlight_idx > 0 then
+        if self._display_items[self._highlight_idx]:IsVisible() then
+            self._display_items[self._highlight_idx]:SetPalatte(PalatteFactory.Get('list_highlight'))
+        end
+    end
+
+    if self._select_idx > 0 then
+        if self._display_items[self._select_idx]:IsVisible() then
+            self._display_items[self._select_idx]:SetPalatte(PalatteFactory.Get('list_select'))
+        end
     end
 
 end

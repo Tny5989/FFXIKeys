@@ -7,6 +7,8 @@ local PalatteFactory = require('u/style/palatte_factory')
 --------------------------------------------------------------------------------
 local ITEM_HEIGHT = 20
 
+local MOUSE_ACTIONS = { Drag = 1, Select = 2, None = 3 }
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local ListView = Component:Component()
@@ -16,7 +18,7 @@ ListView.__index = ListView
 function ListView:ListView()
     local o = Component:Component()
     setmetatable(o, self)
-    o._mouse_button = false
+    o._mouse = MOUSE_ACTIONS.None
     o._type = 'ListView'
 
     o._header = Label:Label('FFXIKeys')
@@ -107,28 +109,45 @@ end
 
 --------------------------------------------------------------------------------
 function ListView:OnMouseMove(x, y, dx, dy)
-    if self._mouse_button then
+    self._list:Highlight(x, y)
+
+    if self._mouse == MOUSE_ACTIONS.Drag then
         self:DragBy(dx, dy)
+    elseif self._mouse == MOUSE_ACTIONS.Select then
+        self._list:Select(x, y)
     end
+
     return false
 end
 
 --------------------------------------------------------------------------------
 function ListView:OnMouseLeftClick(x, y)
+    if self._mouse ~= MOUSE_ACTIONS.None then
+        return false
+    end
+    
     if self._header:ContainsPoint(x, y) then
-        self._mouse_button = true
+        self._mouse = MOUSE_ACTIONS.Drag
+        self:OnMouseMove(x, y, 0, 0)
+        return true
+    elseif self._list:ContainsPoint(x, y) then
+        self._mouse = MOUSE_ACTIONS.Select
         self:OnMouseMove(x, y, 0, 0)
         return true
     else
-        self._mouse_button = false
+        self._mouse = MOUSE_ACTIONS.None
         return false
     end
 end
 
 --------------------------------------------------------------------------------
 function ListView:OnMouseLeftRelease(x, y)
-    if self._mouse_button then
-        self._mouse_button = false
+    if self._mouse == MOUSE_ACTIONS.Drag then
+        self._mouse = MOUSE_ACTIONS.None
+        return true
+    elseif self._mouse == MOUSE_ACTIONS.Select then
+        self._mouse = MOUSE_ACTIONS.None
+        self._list:Activate(x, y)
         return true
     else
         return false
