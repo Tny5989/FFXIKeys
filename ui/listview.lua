@@ -1,4 +1,5 @@
 local Component = require('ui/component')
+local Background = require('ui/background')
 local Label = require('ui/label')
 local List = require('ui/list')
 local Scrollbar = require('ui/scrollbar')
@@ -28,6 +29,9 @@ function ListView:ListView(header_text)
     o._scrollbar = Scrollbar:Scrollbar()
     o._scrollbar:SetSize(10, 0)
 
+    o._background = Background:Background()
+    o._background:SetPalatte(PalatteFactory.Get('scrollbar_bg'))
+
     o._list = List:List()
 
     return o
@@ -39,6 +43,7 @@ function ListView:Destroy()
     self._header:Destroy()
     self._scrollbar:Destroy()
     self._list:Destroy()
+    self._background:Destroy()
 end
 
 --------------------------------------------------------------------------------
@@ -49,6 +54,7 @@ function ListView:MoveTo(x, y)
     self._header:MoveTo(p.x, p.y)
     self._list:MoveTo(p.x, p.y + self._header:Size().h)
     self._scrollbar:MoveTo(p.x + s.w - self._scrollbar:Size().w, p.y)
+    self._background:MoveTo(p.x, p.y)
 end
 
 --------------------------------------------------------------------------------
@@ -59,6 +65,7 @@ function ListView:DragBy(dx, dy)
     self._header:MoveTo(p.x, p.y)
     self._list:MoveTo(p.x, p.y + self._header:Size().h)
     self._scrollbar:MoveTo(p.x + s.w - self._scrollbar:Size().w, p.y)
+    self._background:MoveTo(p.x, p.y)
 end
 
 --------------------------------------------------------------------------------
@@ -69,6 +76,7 @@ function ListView:SetSize(w, h)
     self._header:SetSize(s.w, self._header:Size().h)
     self._scrollbar:SetSize(self._scrollbar:Size().w, s.h)
     self._list:SetSize(s.w, s.h - self._header:Size().h)
+    self._background:SetSize(s.w - self._scrollbar:Size().w, s.h)
     self:MoveTo(p.x, p.y)
 
     self._scrollbar:SetPageCount(self._list:PageCount())
@@ -81,6 +89,7 @@ function ListView:Show()
     self._header:Show()
     self._scrollbar:Show()
     self._list:Show()
+    self._background:Show()
 end
 
 --------------------------------------------------------------------------------
@@ -89,6 +98,7 @@ function ListView:Hide()
     self._header:Hide()
     self._scrollbar:Hide()
     self._list:Hide()
+    self._background:Hide()
 end
 
 --------------------------------------------------------------------------------

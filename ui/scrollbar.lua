@@ -33,9 +33,13 @@ end
 
 --------------------------------------------------------------------------------
 function Scrollbar:MoveTo(x, y)
+    local dx = x - self:Position().x
+    local dy = y - self:Position().y
+
     Component.MoveTo(self, x, y)
-    self._background:MoveTo(x, y)
-    self._foreground:MoveTo(x, y)
+
+    self._background:DragBy(dx, dy)
+    self._foreground:MoveTo(dx, dy)
 end
 
 --------------------------------------------------------------------------------
@@ -65,18 +69,6 @@ function Scrollbar:Hide()
     self._background:Hide()
     self._foreground:Hide()
 end
-
-----------------------------------------------------------------------------------
---function Scrollbar:SetBackgroundColor(alpha, red, green, blue)
---    Component.SetBackgroundColor(self, alpha, red, green, blue)
---    self._background:SetBackgroundColor(alpha, red, green, blue)
---end
---
-----------------------------------------------------------------------------------
---function Scrollbar:SetForegroundColor(alpha, red, green, blue)
---    Component.SetForegroundColor(self, alpha, red, green, blue)
---    self._foreground:SetBackgroundColor(alpha, red, green, blue)
---end
 
 --------------------------------------------------------------------------------
 function Scrollbar:SetPageCount(count)

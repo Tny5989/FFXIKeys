@@ -41,7 +41,7 @@ function CommandFactory.CreateCommand(cmd, p1, p2, p3)
         local lock = Locks.GetLock(p2)
         local count = p3 and tonumber(p3) or nil
         return BuyCommand:BuyCommand(key.id, lock.id, key.option, lock.menu, lock.zone, count)
-    elseif cmd == 'printlinks' or cmd == 'openlinks' then
+    elseif cmd == 'printlinks' or cmd == 'openlinks' or cmd == 'showui' then
         if log then
             log('Settings Saved')
         end

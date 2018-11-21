@@ -8,6 +8,7 @@ require('logger')
 packets = require('packets')
 settings = require('settings')
 
+local Resources = require('resources')
 local CommandFactory = require('command/command_factory')
 local Aliases = require('aliases')
 local Ui = require('ui')
@@ -51,6 +52,9 @@ local function OnIncomingData(id, _, pkt, b, i)
             end
             if settings.config.openlinks then
                 windower.open_url('https://www.ffxiah.com/item/' .. pkt['Param 1'] .. '/')
+            end
+            if settings.config.showui then
+                Ui.AppendItem(Resources.items:with('id', pkt['Param 1']).en)
             end
             state.command(state)
         end

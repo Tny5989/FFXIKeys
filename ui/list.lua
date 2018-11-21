@@ -1,6 +1,7 @@
 local Component = require('ui/component')
 local Label = require('ui/label')
 local PalatteFactory = require('ui/style/palatte_factory')
+local Resources = require('resources')
 
 --------------------------------------------------------------------------------
 local ITEM_HEIGHT = 20
@@ -59,17 +60,13 @@ end
 --------------------------------------------------------------------------------
 function List:Show()
     Component.Show(self)
-    for i = 1, #self._display_items, 1 do
-        self._display_items[i]:Show()
-    end
+    self:Update()
 end
 
 --------------------------------------------------------------------------------
 function List:Hide()
     Component.Hide(self)
-    for i = 1, #self._display_items, 1 do
-        self._display_items[i]:Hide()
-    end
+    self:Update()
 end
 
 --------------------------------------------------------------------------------
@@ -155,8 +152,10 @@ end
 --------------------------------------------------------------------------------
 function List:Activate(x, y)
     for i = 1, #self._display_items, 1 do
-        if self._display_items[i]:ContainsPoint(x, y) then
-            -- TODO activate
+        if self._display_items[i]:IsVisible() and self._display_items[i]:ContainsPoint(x, y) then
+            local text = (self._display_items[i]:Text():gsub("^%s*(.-)%s*$", "%1"))
+            local id = Resources.items:with('en', text).id
+            windower.open_url('https://www.ffxiah.com/item/' .. id .. '/')
         end
     end
     self._select_idx = 0
@@ -195,6 +194,8 @@ function List:Update()
             end
 
             p.y = p.y + ITEM_HEIGHT
+        else
+            self._display_items[i]:Hide()
         end
         idx = idx + 1
     end

@@ -25,7 +25,7 @@ local Ui = {}
 --------------------------------------------------------------------------------
 function Ui.Create()
     local p = Palatte:Palatte()
-    p:SetColor('bg', { a = 155, r = 0, g = 0, b = 0 })
+    p:SetColor('bg', { a = 0, r = 0, g = 0, b = 0 })
     p:SetColor('fg', { a = 255, r = 255, g = 255, b = 255 })
     PalatteFactory.Insert('list_normal', p)
 
@@ -51,12 +51,12 @@ function Ui.Create()
 
     p = Palatte:Palatte()
     p:SetColor('bg', { a = 155, r = 255, g = 255, b = 255 })
-    p:SetColor('fg', { a = 155, r = 0, g = 0, b = 0 })
+    p:SetColor('fg', { a = 255, r = 0, g = 0, b = 0 })
     PalatteFactory.Insert('header', p)
 
     MainMenu = ListView:ListView(PadString('FFXIKeys', #MaxItem))
     MainMenu:MoveTo(1000, 500)
-    MainMenu:SetSize(191, 200)
+    MainMenu:SetSize(201, 200)
 end
 
 --------------------------------------------------------------------------------
