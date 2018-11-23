@@ -27,7 +27,7 @@ function CommandFactory.CreateCommand(cmd, p1, p2, p3)
         end
 
         local key = Keys.GetKey(p1)
-        local lock = Locks.GetLock(p2)
+        local lock = Locks.GetGobbieMysteryBoxByName(p2)
         return UnlockCommand:UnlockCommand(key.id, lock.id)
     elseif cmd == 'buy' then
         if not p1 or not p2 or not p3 then
@@ -38,7 +38,7 @@ function CommandFactory.CreateCommand(cmd, p1, p2, p3)
         end
 
         local key = Keys.GetKey(p1)
-        local lock = Locks.GetLock(p2)
+        local lock = Locks.GetUnityByName(p2)
         local count = p3 and tonumber(p3) or nil
         return BuyCommand:BuyCommand(key.id, lock.id, key.option, lock.menu, lock.zone, count)
     elseif cmd == 'printlinks' or cmd == 'openlinks' then
