@@ -2,19 +2,19 @@ local Resources = require('resources')
 
 --------------------------------------------------------------------------------
 local function CreateHeader(time, count)
-    local dt = os.date('%m/%d/%y - %H:%M:%S', time)
+    local dt = os.date('%m/%d/%Y - %H:%M:%S', time)
     local sc = string.format('%03d', count)
-    local header = '\r\n'
-    header = header .. '//////////////////////////////////////\r\n'
-    header = header .. '// ' .. dt .. ' - ' .. sc .. ' Keys //\r\n'
-    header = header .. '//////////////////////////////////////\r\n'
+    local header = '\n'
+    header = header .. '//////////////////////////////////////\n'
+    header = header .. '// ' .. dt .. ' - ' .. sc .. ' Keys //\n'
+    header = header .. '//////////////////////////////////////\n'
     return header
 end
 
 --------------------------------------------------------------------------------
 local function CreateLine(time, item)
     local dt = os.date('[%H:%M:%S]', time)
-    return dt .. ' ' .. tostring(item)
+    return dt .. ' ' .. tostring(item) .. '\n'
 end
 
 --------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ end
 --------------------------------------------------------------------------------
 function Logger.Flush()
     if #Logger.items > 0 then
-        local file = io.open('', 'a+')
+        local file = io.open(windower.addon_path .. '/data/items.log', 'a+')
         file:write(CreateHeader(Logger.items[1].time, #Logger.items))
         for _, value in pairs(Logger.items) do
             file:write(CreateLine(value.time, value.text))
