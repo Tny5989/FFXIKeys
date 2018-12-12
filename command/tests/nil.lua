@@ -1,0 +1,39 @@
+local LuaUnit = require('luaunit')
+local NilCommand = require('command/nil')
+
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+NilCommandTests = {}
+
+--------------------------------------------------------------------------------
+function NilCommandTests:TestNilCommandReturnFalse()
+    local c = NilCommand:NilCommand()
+    LuaUnit.assertFalse(c())
+end
+
+--------------------------------------------------------------------------------
+function NilCommandTests:TestNilCommandWindowerRequirement()
+    windower = nil
+    NilCommand:NilCommand()()
+end
+
+--------------------------------------------------------------------------------
+function NilCommandTests:TestNilCommandSettingsRequirement()
+    settings = nil
+    NilCommand:NilCommand()()
+end
+
+--------------------------------------------------------------------------------
+function NilCommandTests:TestNilCommandDoesNotUpdateState()
+    local state = {}
+    NilCommand:NilCommand()(state)
+    LuaUnit.assertEquals(state, {})
+end
+
+--------------------------------------------------------------------------------
+function NilCommandTests:TestTypeIsNilCommand()
+    local c = NilCommand:NilCommand()
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+end
+
+LuaUnit.LuaUnit.run('NilCommandTests')
