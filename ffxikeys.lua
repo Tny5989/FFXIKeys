@@ -10,7 +10,7 @@ settings = require('settings')
 
 local CommandFactory = require('command/factory')
 local Aliases = require('aliases')
-local Logger = require('logger')
+local FileLogger = require('util/logger')
 
 --------------------------------------------------------------------------------
 local state = {running = false, command = nil }
@@ -34,7 +34,7 @@ end
 --------------------------------------------------------------------------------
 local function OnIncomingData(id, _, pkt, b, i)
     if not state.running then
-        Logger.Flush()
+        FileLogger.Flush()
         return false
     end
 
@@ -48,7 +48,7 @@ local function OnIncomingData(id, _, pkt, b, i)
                 windower.open_url('https://www.ffxiah.com/item/' .. pkt['Param 1'] .. '/')
             end
             if settings.config.logitems then
-                Logger.AddItem(pkt['Param 1'])
+                FileLogger.AddItem(pkt['Param 1'])
             end
             state.command(state)
         end
