@@ -8,7 +8,7 @@ require('logger')
 packets = require('packets')
 settings = require('settings')
 
-local CommandFactory = require('command/command_factory')
+local CommandFactory = require('command/factory')
 local Aliases = require('aliases')
 local Logger = require('logger')
 
