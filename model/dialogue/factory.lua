@@ -27,6 +27,16 @@ function DialogueFactory.CreateUseDialogue(npc, player, item_id)
         return NilDialogue:NilDialogue()
     end
 
+    if player:Bag():FreeSlots() < 1 then
+        log('Inventory full')
+        return NilDialogue:NilDialogue()
+    end
+
+    if player:Bag():ItemCount(item_id) < 1 then
+        log("No Keys")
+        return NilDialogue:NilDialogue()
+    end
+
     return UseDialogue:UseDialogue(npc, player, item_id)
 end
 
