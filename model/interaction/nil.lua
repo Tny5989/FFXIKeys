@@ -1,43 +1,43 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local NilCommand = {}
-NilCommand.__index = NilCommand
+local NilInteraction = {}
+NilInteraction.__index = NilInteraction
 
 --------------------------------------------------------------------------------
-function NilCommand:NilCommand()
+function NilInteraction:NilInteraction()
     local o = {}
     setmetatable(o, self)
     o._on_success = function() end
     o._on_failure = function() end
-    o._type = 'NilCommand'
+    o._type = 'NilInteraction'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:SetSuccessCallback(f)
+function NilInteraction:SetSuccessCallback(f)
     self._on_success = f
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:SetFailureCallback(f)
+function NilInteraction:SetFailureCallback(f)
     self._on_failure = f
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:OnIncomingData(id, pkt)
+function NilInteraction:OnIncomingData(id, pkt)
     return false
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:Type()
+function NilInteraction:Type()
     return self._type
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:__call()
+function NilInteraction:__call()
     self._on_success()
     self._on_success = function() end
     self._on_failure = function() end
 end
 
-return NilCommand
+return NilInteraction

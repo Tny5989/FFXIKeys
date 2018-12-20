@@ -1,16 +1,16 @@
 local LuaUnit = require('luaunit')
-local LockFactory = require('model/lock/factory')
+local NpcFactory = require('model/npc/factory')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-LockFactoryTests = {}
+NpcFactoryTests = {}
 
 --------------------------------------------------------------------------------
-function LockFactoryTests:SetUp()
+function NpcFactoryTests:SetUp()
     windower = {}
     windower.ffxi = {}
     function windower.ffxi.get_mob_by_id(id)
-        return {id = id, index = 4321, distance = 5}
+        return { id = id, index = 4321, distance = 5, valid_target = true }
     end
 
     settings = {}
@@ -19,37 +19,37 @@ function LockFactoryTests:SetUp()
 end
 
 --------------------------------------------------------------------------------
-function LockFactoryTests:TestNilLockCreatedWhenBadParam()
-    local lock = LockFactory.CreateLock()
-    LuaUnit.assertEquals(lock:Type(), 'NilLock')
+function NpcFactoryTests:TestNilNpcCreatedWhenBadParam()
+    local npc = NpcFactory.CreateNpc()
+    LuaUnit.assertEquals(npc:Type(), 'NilNpc')
 end
 
 --------------------------------------------------------------------------------
-function LockFactoryTests:TestNilLockCreatedWhenBadMob()
+function NpcFactoryTests:TestEntityNpcCreatedWhenBadMob()
     function windower.ffxi.get_mob_by_id(id)
         return nil
     end
 
-    local key = LockFactory.CreateLock(0, 1)
-    LuaUnit.assertEquals(key:Type(), 'NilLock')
+    local key = NpcFactory.CreateNpc(1234, 4321)
+    LuaUnit.assertEquals(key:Type(), 'EntityNpc')
 end
 
 --------------------------------------------------------------------------------
-function LockFactoryTests:TestNilLockCreatedWhenFarAway()
+function NpcFactoryTests:TestEntityNpcCreatedWhenFarAway()
     function windower.ffxi.get_mob_by_id(id)
         return {id = id, index = 4321, distance = 9999}
     end
 
 
-    local lock = LockFactory.CreateLock(0, 1)
-    LuaUnit.assertEquals(lock:Type(), 'NilLock')
+    local npc = NpcFactory.CreateNpc(1234, 4321)
+    LuaUnit.assertEquals(npc:Type(), 'EntityNpc')
 end
 
 
 --------------------------------------------------------------------------------
-function LockFactoryTests:TestNpcLockCreatedWhenValidIdPassed()
-    local lock = LockFactory.CreateLock(0, 1)
-    LuaUnit.assertEquals(lock:Type(), 'GameLock')
+function NpcFactoryTests:TestEntityNpcCreatedWhenValidIdPassed()
+    local npc = NpcFactory.CreateNpc(1234, 4321)
+    LuaUnit.assertEquals(npc:Type(), 'EntityNpc')
 end
 
-LuaUnit.LuaUnit.run('LockFactoryTests')
+LuaUnit.LuaUnit.run('NpcFactoryTests')

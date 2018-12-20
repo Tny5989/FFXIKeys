@@ -1,54 +1,38 @@
-local BuyCommand = require('command/buy')
-local ConfigCommand = require('command/config')
 local NilCommand = require('command/nil')
-local StopCommand = require('command/stop')
-local UnlockCommand = require('command/unlock')
-local Keys = require('data/keys')
-local Locks = require('data/locks')
+local WarpCommand = require('command/warp')
+local Npcs = require('data/npcs')
+local Warps = require('data/warps')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local CommandFactory = {}
 
 --------------------------------------------------------------------------------
-function CommandFactory.CreateCommand(cmd, p1, p2, p3)
-    if not cmd then
+local function StringToZoneId(name)
+    local zone = resources.zones:with('en', windower.convert_auto_trans(name))
+    if zone then
+        return zone.id
+    else
+        return 0
+    end
+end
+
+--------------------------------------------------------------------------------
+function CommandFactory.CreateCommand(cmd, name)
+    if cmd == 'warp' then
+        if not name then
+            log('Zone must be provided')
+            return NilCommand:NilCommand()
+        end
+
+        local warp = Warps.GetByProperty('zone', StringToZoneId(name))
+        local npc = Npcs.GetForCurrentZone()
+
+        return WarpCommand:WarpCommand(npc.id, npc.zone, warp.idx)
+    else
+        log('Unknown command')
         return NilCommand:NilCommand()
     end
-
-    if cmd == 'stop' then
-        return StopCommand:StopCommand()
-    elseif cmd == 'unlock' then
-        if not p1 or not p2 then
-            if log then
-                log('Invalid Arguments')
-            end
-            return NilCommand:NilCommand()
-        end
-
-        local key = Keys.GetKey(p1)
-        local lock = Locks.GetGobbieMysteryBoxByName(p2)
-        return UnlockCommand:UnlockCommand(key.id, lock.id)
-    elseif cmd == 'buy' then
-        if not p1 or not p2 or not p3 then
-            if log then
-                log('Invalid Arguments')
-            end
-            return NilCommand:NilCommand()
-        end
-
-        local key = Keys.GetKey(p1)
-        local lock = Locks.GetUnityByName(p2)
-        local count = p3 and tonumber(p3) or nil
-        return BuyCommand:BuyCommand(key.id, lock.id, key.option, lock.menu, lock.zone, count)
-    elseif cmd == 'printlinks' or cmd == 'openlinks' or cmd == 'logitems' then
-        if log then
-            log('Settings Saved')
-        end
-        return ConfigCommand:ConfigCommand(cmd)
-    end
-
-    return NilCommand:NilCommand()
 end
 
 return CommandFactory

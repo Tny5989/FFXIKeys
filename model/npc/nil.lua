@@ -1,43 +1,39 @@
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-local NilCommand = {}
-NilCommand.__index = NilCommand
+local NilEntity = require('model/entity/nil')
 
 --------------------------------------------------------------------------------
-function NilCommand:NilCommand()
+--------------------------------------------------------------------------------
+local NilNpc = {}
+NilNpc.__index = NilNpc
+
+--------------------------------------------------------------------------------
+function NilNpc:NilNpc()
     local o = {}
     setmetatable(o, self)
-    o._on_success = function() end
-    o._on_failure = function() end
-    o._type = 'NilCommand'
+    o._id = 0
+    o._zone = 0
+    o._entity = NilEntity:NilEntity()
+    o._type = 'NilNpc'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:SetSuccessCallback(f)
-    self._on_success = f
+function NilNpc:Id()
+    return self._id
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:SetFailureCallback(f)
-    self._on_failure = f
+function NilNpc:Zone()
+    return self._zone
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:OnIncomingData(id, pkt)
-    return false
+function NilNpc:Entity()
+    return self._entity
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:Type()
+function NilNpc:Type()
     return self._type
 end
 
---------------------------------------------------------------------------------
-function NilCommand:__call()
-    self._on_success()
-    self._on_success = function() end
-    self._on_failure = function() end
-end
-
-return NilCommand
+return NilNpc

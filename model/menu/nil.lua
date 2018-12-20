@@ -1,31 +1,31 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local NilLock = {}
-NilLock.__index = NilLock
+local NilMenu = {}
+NilMenu.__index = NilMenu
 
 --------------------------------------------------------------------------------
-function NilLock:NilLock()
+function NilMenu:NilMenu()
     local o = {}
     setmetatable(o, self)
     o._id = 0
-    o._menu = 0
-    o._type = 'NilLock'
+    o._option = { option = 0, automated = false }
+    o._type = 'NilMenu'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilLock:Npc()
+function NilMenu:Id()
     return self._id
 end
 
 --------------------------------------------------------------------------------
-function NilLock:Menu()
-    return self._menu
+function NilMenu:OptionFor(_)
+    return self._option
 end
 
 --------------------------------------------------------------------------------
-function NilLock:Type()
+function NilMenu:Type()
     return self._type
 end
 
-return NilLock
+return NilMenu

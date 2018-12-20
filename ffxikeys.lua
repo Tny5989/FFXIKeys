@@ -1,19 +1,24 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '1.4.2'
+_addon.version = '2.0.1'
 _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
 require('logger')
-packets = require('packets')
-settings = require('settings')
+settings = require('util/settings')
+resources = require('resources')
 
 local CommandFactory = require('command/factory')
-local Aliases = require('aliases')
-local FileLogger = require('util/logger')
+local Aliases = require('util/aliases')
+local NilCommand = require('command/nil')
 
 --------------------------------------------------------------------------------
-local state = {running = false, command = nil }
+local command = NilCommand:NilCommand()
+
+--------------------------------------------------------------------------------
+local function OnCommandFinished()
+    command = NilCommand:NilCommand()
+end
 
 --------------------------------------------------------------------------------
 local function OnLoad()
@@ -22,46 +27,25 @@ local function OnLoad()
 end
 
 --------------------------------------------------------------------------------
-local function OnZoneChange(_, _)
+local function OnZoneChange()
     Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
-local function OnCommand(cmd, param1, param2, param3)
-    CommandFactory.CreateCommand(cmd, param1, param2, param3)(state)
+local function OnCommand(cmd, name)
+    if command:Type() == 'NilCommand' then
+        command = CommandFactory.CreateCommand(cmd, name)
+        command:SetSuccessCallback(OnCommandFinished)
+        command:SetFailureCallback(OnCommandFinished)
+        command()
+    else
+        log('Already running a command')
+    end
 end
 
 --------------------------------------------------------------------------------
 local function OnIncomingData(id, _, pkt, b, i)
-    if not state.running then
-        FileLogger.Flush()
-        return false
-    end
-
-    if state.command:Type() == 'UnlockCommand' then
-        if id == 0x02A then
-            local pkt = packets.parse('incoming', pkt)
-            if settings.config.printlinks then
-                log('https://www.ffxiah.com/item/' .. pkt['Param 1'] .. '/')
-            end
-            if settings.config.openlinks then
-                windower.open_url('https://www.ffxiah.com/item/' .. pkt['Param 1'] .. '/')
-            end
-            if settings.config.logitems then
-                FileLogger.AddItem(pkt['Param 1'])
-            end
-            state.command(state)
-        end
-    elseif state.command:Type() == 'BuyCommand' then
-        if id == 0x034 then
-            state.command(state)
-            return true
-        elseif id == 0x05C then
-            return true
-        elseif id == 0x052 then
-            return true
-        end
-    end
+    return command:OnIncomingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------

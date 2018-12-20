@@ -1,4 +1,4 @@
-local BagFactory = require('model/inventory/factory')
+local NilInventory = require('model/inventory/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -14,7 +14,7 @@ function NilEntity:NilEntity()
     o._index = 0
     o._distance = NilEntity.MAX_DISTANCE
     o._type = 'NilEntity'
-    o._bag = BagFactory.CreateInventory()
+    o._bag = NilInventory:NilInventory()
     return o
 end
 

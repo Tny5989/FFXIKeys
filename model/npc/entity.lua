@@ -1,21 +1,19 @@
-local NpcLock = require('model/lock/npc')
+local NilNpc = require('model/npc/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local GameLock = NpcLock:NpcLock()
-GameLock.__index = GameLock
+local EntityNpc = NilNpc:NilNpc()
+EntityNpc.__index = EntityNpc
 
 --------------------------------------------------------------------------------
-function GameLock:GameLock(id, menu, entity)
-    local o = NpcLock:NpcLock(id, menu)
+function EntityNpc:EntityNpc(id, zone, entity)
+    local o = NilNpc:NilNpc()
     setmetatable(o, self)
+    o._id = id
+    o._zone = zone
     o._entity = entity
-    o._type = 'GameLock'
+    o._type = 'EntityNpc'
     return o
 end
 
-function GameLock:Entity()
-    return self._entity
-end
-
-return GameLock
+return EntityNpc
