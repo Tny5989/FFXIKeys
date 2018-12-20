@@ -1,3 +1,4 @@
+local UseDialogue = require('model/dialogue/use')
 local NilDialogue = require('model/dialogue/nil')
 
 --------------------------------------------------------------------------------
@@ -5,8 +6,28 @@ local NilDialogue = require('model/dialogue/nil')
 local DialogueFactory = {}
 
 --------------------------------------------------------------------------------
-function DialogueFactory.CreateItemDialogue()
-    return NilDialogue:NilDialogue()
+function DialogueFactory.CreateUseDialogue(npc, player, item_id)
+    if not npc or npc:Type() == 'NilEntity' then
+        log('Unable to find npc')
+        return NilDialogue:NilDialogue()
+    end
+
+    if not player or player:Type() == 'NilEntity' then
+        log('Unable to find player')
+        return NilDialogue:NilDialogue()
+    end
+
+    if npc:Distance() > settings.config.maxdistance then
+        log('Npc too far away')
+        return NilDialogue:NilDialogue()
+    end
+
+    if not item_id then
+        log('Bad item id')
+        return NilDialogue:NilDialogue()
+    end
+
+    return UseDialogue:UseDialogue(npc, player, item_id)
 end
 
 return DialogueFactory

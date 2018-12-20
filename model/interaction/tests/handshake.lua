@@ -1,6 +1,5 @@
 local LuaUnit = require('luaunit')
 local Handshake = require('model/interaction/handshake')
-local EntityNpc = require('model/npc/entity')
 local NilEntity = require('model/entity/nil')
 
 --------------------------------------------------------------------------------
@@ -37,7 +36,7 @@ end
 --------------------------------------------------------------------------------
 function HandshakeTests:TestFirstPacketGroupIsActionPacket()
     local handshake = Handshake:Handshake()
-    local target = EntityNpc:EntityNpc(1234, 1, MockEntity:MockEntity(1234, 1111))
+    local target = MockEntity:MockEntity(1234, 1)
     local pkts = handshake:_GeneratePackets(target)
     LuaUnit.assertEquals(1, #pkts)
     LuaUnit.assertEquals(pkts[1].id, 0x01A)
@@ -47,7 +46,7 @@ end
 --------------------------------------------------------------------------------
 function HandshakeTests:TestSecondPacketGroupIsEmpty()
     local handshake = Handshake:Handshake()
-    local target = EntityNpc:EntityNpc(1234, 1, MockEntity:MockEntity(1234, 1111))
+    local target = MockEntity:MockEntity(1234, 1)
     handshake:_GeneratePackets(target)
     local pkts = handshake:_GeneratePackets(target)
     LuaUnit.assertEquals(0, #pkts)
@@ -56,7 +55,7 @@ end
 --------------------------------------------------------------------------------
 function HandshakeTests:TestCallingInjectsPackets()
     local handshake = Handshake:Handshake()
-    local target = EntityNpc:EntityNpc(1234, 1, MockEntity:MockEntity(1234, 1111))
+    local target = MockEntity:MockEntity(1234, 1)
     handshake(target)
     LuaUnit.assertEquals(packets.injectcount, 1)
     handshake(target)

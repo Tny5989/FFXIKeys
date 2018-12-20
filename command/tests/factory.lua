@@ -10,49 +10,57 @@ function CommandFactoryTests:SetUp()
     windower = {}
     windower.ffxi = {}
     function windower.ffxi.get_mob_by_id(id)
-        return {id = id, index = 4321, distance = 5}
+        return { id = id, index = 4321, distance = 9999, valid_target = true }
+    end
+
+    function windower.ffxi.get_player()
+        return { id = 9999, index = 8888, distance = 0 }
+    end
+
+    function windower.ffxi.get_items()
+        return { max = 0, count = 0 }
     end
 
     function windower.ffxi.get_info()
-        return {zone = 110}
+        return { zone = 232 }
     end
 
-    function windower.convert_auto_trans()
-    end
+    settings = {}
+    settings.config = {}
+    settings.config.maxdistance = 20
 
     function log()
     end
-
-    resources = {}
-    resources.zones = {}
-
-    function resources.zones.with()
-    end
 end
-
 
 --------------------------------------------------------------------------------
 function CommandFactoryTests:TestNilCommandCreatedWhenBadCommand()
-    local c = CommandFactory.CreateCommand(nil)
+    local c = CommandFactory.CreateCommand()
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 --------------------------------------------------------------------------------
 function CommandFactoryTests:TestNilCommandCreatedWhenUnknownCommand()
-    local c = CommandFactory.CreateCommand('', '')
+    local c = CommandFactory.CreateCommand('unknown')
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestNilCommandCreatedWhenBadName()
-    local c = CommandFactory.CreateCommand('warp', nil)
+function CommandFactoryTests:TestUseCommandCreatedWhenValidParams()
+    local c = CommandFactory.CreateCommand('use', 'SP Gobbie Key')
+    LuaUnit.assertEquals(c:Type(), 'UseCommand')
+end
+
+--------------------------------------------------------------------------------
+function CommandFactoryTests:TestNilCommandCreatedWhenBadUseParam()
+    local c = CommandFactory.CreateCommand('use', nil)
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestWarpCommmandCreatedForValidWarp()
-    local c = CommandFactory.CreateCommand('warp', '')
-    LuaUnit.assertEquals(c:Type(), 'WarpCommand')
+function CommandFactoryTests:TestNilCommandCreatedWhenUnknownParam()
+    local c = CommandFactory.CreateCommand('use', 'apples')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 LuaUnit.LuaUnit.run('CommandFactoryTests')

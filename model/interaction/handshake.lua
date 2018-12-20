@@ -1,10 +1,10 @@
 local NilInteraction = require('model/interaction/nil')
 
 --------------------------------------------------------------------------------
-local function CreateItemPacket(target)
+local function CreateActionPacket(target)
     local pkt = packets.new('outgoing', 0x01A)
     pkt['Target'] = target:Id()
-    pkt['Target Index'] = target:Entity():Index()
+    pkt['Target Index'] = target:Index()
     return pkt
 end
 
@@ -17,7 +17,7 @@ Handshake.__index = Handshake
 function Handshake:Handshake()
     local o = NilInteraction:NilInteraction()
     setmetatable(o, self)
-    o._to_send = { [1] = function(target) return {CreateItemPacket(target)} end }
+    o._to_send = { [1] = function(target) return {CreateActionPacket(target)} end }
     o._idx = 1
     o._type = 'Handshake'
 

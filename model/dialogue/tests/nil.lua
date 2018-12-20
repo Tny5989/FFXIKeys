@@ -49,9 +49,9 @@ function NilDialogueTests:TestOnIncomingDataAlwaysReturnsFalse()
 end
 
 --------------------------------------------------------------------------------
-function NilDialogueTests:TestTargetTypeIsNilNpc()
+function NilDialogueTests:TestTargetTypeIsNilEntity()
     local dialogue = NilDialogue:NilDialogue()
-    LuaUnit.assertEquals(dialogue:Target():Type(), 'NilNpc')
+    LuaUnit.assertEquals(dialogue:Target():Type(), 'NilEntity')
 end
 
 --------------------------------------------------------------------------------
