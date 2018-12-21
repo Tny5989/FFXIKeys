@@ -46,8 +46,6 @@ end
 --------------------------------------------------------------------------------
 function NilCommand:__call()
     self._on_failure()
-    self._on_success = function() end
-    self._on_failure = function() end
 end
 
 return NilCommand

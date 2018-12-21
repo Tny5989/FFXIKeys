@@ -84,6 +84,39 @@ function UseDialogueTests:TestPacketsSent()
 end
 
 --------------------------------------------------------------------------------
+function UseDialogueTests:TestSuccessCallback()
+    local dialogue = UseDialogue:UseDialogue(MockEntity:MockEntity(1234, 4), MockEntity:MockEntity(4321, 3), 2)
+
+    local fc = 0
+    function failure()
+        fc = fc + 1
+    end
+
+    local sc = 0
+    function success()
+        sc = sc + 1
+    end
+
+    dialogue:SetSuccessCallback(success)
+    dialogue:SetFailureCallback(failure)
+
+    dialogue:Start()
+
+    packets.injected = {}
+    dialogue:OnIncomingData(0x034, {})
+    dialogue:OnIncomingData(0x05C, {})
+    dialogue:OnIncomingData(0x052, {})
+    dialogue:OnIncomingData(0x05C, {})
+    dialogue:OnIncomingData(0x052, {})
+    dialogue:OnIncomingData(0x052, {})
+
+    dialogue:Start()
+
+    LuaUnit.assertEquals(fc, 0)
+    LuaUnit.assertEquals(sc, 2)
+end
+
+--------------------------------------------------------------------------------
 function UseDialogueTests:TestDialogueFailsOnEarly52()
     local dialogue = UseDialogue:UseDialogue(MockEntity:MockEntity(1234, 4), MockEntity:MockEntity(4321, 3), 2)
 

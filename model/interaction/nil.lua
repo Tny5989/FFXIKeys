@@ -36,8 +36,6 @@ end
 --------------------------------------------------------------------------------
 function NilInteraction:__call()
     self._on_success()
-    self._on_success = function() end
-    self._on_failure = function() end
 end
 
 return NilInteraction

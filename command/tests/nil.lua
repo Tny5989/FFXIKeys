@@ -45,29 +45,6 @@ function NilCommandTests:TestFailureCallbackCalled()
 end
 
 --------------------------------------------------------------------------------
-function NilCommandTests:TestFailureCallbackOnlyCalledOnce()
-    local sc = 0
-    function success()
-        sc = sc + 1
-    end
-
-    local fc = 0
-    function failure()
-        fc = fc + 1
-    end
-
-    local c = NilCommand:NilCommand()
-    c:SetSuccessCallback(success)
-    c:SetFailureCallback(failure)
-    c()
-    c()
-    c()
-
-    LuaUnit.assertEquals(sc, 0)
-    LuaUnit.assertEquals(fc, 1)
-end
-
---------------------------------------------------------------------------------
 function NilCommandTests:TestTypeIsNilCommand()
     local c = NilCommand:NilCommand()
     LuaUnit.assertEquals(c:Type(), 'NilCommand')

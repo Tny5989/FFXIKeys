@@ -36,8 +36,6 @@ function Choice:OnIncomingData(id, pkt)
     -- TODO failure condition? 0x052 with 5th byte set differently?
     if id == 0x052 then
         self._on_success()
-        self._on_success = function() end
-        self._on_failure = function() end
         return true
     else
         return false

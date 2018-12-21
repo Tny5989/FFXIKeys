@@ -30,13 +30,9 @@ end
 function Handshake:OnIncomingData(id, _)
     if id == 0x052 then
         self._on_failure()
-        self._on_failure = function() end
-        self._on_success = function() end
         return true
     elseif id == 0x034 or id == 0x032 then
         self._on_success()
-        self._on_success = function() end
-        self._on_failure = function() end
         return true
     else
         return false

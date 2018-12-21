@@ -2,6 +2,7 @@ local NilDialogue = require('model/dialogue/nil')
 local NilMenu = require('model/menu/nil')
 local Trade = require('model/interaction/trade')
 local Choice = require('model/interaction/choice')
+local NilInteraction = require('model/interaction/nil')
 local MenuFactory = require('model/menu/factory')
 
 --------------------------------------------------------------------------------
@@ -21,8 +22,11 @@ function UseDialogue:UseDialogue(target, player, item_id)
     o._interactions = {}
     o._idx = 0
 
-    setmetatable(o._interactions,
-        { __index = function() return o._on_success end})
+    o._end = NilInteraction:NilInteraction()
+    o._end:SetSuccessCallback(function() o._on_success() end)
+    o._end:SetFailureCallback(function() o._on_success() end)
+
+    setmetatable(o._interactions, { __index = function() return o._end end })
 
     o:_AppendInteraction(Trade:Trade())
 

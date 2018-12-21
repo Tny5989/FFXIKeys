@@ -27,22 +27,6 @@ function NilDialogueTests:TestSuccessCallbackOnStart()
 end
 
 --------------------------------------------------------------------------------
-function NilDialogueTests:TestCallbackOnlyCalledOnce()
-    local dialogue = NilDialogue:NilDialogue()
-
-    local sc = 0
-    function success()
-        sc = sc + 1
-    end
-
-    dialogue:SetFailureCallback(success)
-    dialogue:Start()
-    dialogue:Start()
-    dialogue:Start()
-    LuaUnit.assertEquals(sc, 1)
-end
-
---------------------------------------------------------------------------------
 function NilDialogueTests:TestOnIncomingDataAlwaysReturnsFalse()
     local dialogue = NilDialogue:NilDialogue()
     LuaUnit.assertFalse(dialogue:OnIncomingData(0x052, {}));
