@@ -17,14 +17,7 @@ local NilCommand = require('command/nil')
 local command = NilCommand:NilCommand()
 
 --------------------------------------------------------------------------------
-local function OnCommandSuccess(reward)
-    if settings.config.loop then
-        command:Reset()
-        command()
-    else
-        command = NilCommand:NilCommand()
-    end
-
+local function OnReward(reward)
     if reward then
         if settings.config.printlinks then
             log('https://www.ffxiah.com/item/' .. reward .. '/')
@@ -36,6 +29,19 @@ local function OnCommandSuccess(reward)
             FileLogger.AddItem(reward)
         end
     end
+end
+
+--------------------------------------------------------------------------------
+local function OnCommandSuccess(reward)
+    if settings.config.loop then
+        command:Reset()
+        command()
+    else
+        command = NilCommand:NilCommand()
+        FileLogger.Flush()
+    end
+
+    OnReward(reward)
 end
 
 --------------------------------------------------------------------------------
