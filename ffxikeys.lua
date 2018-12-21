@@ -23,6 +23,7 @@ local OnLoad
 local OnZoneChange
 local OnCommand
 local OnIncomingData
+local OnOutgoingData
 
 --------------------------------------------------------------------------------
 CreateCommand = function(cmd, param)
@@ -75,7 +76,13 @@ OnIncomingData = function(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
+OnOutgoingData = function(id, _, pkt, b, i)
+    return command:OnOutgoingData(id, pkt)
+end
+
+--------------------------------------------------------------------------------
 windower.register_event('load', OnLoad)
 windower.register_event('zone change', OnZoneChange)
 windower.register_event('addon command', OnCommand)
 windower.register_event('incoming chunk', OnIncomingData)
+windower.register_event('outgoing chunk', OnOutgoingData)
