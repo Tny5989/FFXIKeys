@@ -52,6 +52,15 @@ function UseDialogue:OnIncomingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
+function UseDialogue:OnOutgoingData(id, pkt)
+    if id == 0x015 then
+        return true
+    else
+        return false
+    end
+end
+
+--------------------------------------------------------------------------------
 function UseDialogue:Start()
     self:_OnSuccess()
 end

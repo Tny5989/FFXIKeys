@@ -38,6 +38,12 @@ function UseDialogueTests:SetUp()
 end
 
 --------------------------------------------------------------------------------
+function UseDialogueTests:TestOnOutgoingDataReturnTrueFor015()
+    local c = UseDialogue:UseDialogue(MockEntity:MockEntity(1234, 4), MockEntity:MockEntity(4321, 3), 2)
+    LuaUnit.assertTrue(c:OnOutgoingData(0x015, {}))
+end
+
+--------------------------------------------------------------------------------
 function UseDialogueTests:TestPacketsSent()
     local dialogue = UseDialogue:UseDialogue(MockEntity:MockEntity(1234, 4), MockEntity:MockEntity(4321, 3), 2)
 

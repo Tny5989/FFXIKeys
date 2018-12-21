@@ -9,8 +9,8 @@ local UseCommand = NilCommand:NilCommand()
 UseCommand.__index = UseCommand
 
 --------------------------------------------------------------------------------
-function UseCommand:UseCommand(id, item_id, zone)
-    local o = NilCommand:NilCommand()
+function UseCommand:UseCommand(params, id, item_id, zone)
+    local o = NilCommand:NilCommand(params)
     setmetatable(o, self)
     o._dialogue = DialogueFactory.CreateUseDialogue(EntityFactory.CreateMob(id, zone),
         EntityFactory.CreatePlayer(), item_id)
@@ -23,6 +23,11 @@ end
 --------------------------------------------------------------------------------
 function UseCommand:OnIncomingData(id, pkt)
     return self._dialogue:OnIncomingData(id, pkt)
+end
+
+--------------------------------------------------------------------------------
+function UseCommand:OnOutgoingData(id, pkt)
+    return self._dialogue:OnOutgoingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------

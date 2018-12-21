@@ -13,18 +13,14 @@ function CommandFactory.CreateCommand(cmd, p1)
         local key = Keys.GetByProperty('en', p1)
         if key.id == 0 then
             log('Invalid argument')
-            return NilCommand:NilCommand()
+            return NilCommand:NilCommand(p1)
         end
 
         local npc = Npcs.GetClosest()
-        local c =  UseCommand:UseCommand(npc.id, key.id, npc.zone)
-
-        c:SetRawParams({ p1 })
-
-        return c
+        return UseCommand:UseCommand(p1, npc.id, key.id, npc.zone)
     end
 
-    return NilCommand:NilCommand()
+    return NilCommand:NilCommand(p1)
 end
 
 return CommandFactory

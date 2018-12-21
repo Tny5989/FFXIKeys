@@ -6,9 +6,21 @@ local NilCommand = require('command/nil')
 NilCommandTests = {}
 
 --------------------------------------------------------------------------------
+function NilCommandTests:TestParamsAreCorrect()
+    local c = NilCommand:NilCommand('abc')
+    LuaUnit.assertEquals(c:RawParams(), 'abc')
+end
+
+--------------------------------------------------------------------------------
 function NilCommandTests:TestOnIncomingDataReturnFalse()
     local c = NilCommand:NilCommand()
     LuaUnit.assertFalse(c:OnIncomingData(0x052, {}))
+end
+
+--------------------------------------------------------------------------------
+function NilCommandTests:TestOnOutgoingDataReturnFalse()
+    local c = NilCommand:NilCommand()
+    LuaUnit.assertFalse(c:OnOutgoingData(0x052, {}))
 end
 
 --------------------------------------------------------------------------------

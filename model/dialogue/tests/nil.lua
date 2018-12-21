@@ -6,6 +6,18 @@ local NilDialogue = require('model/dialogue/nil')
 NilDialogueTests = {}
 
 --------------------------------------------------------------------------------
+function NilDialogueTests:TestOnIncomingDataReturnFalse()
+    local c = NilDialogue:NilDialogue()
+    LuaUnit.assertFalse(c:OnIncomingData(0x052, {}))
+end
+
+--------------------------------------------------------------------------------
+function NilDialogueTests:TestOnOutgoingDataReturnFalse()
+    local c = NilDialogue:NilDialogue()
+    LuaUnit.assertFalse(c:OnOutgoingData(0x052, {}))
+end
+
+--------------------------------------------------------------------------------
 function NilDialogueTests:TestSuccessCallbackOnStart()
     local dialogue = NilDialogue:NilDialogue()
 
