@@ -15,55 +15,35 @@ local NilCommand = require('command/nil')
 --------------------------------------------------------------------------------
 local command = NilCommand:NilCommand()
 
--- Forward declarations
-local CreateCommand
-local OnCommandSuccess
-local OnCommandFailure
-local OnLoad
-local OnZoneChange
-local OnCommand
-local OnIncomingData
-local OnOutgoingData
-
 --------------------------------------------------------------------------------
-CreateCommand = function(cmd, param)
-    local command = CommandFactory.CreateCommand(cmd, param)
-    command:SetSuccessCallback(OnCommandSuccess)
-    command:SetFailureCallback(OnCommandFailure)
-    return command
+local function OnCommandSuccess()
+    command:Reset()
+    command()
 end
 
 --------------------------------------------------------------------------------
-OnCommandFailure = function()
+local function OnCommandFailure()
     command = NilCommand:NilCommand()
     log('Done')
 end
 
 --------------------------------------------------------------------------------
-OnCommandSuccess = function()
-    if command:Type() == 'UseCommand' then
-        command = CreateCommand('use', command:RawParams())
-        command()
-    else
-        OnCommandFailure()
-    end
-end
-
---------------------------------------------------------------------------------
-OnLoad = function()
+local function OnLoad()
     settings.load()
     Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
-OnZoneChange = function()
+local function OnZoneChange()
     Aliases.Update()
 end
 
 --------------------------------------------------------------------------------
-OnCommand = function(cmd, name)
+local function OnCommand(cmd, name)
     if command:Type() == 'NilCommand' then
-        command = CreateCommand(cmd, name)
+        command = CommandFactory.CreateCommand(cmd, name)
+        command:SetSuccessCallback(OnCommandSuccess)
+        command:SetFailureCallback(OnCommandFailure)
         command()
     else
         log('Already running a command')
@@ -71,12 +51,12 @@ OnCommand = function(cmd, name)
 end
 
 --------------------------------------------------------------------------------
-OnIncomingData = function(id, _, pkt, b, i)
+local function OnIncomingData(id, _, pkt, b, i)
     return command:OnIncomingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
-OnOutgoingData = function(id, _, pkt, b, i)
+local function OnOutgoingData(id, _, pkt, b, i)
     return command:OnOutgoingData(id, pkt)
 end
 

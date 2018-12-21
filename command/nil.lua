@@ -4,12 +4,11 @@ local NilCommand = {}
 NilCommand.__index = NilCommand
 
 --------------------------------------------------------------------------------
-function NilCommand:NilCommand(params)
+function NilCommand:NilCommand()
     local o = {}
     setmetatable(o, self)
     o._on_success = function() end
     o._on_failure = function() end
-    o._raw = params
     o._type = 'NilCommand'
     return o
 end
@@ -25,11 +24,6 @@ function NilCommand:SetFailureCallback(f)
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:RawParams()
-    return self._raw
-end
-
---------------------------------------------------------------------------------
 function NilCommand:OnIncomingData(id, pkt)
     return false
 end
@@ -37,6 +31,10 @@ end
 --------------------------------------------------------------------------------
 function NilCommand:OnOutgoingData(id, pkt)
     return false
+end
+
+--------------------------------------------------------------------------------
+function NilCommand:Reset()
 end
 
 --------------------------------------------------------------------------------

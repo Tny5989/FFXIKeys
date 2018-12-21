@@ -42,12 +42,6 @@ function UseCommandTests:SetUp()
 end
 
 --------------------------------------------------------------------------------
-function UseCommandTests:TestParamsAreCorrect()
-    local c = UseCommand:UseCommand('abc')
-    LuaUnit.assertEquals(c:RawParams(), 'abc')
-end
-
---------------------------------------------------------------------------------
 function UseCommandTests:TestSuccessCallbackCalled()
     local sc = 0
     function success()
@@ -59,7 +53,7 @@ function UseCommandTests:TestSuccessCallbackCalled()
         fc = fc + 1
     end
 
-    local c = UseCommand:UseCommand('', 1234, 8973, 1)
+    local c = UseCommand:UseCommand(1234, 8973, 1)
     c:SetSuccessCallback(success)
     c:SetFailureCallback(failure)
     c()
@@ -83,7 +77,7 @@ end
 
 --------------------------------------------------------------------------------
 function UseCommandTests:TestTypeIsUseCommand()
-    local c = UseCommand:UseCommand('', 1234, 8973, 1)
+    local c = UseCommand:UseCommand(1234, 8973, 1)
     LuaUnit.assertEquals(c:Type(), 'UseCommand')
 end
 

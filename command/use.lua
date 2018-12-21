@@ -9,14 +9,16 @@ local UseCommand = NilCommand:NilCommand()
 UseCommand.__index = UseCommand
 
 --------------------------------------------------------------------------------
-function UseCommand:UseCommand(params, id, item_id, zone)
-    local o = NilCommand:NilCommand(params)
+function UseCommand:UseCommand(id, item_id, zone)
+    local o = NilCommand:NilCommand()
     setmetatable(o, self)
-    o._dialogue = DialogueFactory.CreateUseDialogue(EntityFactory.CreateMob(id, zone),
-        EntityFactory.CreatePlayer(), item_id)
-    o._dialogue:SetSuccessCallback(function() o._on_success() end)
-    o._dialogue:SetFailureCallback(function() o._on_failure() end)
+    o._id = id
+    o._item_id = item_id
+    o._zone = zone
     o._type = 'UseCommand'
+
+    o:Reset()
+
     return o
 end
 
@@ -28,6 +30,15 @@ end
 --------------------------------------------------------------------------------
 function UseCommand:OnOutgoingData(id, pkt)
     return self._dialogue:OnOutgoingData(id, pkt)
+end
+
+--------------------------------------------------------------------------------
+function UseCommand:Reset()
+    self._dialogue = DialogueFactory.CreateUseDialogue(
+        EntityFactory.CreateMob(self._id, self._zone),
+        EntityFactory.CreatePlayer(), self._item_id)
+    self._dialogue:SetSuccessCallback(function() self._on_success() end)
+    self._dialogue:SetFailureCallback(function() self._on_failure() end)
 end
 
 --------------------------------------------------------------------------------
