@@ -24,7 +24,7 @@ function NilCommandTests:TestNilCommandSettingsRequirement()
 end
 
 --------------------------------------------------------------------------------
-function NilCommandTests:TestSuccessCallbackCalled()
+function NilCommandTests:TestFailureCallbackCalled()
     local sc = 0
     function success()
         sc = sc + 1
@@ -45,7 +45,7 @@ function NilCommandTests:TestSuccessCallbackCalled()
 end
 
 --------------------------------------------------------------------------------
-function NilCommandTests:TestSuccessCallbackOnlyCalledOnce()
+function NilCommandTests:TestFailureCallbackOnlyCalledOnce()
     local sc = 0
     function success()
         sc = sc + 1
