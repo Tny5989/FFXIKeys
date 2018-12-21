@@ -5,8 +5,8 @@ _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
 require('logger')
+packets = require('packets')
 settings = require('util/settings')
-resources = require('resources')
 
 local CommandFactory = require('command/factory')
 local Aliases = require('util/aliases')
@@ -16,8 +16,21 @@ local NilCommand = require('command/nil')
 local command = NilCommand:NilCommand()
 
 --------------------------------------------------------------------------------
-local function OnCommandFinished()
+local function OnCommandFailure()
     command = NilCommand:NilCommand()
+    log('Done')
+end
+
+--------------------------------------------------------------------------------
+local function OnCommandSuccess()
+    if command:Type() == 'UseCommand' then
+        command = CommandFactory.CreateCommand('use', unpack(command:RawParams()))
+        command:SetSuccessCallback(OnCommandSuccess)
+        command:SetFailureCallback(OnCommandFailure)
+        command()
+    else
+        OnCommandFailure()
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -35,8 +48,8 @@ end
 local function OnCommand(cmd, name)
     if command:Type() == 'NilCommand' then
         command = CommandFactory.CreateCommand(cmd, name)
-        command:SetSuccessCallback(OnCommandFinished)
-        command:SetFailureCallback(OnCommandFinished)
+        command:SetSuccessCallback(OnCommandSuccess)
+        command:SetFailureCallback(OnCommandFailure)
         command()
     else
         log('Already running a command')

@@ -40,8 +40,8 @@ function NilCommandTests:TestSuccessCallbackCalled()
     c:SetFailureCallback(failure)
     c()
 
-    LuaUnit.assertEquals(sc, 1)
-    LuaUnit.assertEquals(fc, 0)
+    LuaUnit.assertEquals(sc, 0)
+    LuaUnit.assertEquals(fc, 1)
 end
 
 --------------------------------------------------------------------------------
@@ -63,8 +63,8 @@ function NilCommandTests:TestSuccessCallbackOnlyCalledOnce()
     c()
     c()
 
-    LuaUnit.assertEquals(sc, 1)
-    LuaUnit.assertEquals(fc, 0)
+    LuaUnit.assertEquals(sc, 0)
+    LuaUnit.assertEquals(fc, 1)
 end
 
 --------------------------------------------------------------------------------

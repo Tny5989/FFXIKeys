@@ -5,8 +5,8 @@ local function CreateItemPacket(target, player, item_id)
     local pkt = packets.new('outgoing', 0x036)
     pkt['Target'] = target:Id()
     pkt['Target Index'] = target:Index()
-    pkt['Item Count'] = 1
-    pkt['Item Index'] = player:Bag():ItemIndex(item_id)
+    pkt['Item Count 1'] = 1
+    pkt['Item Index 1'] = player:Bag():ItemIndex(item_id)
     pkt['Number of Items'] = 1
     return pkt
 end
@@ -55,7 +55,7 @@ function Trade:_GeneratePackets(target, player, item_id)
 end
 
 --------------------------------------------------------------------------------
-function Trade:__call(target, player, item_id)
+function Trade:__call(target, _, _, _, player, item_id)
     local pkts = self:_GeneratePackets(target, player, item_id)
     for _, pkt in pairs(pkts) do
         packets.inject(pkt)

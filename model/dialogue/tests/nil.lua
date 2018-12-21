@@ -22,8 +22,8 @@ function NilDialogueTests:TestSuccessCallbackOnStart()
     dialogue:SetSuccessCallback(success)
     dialogue:SetFailureCallback(failure)
     dialogue:Start()
-    LuaUnit.assertEquals(sc, 1)
-    LuaUnit.assertEquals(fc, 0)
+    LuaUnit.assertEquals(sc, 0)
+    LuaUnit.assertEquals(fc, 1)
 end
 
 --------------------------------------------------------------------------------
@@ -35,7 +35,7 @@ function NilDialogueTests:TestCallbackOnlyCalledOnce()
         sc = sc + 1
     end
 
-    dialogue:SetSuccessCallback(success)
+    dialogue:SetFailureCallback(success)
     dialogue:Start()
     dialogue:Start()
     dialogue:Start()

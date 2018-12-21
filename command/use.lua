@@ -9,10 +9,10 @@ local UseCommand = NilCommand:NilCommand()
 UseCommand.__index = UseCommand
 
 --------------------------------------------------------------------------------
-function UseCommand:UseCommand(id, item_id)
+function UseCommand:UseCommand(id, item_id, zone)
     local o = NilCommand:NilCommand()
     setmetatable(o, self)
-    o._dialogue = DialogueFactory.CreateUseDialogue(EntityFactory.CreateMob(id),
+    o._dialogue = DialogueFactory.CreateUseDialogue(EntityFactory.CreateMob(id, zone),
         EntityFactory.CreatePlayer(), item_id)
     o._dialogue:SetSuccessCallback(function() o._on_success() end)
     o._dialogue:SetFailureCallback(function() o._on_failure() end)

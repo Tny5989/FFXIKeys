@@ -24,6 +24,16 @@ function NilCommand:SetFailureCallback(f)
 end
 
 --------------------------------------------------------------------------------
+function NilCommand:SetRawParams(params)
+    self._raw = params
+end
+
+--------------------------------------------------------------------------------
+function NilCommand:RawParams()
+    return self._raw
+end
+
+--------------------------------------------------------------------------------
 function NilCommand:OnIncomingData(id, pkt)
     return false
 end
@@ -35,7 +45,7 @@ end
 
 --------------------------------------------------------------------------------
 function NilCommand:__call()
-    self._on_success()
+    self._on_failure()
     self._on_success = function() end
     self._on_failure = function() end
 end

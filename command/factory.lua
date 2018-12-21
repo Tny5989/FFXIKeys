@@ -16,7 +16,12 @@ function CommandFactory.CreateCommand(cmd, p1)
             return NilCommand:NilCommand()
         end
 
-        return UseCommand:UseCommand(Npcs.GetClosest().id, key.id)
+        local npc = Npcs.GetClosest()
+        local c =  UseCommand:UseCommand(npc.id, key.id, npc.zone)
+
+        c:SetRawParams({ p1 })
+
+        return c
     end
 
     return NilCommand:NilCommand()

@@ -34,7 +34,7 @@ end
 
 --------------------------------------------------------------------------------
 function NilDialogue:Start()
-    self._on_success()
+    self._on_failure()
     self._on_success = function() end
     self._on_failure = function() end
 end

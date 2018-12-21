@@ -91,23 +91,23 @@ function MenuFactoryTests:TestNilMenuCreatedWhenUnableToParsePacket_Extra()
 end
 
 --------------------------------------------------------------------------------
-function MenuFactoryTests:TestActionMenuCreatedWhenLastMenuWasSimple()
+function MenuFactoryTests:TestSimpleMenuCreatedWhenLastMenuWasSimple()
     function packets.parse(_, _)
         return {}
     end
 
     local menu = MenuFactory.CreateExtraMenu({}, SimpleMenu:SimpleMenu(), 0)
-    LuaUnit.assertEquals(menu:Type(), 'ActionMenu')
+    LuaUnit.assertEquals(menu:Type(), 'SimpleMenu')
 end
 
 --------------------------------------------------------------------------------
-function MenuFactoryTests:TestWarpMenuCreatedWhenLastMenuWasAction()
+function MenuFactoryTests:TestSimpleMenuCreatedWhenLastMenuWasAction()
     function packets.parse(_, _)
         return {}
     end
 
     local menu = MenuFactory.CreateExtraMenu({}, ActionMenu:ActionMenu(), 0)
-    LuaUnit.assertEquals(menu:Type(), 'WarpMenu')
+    LuaUnit.assertEquals(menu:Type(), 'SimpleMenu')
 end
 
 LuaUnit.LuaUnit.run('MenuFactoryTests')

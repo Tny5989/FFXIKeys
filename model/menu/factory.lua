@@ -1,7 +1,6 @@
 local ActionMenu = require('model/menu/action')
 local NilMenu = require('model/menu/nil')
 local SimpleMenu = require('model/menu/simple')
-local WarpMenu = require('model/menu/warp')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -28,12 +27,12 @@ function MenuFactory.CreateMenu(pkt)
         return SimpleMenu:SimpleMenu(menu_id, 0, false)
     end
 
-    return SimpleMenu:SimpleMenu(menu_id, 10, true)
+    return ActionMenu:ActionMenu(menu_id)
 end
 
 --------------------------------------------------------------------------------
-function MenuFactory.CreateExtraMenu(pkt, last_menu, zone_idx)
-    if not pkt or not last_menu or not zone_idx or not packets then
+function MenuFactory.CreateExtraMenu(pkt, last_menu, item_id)
+    if not pkt or not last_menu or not item_id or not packets then
         return NilMenu:NilMenu()
     end
 
@@ -43,13 +42,11 @@ function MenuFactory.CreateExtraMenu(pkt, last_menu, zone_idx)
         return NilMenu:NilMenu()
     end
 
-    if last_menu:Type() == 'SimpleMenu' then
-        return ActionMenu:ActionMenu(last_menu:Id())
-    else
-        return WarpMenu:WarpMenu(last_menu:Id(), { zone_idx });
+    if last_menu:Type() == 'ActionMenu' then
+        return SimpleMenu:SimpleMenu(last_menu:Id(), 2, true)
     end
 
-    return NilMenu:NilMenu()
+    return SimpleMenu:SimpleMenu(last_menu:Id(), 2, false);
 end
 
 return MenuFactory
