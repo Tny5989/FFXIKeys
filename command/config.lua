@@ -18,6 +18,7 @@ end
 --------------------------------------------------------------------------------
 function ConfigCommand:__call()
     settings.config[self._setting] = self._value
+    settings.save()
     log(self._setting .. ' is now ' .. (self._value and 'on' or 'off'))
 end
 
