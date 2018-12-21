@@ -35,31 +35,46 @@ end
 
 --------------------------------------------------------------------------------
 function CommandFactoryTests:TestNilCommandCreatedWhenBadCommand()
-    local c = CommandFactory.CreateCommand()
+    local c = CommandFactory.CreateOrRunCommand()
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 --------------------------------------------------------------------------------
 function CommandFactoryTests:TestNilCommandCreatedWhenUnknownCommand()
-    local c = CommandFactory.CreateCommand('unknown')
+    local c = CommandFactory.CreateOrRunCommand('unknown')
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 --------------------------------------------------------------------------------
 function CommandFactoryTests:TestUseCommandCreatedWhenValidParams()
-    local c = CommandFactory.CreateCommand('use', 'SP Gobbie Key')
+    local c = CommandFactory.CreateOrRunCommand('use', 'SP Gobbie Key')
     LuaUnit.assertEquals(c:Type(), 'UseCommand')
 end
 
 --------------------------------------------------------------------------------
 function CommandFactoryTests:TestNilCommandCreatedWhenBadUseParam()
-    local c = CommandFactory.CreateCommand('use', nil)
+    local c = CommandFactory.CreateOrRunCommand('use', nil)
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 
 --------------------------------------------------------------------------------
 function CommandFactoryTests:TestNilCommandCreatedWhenUnknownParam()
-    local c = CommandFactory.CreateCommand('use', 'apples')
+    local c = CommandFactory.CreateOrRunCommand('use', 'apples')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+end
+
+--------------------------------------------------------------------------------
+function CommandFactoryTests:TestNilCommandCreatedWhenConfigCommand()
+    local c = CommandFactory.CreateOrRunCommand('loop')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+
+    c = CommandFactory.CreateOrRunCommand('printlinks')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+
+    c = CommandFactory.CreateOrRunCommand('openlinks')
+    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+
+    c = CommandFactory.CreateOrRunCommand('logitems')
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 

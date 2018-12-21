@@ -6,6 +6,11 @@ local NilInteraction = require('model/interaction/nil')
 local MenuFactory = require('model/menu/factory')
 
 --------------------------------------------------------------------------------
+local function ParseReward(pkt)
+    return packets.parse('incoming', pkt)['Param 1']
+end
+
+--------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 local UseDialogue = NilDialogue:NilDialogue()
 UseDialogue.__index = UseDialogue
@@ -21,9 +26,10 @@ function UseDialogue:UseDialogue(target, player, item_id)
     o._menu = NilMenu:NilMenu()
     o._interactions = {}
     o._idx = 0
+    o._reward = nil
 
     o._end = NilInteraction:NilInteraction()
-    o._end:SetSuccessCallback(function() o._on_success() end)
+    o._end:SetSuccessCallback(function() o._on_success(o._reward) end)
     o._end:SetFailureCallback(function() o._on_success() end)
 
     setmetatable(o._interactions, { __index = function() return o._end end })
@@ -46,6 +52,9 @@ function UseDialogue:OnIncomingData(id, pkt)
         block = true
         self._menu = MenuFactory.CreateExtraMenu(pkt, self._menu, self._item_id)
         self:_AppendInteraction(Choice:Choice())
+    elseif id == 0x02A then
+        block = false
+        self._reward = ParseReward(pkt)
     end
 
     return (self._interactions[self._idx]:OnIncomingData(id, pkt) or block)

@@ -10,21 +10,38 @@ settings = require('util/settings')
 
 local CommandFactory = require('command/factory')
 local Aliases = require('util/aliases')
+local FileLogger = require('util/logger')
 local NilCommand = require('command/nil')
 
 --------------------------------------------------------------------------------
 local command = NilCommand:NilCommand()
 
 --------------------------------------------------------------------------------
-local function OnCommandSuccess()
-    command:Reset()
-    command()
+local function OnCommandSuccess(reward)
+    if settings.config.loop then
+        command:Reset()
+        command()
+    else
+        command = NilCommand:NilCommand()
+    end
+
+    if reward then
+        if settings.config.printlinks then
+            log('https://www.ffxiah.com/item/' .. reward .. '/')
+        end
+        if settings.config.openlinks then
+            windower.open_url('https://www.ffxiah.com/item/' .. reward .. '/')
+        end
+        if settings.config.logitems then
+            FileLogger.AddItem(reward)
+        end
+    end
 end
 
 --------------------------------------------------------------------------------
 local function OnCommandFailure()
     command = NilCommand:NilCommand()
-    log('Done')
+    FileLogger.Flush()
 end
 
 --------------------------------------------------------------------------------
@@ -40,13 +57,14 @@ end
 
 --------------------------------------------------------------------------------
 local function OnCommand(cmd, name)
+    local new_command = CommandFactory.CreateOrRunCommand(cmd, name)
     if command:Type() == 'NilCommand' then
-        command = CommandFactory.CreateCommand(cmd, name)
+        command = new_command
         command:SetSuccessCallback(OnCommandSuccess)
         command:SetFailureCallback(OnCommandFailure)
         command()
-    else
-        log('Already running a command')
+    elseif new_command:Type() ~= 'NilCommand' then
+        log('Already running a complex command')
     end
 end
 
