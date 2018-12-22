@@ -25,7 +25,7 @@ function UseDialogue:UseDialogue(target, player, item_id)
     o._type = 'UseDialogue'
     o._menu = NilMenu:NilMenu()
     o._interactions = {}
-    o._idx = 0
+    o._idx = 1
     o._reward = nil
 
     o._end = NilInteraction:NilInteraction()
@@ -34,6 +34,7 @@ function UseDialogue:UseDialogue(target, player, item_id)
 
     setmetatable(o._interactions, { __index = function() return o._end end })
 
+    o:_AppendInteraction(NilInteraction:NilInteraction())
     o:_AppendInteraction(Trade:Trade())
 
     return o
@@ -62,11 +63,7 @@ end
 
 --------------------------------------------------------------------------------
 function UseDialogue:OnOutgoingData(id, pkt)
-    if id == 0x015 then
-        return true
-    else
-        return false
-    end
+    return self._interactions[self._idx]:OnOutgoingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------

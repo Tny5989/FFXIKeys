@@ -29,6 +29,11 @@ function NilInteraction:OnIncomingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
+function NilInteraction:OnOutgoingData(id, pkt)
+    return false
+end
+
+--------------------------------------------------------------------------------
 function NilInteraction:Type()
     return self._type
 end
