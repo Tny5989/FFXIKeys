@@ -23,8 +23,6 @@ function Trade:Trade()
     o._to_send = { [1] = function(target, player, item_id)
         return {CreateItemPacket(target, player, item_id)} end }
     o._idx = 1
-    o._finished = false
-    o._d = false
     o._type = 'Trade'
 
     setmetatable(o._to_send,
@@ -38,20 +36,10 @@ function Trade:OnIncomingData(id, _)
         self._on_failure()
         return true
     elseif id == 0x034 or id == 0x032 then
-        self._finished = true
+        self._on_success()
         return true
     else
         return false
-    end
-end
-
---------------------------------------------------------------------------------
-function Trade:OnOutgoingData(id, _)
-    if id == 0x015 and self._finished then
-        self._on_success()
-        return false
-    else
-        return NilInteraction.OnOutgoingData(self, id, _)
     end
 end
 
