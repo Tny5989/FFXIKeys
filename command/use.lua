@@ -37,7 +37,7 @@ function UseCommand:Reset()
     self._dialogue = DialogueFactory.CreateUseDialogue(
         EntityFactory.CreateMob(self._id, self._zone),
         EntityFactory.CreatePlayer(), self._item_id)
-    self._dialogue:SetSuccessCallback(function() self._on_success() end)
+    self._dialogue:SetSuccessCallback(function(reward) self._on_success(reward) end)
     self._dialogue:SetFailureCallback(function() self._on_failure() end)
 end
 
