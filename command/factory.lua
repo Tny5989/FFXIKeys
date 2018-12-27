@@ -14,26 +14,23 @@ ConfigCommands['loop'] = true
 ConfigCommands['printlinks'] = true
 ConfigCommands['openlinks'] = true
 ConfigCommands['logitems'] = true
+setmetatable(ConfigCommands,
+    { __index = function() return false end })
 
 --------------------------------------------------------------------------------
-function CommandFactory.CreateOrRunCommand(cmd, p1)
+function CommandFactory.CreateCommand(cmd, p1)
     if cmd == 'use' then
         local key = Keys.GetByProperty('en', p1)
         if key.id == 0 then
             log('Invalid argument')
             return NilCommand:NilCommand()
         end
-
         local npc = Npcs.GetClosest()
         return UseCommand:UseCommand(npc.id, key.id, npc.zone)
-    elseif cmd and ConfigCommands[cmd] then
-        -- Config commands are simple and ran immediately to avoid interrupting
-        -- longer running commands
-        ConfigCommand:ConfigCommand(cmd, not (settings.config[cmd]))()
-        return NilCommand:NilCommand()
+    elseif ConfigCommands[cmd] then
+        return ConfigCommand:ConfigCommand(cmd, not (settings.config[cmd]))
     end
 
-    log('Unknown command')
     return NilCommand:NilCommand()
 end
 

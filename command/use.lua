@@ -42,6 +42,11 @@ function UseCommand:Reset()
 end
 
 --------------------------------------------------------------------------------
+function UseCommand:IsSimple()
+    return false
+end
+
+--------------------------------------------------------------------------------
 function UseCommand:__call()
     self._dialogue:Start()
 end

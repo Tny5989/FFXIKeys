@@ -6,6 +6,11 @@ local NilCommand = require('command/nil')
 NilCommandTests = {}
 
 --------------------------------------------------------------------------------
+function NilCommandTests:TestIsSimple()
+    LuaUnit.assertTrue(NilCommand:NilCommand():IsSimple())
+end
+
+--------------------------------------------------------------------------------
 function NilCommandTests:TestOnIncomingDataReturnFalse()
     local c = NilCommand:NilCommand()
     LuaUnit.assertFalse(c:OnIncomingData(0x052, {}))

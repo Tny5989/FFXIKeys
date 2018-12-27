@@ -57,24 +57,6 @@ local function OnLoad()
 end
 
 --------------------------------------------------------------------------------
-local function OnZoneChange()
-    Aliases.Update()
-end
-
---------------------------------------------------------------------------------
-local function OnCommand(cmd, name)
-    local new_command = CommandFactory.CreateOrRunCommand(cmd, name)
-    if command:Type() == 'NilCommand' then
-        command = new_command
-        command:SetSuccessCallback(OnCommandSuccess)
-        command:SetFailureCallback(OnCommandFailure)
-        command()
-    elseif new_command:Type() ~= 'NilCommand' then
-        log('Already running a complex command')
-    end
-end
-
---------------------------------------------------------------------------------
 local function OnIncomingData(id, _, pkt, b, i)
     return command:OnIncomingData(id, pkt)
 end
@@ -85,8 +67,23 @@ local function OnOutgoingData(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
+local function OnCommand(cmd, name)
+    local new_command = CommandFactory.CreateCommand(cmd, name)
+    if new_command:IsSimple() then
+        new_command()
+    elseif command:IsSimple() then
+        command = new_command
+        command:SetSuccessCallback(OnCommandSuccess)
+        command:SetFailureCallback(OnCommandFailure)
+        command()
+    else
+        log('Already running a complex command')
+    end
+end
+
+--------------------------------------------------------------------------------
 windower.register_event('load', OnLoad)
-windower.register_event('zone change', OnZoneChange)
+windower.register_event('zone change', OnLoad)
 windower.register_event('addon command', OnCommand)
 windower.register_event('incoming chunk', OnIncomingData)
 windower.register_event('outgoing chunk', OnOutgoingData)

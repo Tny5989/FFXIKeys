@@ -42,6 +42,11 @@ function UseCommandTests:SetUp()
 end
 
 --------------------------------------------------------------------------------
+function UseCommandTests:TestIsSimple()
+    LuaUnit.assertFalse(UseCommand:UseCommand():IsSimple())
+end
+
+--------------------------------------------------------------------------------
 function UseCommandTests:TestSuccessCallbackCalled()
     local sc = 0
     function success()

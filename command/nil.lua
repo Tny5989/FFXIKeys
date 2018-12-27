@@ -38,6 +38,11 @@ function NilCommand:Reset()
 end
 
 --------------------------------------------------------------------------------
+function NilCommand:IsSimple()
+    return true
+end
+
+--------------------------------------------------------------------------------
 function NilCommand:Type()
     return self._type
 end
