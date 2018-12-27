@@ -64,18 +64,24 @@ function CommandFactoryTests:TestNilCommandCreatedWhenUnknownParam()
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestNilCommandCreatedWhenConfigCommand()
+function CommandFactoryTests:TestConfigCommandCreatedWhenConfigCommand()
     local c = CommandFactory.CreateCommand('loop')
-    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    LuaUnit.assertEquals(c:Type(), 'ConfigCommand')
 
     c = CommandFactory.CreateCommand('printlinks')
-    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    LuaUnit.assertEquals(c:Type(), 'ConfigCommand')
 
     c = CommandFactory.CreateCommand('openlinks')
-    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    LuaUnit.assertEquals(c:Type(), 'ConfigCommand')
 
     c = CommandFactory.CreateCommand('logitems')
-    LuaUnit.assertEquals(c:Type(), 'NilCommand')
+    LuaUnit.assertEquals(c:Type(), 'ConfigCommand')
+end
+
+--------------------------------------------------------------------------------
+function CommandFactoryTests:TestStopCommandCreatedForStop()
+    local c = CommandFactory.CreateCommand('stop')
+    LuaUnit.assertEquals(c:Type(), 'StopCommand')
 end
 
 LuaUnit.LuaUnit.run('CommandFactoryTests')

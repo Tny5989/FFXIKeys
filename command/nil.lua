@@ -48,7 +48,7 @@ function NilCommand:Type()
 end
 
 --------------------------------------------------------------------------------
-function NilCommand:__call()
+function NilCommand:__call(state)
     self._on_failure()
 end
 

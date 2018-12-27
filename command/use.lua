@@ -47,7 +47,7 @@ function UseCommand:IsSimple()
 end
 
 --------------------------------------------------------------------------------
-function UseCommand:__call()
+function UseCommand:__call(state)
     self._dialogue:Start()
 end
 

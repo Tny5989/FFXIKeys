@@ -14,7 +14,8 @@ local FileLogger = require('util/logger')
 local NilCommand = require('command/nil')
 
 --------------------------------------------------------------------------------
-local command = NilCommand:NilCommand()
+local state = {}
+state.command = NilCommand:NilCommand()
 
 --------------------------------------------------------------------------------
 local function OnReward(reward)
@@ -33,20 +34,22 @@ end
 
 --------------------------------------------------------------------------------
 local function OnCommandSuccess(reward)
+    OnReward(reward)
+
     if settings.config.loop then
-        command:Reset()
-        command()
+        state.command:Reset()
+        state.command(state)
     else
-        command = NilCommand:NilCommand()
+        state.command = NilCommand:NilCommand()
         FileLogger.Flush()
     end
-
-    OnReward(reward)
 end
 
 --------------------------------------------------------------------------------
-local function OnCommandFailure()
-    command = NilCommand:NilCommand()
+local function OnCommandFailure(reward)
+    OnReward(reward)
+
+    state.command = NilCommand:NilCommand()
     FileLogger.Flush()
 end
 
@@ -58,24 +61,24 @@ end
 
 --------------------------------------------------------------------------------
 local function OnIncomingData(id, _, pkt, b, i)
-    return command:OnIncomingData(id, pkt)
+    return state.command:OnIncomingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
 local function OnOutgoingData(id, _, pkt, b, i)
-    return command:OnOutgoingData(id, pkt)
+    return state.command:OnOutgoingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
 local function OnCommand(cmd, name)
     local new_command = CommandFactory.CreateCommand(cmd, name)
     if new_command:IsSimple() then
-        new_command()
-    elseif command:IsSimple() then
-        command = new_command
-        command:SetSuccessCallback(OnCommandSuccess)
-        command:SetFailureCallback(OnCommandFailure)
-        command()
+        new_command(state)
+    elseif state.command:IsSimple() then
+        state.command = new_command
+        state.command:SetSuccessCallback(OnCommandSuccess)
+        state.command:SetFailureCallback(OnCommandFailure)
+        state.command(state)
     else
         log('Already running a complex command')
     end

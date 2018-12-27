@@ -1,5 +1,6 @@
 local ConfigCommand = require('command/config')
 local NilCommand = require('command/nil')
+local StopCommand = require('command/stop')
 local UseCommand = require('command/use')
 local Keys = require('data/keys')
 local Npcs = require('data/npcs')
@@ -27,6 +28,8 @@ function CommandFactory.CreateCommand(cmd, p1)
         end
         local npc = Npcs.GetClosest()
         return UseCommand:UseCommand(npc.id, key.id, npc.zone)
+    elseif cmd == 'stop' then
+        return StopCommand:StopCommand()
     elseif ConfigCommands[cmd] then
         return ConfigCommand:ConfigCommand(cmd, not (settings.config[cmd]))
     end
