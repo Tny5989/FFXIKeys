@@ -89,7 +89,4 @@ windower.register_event('load', OnLoad)
 windower.register_event('zone change', OnLoad)
 windower.register_event('addon command', OnCommand)
 windower.register_event('incoming chunk', OnIncomingData)
-<<<<<<< HEAD
-=======
 windower.register_event('outgoing chunk', OnOutgoingData)
->>>>>>> origin/dev
