@@ -15,9 +15,8 @@ end
 
 --------------------------------------------------------------------------------
 function StopCommand:__call(state)
-    state.running = false
-    state.command = nil
-    return true
+    log('Stopping')
+    state.command._on_success = state.command._on_failure
 end
 
 return StopCommand

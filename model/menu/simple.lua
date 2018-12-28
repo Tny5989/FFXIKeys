@@ -1,18 +1,20 @@
-local NilLock = require('model/lock/nil')
+local NilMenu = require('model/menu/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local NpcLock = NilLock:NilLock()
-NpcLock.__index = NpcLock
+local SimpleMenu = NilMenu:NilMenu()
+SimpleMenu.__index = SimpleMenu
 
 --------------------------------------------------------------------------------
-function NpcLock:NpcLock(id, menu)
-    local o = NilLock:NilLock()
+function SimpleMenu:SimpleMenu(id, option, automated)
+    local o = NilMenu:NilMenu()
     setmetatable(o, self)
+
     o._id = id
-    o._menu = menu
-    o._type = 'NpcLock'
+    o._option = { option = option, automated = automated }
+    o._type = 'SimpleMenu'
+
     return o
 end
 
-return NpcLock
+return SimpleMenu

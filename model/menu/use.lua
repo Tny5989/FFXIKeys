@@ -1,18 +1,17 @@
-local NilKey = require('model/key/nil')
+local SimpleMenu = require('model/menu/simple')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local ItemKey = NilKey:NilKey()
-ItemKey.__index = ItemKey
+local UseMenu = SimpleMenu:SimpleMenu()
+UseMenu.__index = UseMenu
 
 --------------------------------------------------------------------------------
-function ItemKey:ItemKey(id, option)
-    local o = NilKey:NilKey()
+function UseMenu:UseMenu(id)
+    local o = SimpleMenu:SimpleMenu(id, 1, true)
     setmetatable(o, self)
-    o._id = id
-    o._option = option
-    o._type = 'ItemKey'
+    o._type = 'UseMenu'
+
     return o
 end
 
-return ItemKey
+return UseMenu

@@ -5,45 +5,55 @@ local DialogueFactory = require('model/dialogue/factory')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local BuyCommand = NilCommand:NilCommand()
-BuyCommand.__index = BuyCommand
+local UseCommand = NilCommand:NilCommand()
+UseCommand.__index = UseCommand
 
 --------------------------------------------------------------------------------
-function BuyCommand:BuyCommand(id, idx, zone, count)
+function UseCommand:UseCommand(id, item_id, zone)
     local o = NilCommand:NilCommand()
     setmetatable(o, self)
     o._id = id
-    o._idx = idx
+    o._item_id = item_id
     o._zone = zone
-    o._count = count
-    o._type = 'BuyCommand'
+    o._type = 'UseCommand'
 
-    o._dialogue = DialogueFactory.CreateBuyDialogue(EntityFactory.CreateMob(o._id, o._zone),
-        EntityFactory.CreatePlayer(), o._idx, o._count)
-    o._dialogue:SetSuccessCallback(function() o._on_success() end)
-    o._dialogue:SetFailureCallback(function() o._on_failure() end)
+    o:Reset()
 
     return o
 end
 
 --------------------------------------------------------------------------------
-function BuyCommand:OnIncomingData(id, pkt)
+function UseCommand:OnIncomingData(id, pkt)
     return self._dialogue:OnIncomingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
-function BuyCommand:OnOutgoingData(id, pkt)
+function UseCommand:OnOutgoingData(id, pkt)
     return self._dialogue:OnOutgoingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
-function BuyCommand:IsSimple()
+function UseCommand:Reset()
+    self._dialogue = DialogueFactory.CreateUseDialogue(
+        EntityFactory.CreateMob(self._id, self._zone),
+        EntityFactory.CreatePlayer(), self._item_id)
+    self._dialogue:SetSuccessCallback(function(reward) self._on_success(reward) end)
+    self._dialogue:SetFailureCallback(function() self._on_failure() end)
+end
+
+--------------------------------------------------------------------------------
+function UseCommand:IsSimple()
     return false
 end
 
 --------------------------------------------------------------------------------
-function BuyCommand:__call(state)
+function UseCommand:IsRepeatable()
+    return true
+end
+
+--------------------------------------------------------------------------------
+function UseCommand:__call(state)
     self._dialogue:Start()
 end
 
-return BuyCommand
+return UseCommand

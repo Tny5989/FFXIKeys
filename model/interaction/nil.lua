@@ -1,52 +1,46 @@
-local NilInventory = require('model/inventory/nil')
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+local NilInteraction = {}
+NilInteraction.__index = NilInteraction
 
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-local NilEntity = {}
-NilEntity.__index = NilEntity
-NilEntity.MAX_DISTANCE = 2^32
-
---------------------------------------------------------------------------------
-function NilEntity:NilEntity()
+function NilInteraction:NilInteraction()
     local o = {}
     setmetatable(o, self)
-    o._id = 0
-    o._index = 0
-    o._zone = 0
-    o._distance = NilEntity.MAX_DISTANCE
-    o._type = 'NilEntity'
-    o._bag = NilInventory:NilInventory()
+    o._on_success = function() end
+    o._on_failure = function() end
+    o._type = 'NilInteraction'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Id()
-    return self._id
+function NilInteraction:SetSuccessCallback(f)
+    self._on_success = f
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Index()
-    return self._index
+function NilInteraction:SetFailureCallback(f)
+    self._on_failure = f
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Distance()
-    return self._distance
+function NilInteraction:OnIncomingData(id, pkt)
+    return false
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Zone()
-    return self._zone
+function NilInteraction:OnOutgoingData(id, pkt)
+    return false
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Type()
+function NilInteraction:Type()
     return self._type
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Bag()
-    return self._bag
+function NilInteraction:__call()
+    self._on_success()
 end
 
-return NilEntity
+return NilInteraction

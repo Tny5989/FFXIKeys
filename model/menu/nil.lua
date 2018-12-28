@@ -1,24 +1,31 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local NilAction = {}
-NilAction.__index = NilAction
+local NilMenu = {}
+NilMenu.__index = NilMenu
 
 --------------------------------------------------------------------------------
-function NilAction:NilAction()
+function NilMenu:NilMenu(id)
     local o = {}
     setmetatable(o, self)
-    o._type = 'NilAction'
+    o._id = id
+    o._option = { option = 0, automated = false }
+    o._type = 'NilMenu'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilAction:Type()
-    return self._type
+function NilMenu:Id()
+    return self._id
 end
 
 --------------------------------------------------------------------------------
-function NilAction:__call()
-    return false
+function NilMenu:OptionFor(_)
+    return self._option
 end
 
-return NilAction
+--------------------------------------------------------------------------------
+function NilMenu:Type()
+    return self._type
+end
+
+return NilMenu

@@ -1,17 +1,17 @@
-local ItemKey = require('model/key/item')
+local SimpleMenu = require('model/menu/simple')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local GameKey = ItemKey:ItemKey()
-GameKey.__index = GameKey
+local BuyMenu = SimpleMenu:SimpleMenu()
+BuyMenu.__index = BuyMenu
 
 --------------------------------------------------------------------------------
-function GameKey:GameKey(id, option, entity)
-    local o = ItemKey:ItemKey(id, option)
+function BuyMenu:BuyMenu(id)
+    local o = SimpleMenu:SimpleMenu(id, 10, true)
     setmetatable(o, self)
-    o._entity = entity
-    o._type = 'GameKey'
+    o._type = 'BuyMenu'
+
     return o
 end
 
-return GameKey
+return BuyMenu

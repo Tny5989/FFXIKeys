@@ -22,8 +22,8 @@ function EntityFactory.CreatePlayer()
 end
 
 --------------------------------------------------------------------------------
-function EntityFactory.CreateMob(mob_id)
-    if not mob_id then
+function EntityFactory.CreateMob(mob_id, zone)
+    if not mob_id or not zone then
         return NilEntity:NilEntity()
     end
 
@@ -32,7 +32,7 @@ function EntityFactory.CreateMob(mob_id)
         return NilEntity:NilEntity()
     end
 
-    return MobEntity:MobEntity(mob)
+    return MobEntity:MobEntity(mob, zone)
 end
 
 return EntityFactory

@@ -1,52 +1,55 @@
-local NilInventory = require('model/inventory/nil')
+local NilEntity = require('model/entity/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local NilEntity = {}
-NilEntity.__index = NilEntity
-NilEntity.MAX_DISTANCE = 2^32
+local NilDialogue = {}
+NilDialogue.__index = NilDialogue
 
 --------------------------------------------------------------------------------
-function NilEntity:NilEntity()
+function NilDialogue:NilDialogue()
     local o = {}
     setmetatable(o, self)
-    o._id = 0
-    o._index = 0
-    o._zone = 0
-    o._distance = NilEntity.MAX_DISTANCE
-    o._type = 'NilEntity'
-    o._bag = NilInventory:NilInventory()
+    o._on_failure = function() end
+    o._on_success = function() end
+    o._target = NilEntity:NilEntity()
+    o._type = 'NilDialogue'
+
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Id()
-    return self._id
+function NilDialogue:SetSuccessCallback(f)
+    self._on_success = f
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Index()
-    return self._index
+function NilDialogue:SetFailureCallback(f)
+    self._on_failure = f
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Distance()
-    return self._distance
+function NilDialogue:OnIncomingData(id, pkt)
+    return false
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Zone()
-    return self._zone
+function NilDialogue:OnOutgoingData(id, pkt)
+    return false
 end
 
 --------------------------------------------------------------------------------
-function NilEntity:Type()
+function NilDialogue:Start()
+    self._on_failure()
+end
+
+--------------------------------------------------------------------------------
+function NilDialogue:Target()
+    return self._target
+end
+
+--------------------------------------------------------------------------------
+function NilDialogue:Type()
     return self._type
 end
 
---------------------------------------------------------------------------------
-function NilEntity:Bag()
-    return self._bag
-end
-
-return NilEntity
+return NilDialogue

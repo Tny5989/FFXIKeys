@@ -13,6 +13,7 @@ local function defaults()
     defaults.printlinks = false
     defaults.openlinks = false
     defaults.logitems = false
+    defaults.loop = true
     defaults.maxdistance = 25.0
 
     return defaults

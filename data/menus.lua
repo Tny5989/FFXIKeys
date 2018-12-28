@@ -23,24 +23,41 @@ local function AllByValue(name, search_value, domain)
 end
 
 --------------------------------------------------------------------------------
+local Menus = {}
+
+Menus.Values = {}
+Menus.Values['']   = { id = 0000, item_claim = false }
+
+-- Igsli
+Menus.Values[0598] = { id = 0598, item_claim = false }
+Menus.Values[0599] = { id = 0599, item_claim = true  }
+
+-- Urbiolaine
+Menus.Values[3529] = { id = 3529, item_claim = false }
+
+-- Teldro-Kesdrodo
+Menus.Values[0879] = { id = 0879, item_claim = false }
+
+-- Yonolala
+Menus.Values[0879] = { id = 0879, item_claim = false }
+
+-- Nunaarl Bthtrogg
+Menus.Values[5149] = { id = 5149, item_claim = false }
+
+
 --------------------------------------------------------------------------------
-local Keys = {}
-Keys.Values = {}
-
--- Nil Key
-Keys.Values['']   = { id = 0000, idx = 0, en = '' }
-
--- Keys
-Keys.Values[8973] = { id = 8973, idx = 1, en = 'SP Gobbie Key' }
-
---------------------------------------------------------------------------------
-function Keys.GetByProperty(key, value)
-    return ByValue(tostring(key), value, Keys.Values)
+function Menus.GetByProperty(key, value)
+    return ByValue(tostring(key), value, Menus.Values)
 end
 
 --------------------------------------------------------------------------------
-function Keys.GetAllByProperty(key, value)
-    return AllByValue(tostring(key), value, Keys.Values)
+function Menus.GetAllByProperty(key, value)
+    return AllByValue(tostring(key), value, Menus.Values)
 end
 
-return Keys
+--------------------------------------------------------------------------------
+function Menus.IsItemClaim(menu_id)
+    return ByValue('id', tonumber(menu_id), Menus.Values).item_claim
+end
+
+return Menus
