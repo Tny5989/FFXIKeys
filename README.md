@@ -21,6 +21,7 @@ Use                   | //usekeys
 Buy                   | //buykeys \<count\>
 
 \<key\> should be replaced with values from data/keys.lua.
+
 \<count\> should be replaced with a number.
 
 This addon does not check your accolades.  It is up to you to verify your accolades amount before buying keys.
