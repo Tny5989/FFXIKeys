@@ -43,6 +43,11 @@ function NilCommand:IsSimple()
 end
 
 --------------------------------------------------------------------------------
+function NilCommand:IsRepeatable()
+    return false
+end
+
+--------------------------------------------------------------------------------
 function NilCommand:Type()
     return self._type
 end

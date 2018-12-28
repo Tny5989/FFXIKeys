@@ -36,7 +36,7 @@ end
 local function OnCommandSuccess(reward)
     OnReward(reward)
 
-    if settings.config.loop then
+    if settings.config.loop and state.command:IsRepeatable() then
         state.command:Reset()
         state.command(state)
     else
@@ -70,8 +70,8 @@ local function OnOutgoingData(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
-local function OnCommand(cmd, name)
-    local new_command = CommandFactory.CreateCommand(cmd, name)
+local function OnCommand(cmd, name, count)
+    local new_command = CommandFactory.CreateCommand(cmd, name, count)
     if new_command:IsSimple() then
         new_command(state)
     elseif state.command:IsSimple() then

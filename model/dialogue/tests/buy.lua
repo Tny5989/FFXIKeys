@@ -1,5 +1,5 @@
 local LuaUnit = require('luaunit')
-local UseDialogue = require('model/dialogue/use')
+local BuyDialogue = require('model/dialogue/buy')
 local NilEntity = require('model/entity/nil')
 
 --------------------------------------------------------------------------------
@@ -18,10 +18,10 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-UseDialogueTests = {}
+BuyDialogueTests = {}
 
 --------------------------------------------------------------------------------
-function UseDialogueTests:SetUp()
+function BuyDialogueTests:SetUp()
     packets = {}
     function packets.new(dir, id)
         return { dir = dir, id = id }
@@ -38,8 +38,8 @@ function UseDialogueTests:SetUp()
 end
 
 --------------------------------------------------------------------------------
-function UseDialogueTests:TestPacketsSent()
-    local dialogue = UseDialogue:UseDialogue(MockEntity:MockEntity(1234, 4), MockEntity:MockEntity(4321, 3), 2)
+function BuyDialogueTests:TestPacketsSent()
+    local dialogue = BuyDialogue:BuyDialogue(MockEntity:MockEntity(1234, 4), 2, 6)
 
     local fc = 0
     function failure()
@@ -56,10 +56,16 @@ function UseDialogueTests:TestPacketsSent()
 
     dialogue:Start()
     LuaUnit.assertEquals(#packets.injected, 1)
-    LuaUnit.assertEquals(packets.injected[1].id, 0x036)
+    LuaUnit.assertEquals(packets.injected[1].id, 0x01A)
 
     packets.injected = {}
     dialogue:OnIncomingData(0x034, {})
+    LuaUnit.assertEquals(#packets.injected, 1)
+    LuaUnit.assertEquals(packets.injected[1].id, 0x05B)
+
+    packets.injected = {}
+    dialogue:OnIncomingData(0x05C, {})
+    dialogue:OnIncomingData(0x052, {})
     LuaUnit.assertEquals(#packets.injected, 1)
     LuaUnit.assertEquals(packets.injected[1].id, 0x05B)
 
@@ -84,8 +90,8 @@ function UseDialogueTests:TestPacketsSent()
 end
 
 --------------------------------------------------------------------------------
-function UseDialogueTests:TestSuccessCallback()
-    local dialogue = UseDialogue:UseDialogue(MockEntity:MockEntity(1234, 4), MockEntity:MockEntity(4321, 3), 2)
+function BuyDialogueTests:TestSuccessCallback()
+    local dialogue = BuyDialogue:BuyDialogue(MockEntity:MockEntity(1234, 4), 2)
 
     local fc = 0
     function failure()
@@ -108,6 +114,8 @@ function UseDialogueTests:TestSuccessCallback()
     dialogue:OnIncomingData(0x052, {})
     dialogue:OnIncomingData(0x05C, {})
     dialogue:OnIncomingData(0x052, {})
+    dialogue:OnIncomingData(0x05C, {})
+    dialogue:OnIncomingData(0x052, {})
     dialogue:OnIncomingData(0x052, {})
 
     dialogue:Start()
@@ -117,8 +125,8 @@ function UseDialogueTests:TestSuccessCallback()
 end
 
 --------------------------------------------------------------------------------
-function UseDialogueTests:TestDialogueFailsOnEarly52()
-    local dialogue = UseDialogue:UseDialogue(MockEntity:MockEntity(1234, 4), MockEntity:MockEntity(4321, 3), 2)
+function BuyDialogueTests:TestDialogueFailsOnEarly52()
+    local dialogue = BuyDialogue:BuyDialogue(MockEntity:MockEntity(1234, 4), 2)
 
     local fc = 0
     function failure()
@@ -135,7 +143,7 @@ function UseDialogueTests:TestDialogueFailsOnEarly52()
 
     dialogue:Start()
     LuaUnit.assertEquals(#packets.injected, 1)
-    LuaUnit.assertEquals(packets.injected[1].id, 0x036)
+    LuaUnit.assertEquals(packets.injected[1].id, 0x01A)
 
     packets.injected = {}
     dialogue:OnIncomingData(0x052, {})
@@ -146,9 +154,9 @@ function UseDialogueTests:TestDialogueFailsOnEarly52()
 end
 
 --------------------------------------------------------------------------------
-function UseDialogueTests:TestTypeIsUseDialogue()
-    local dialogue = UseDialogue:UseDialogue()
-    LuaUnit.assertEquals(dialogue:Type(), 'UseDialogue')
+function BuyDialogueTests:TestTypeIsBuyDialogue()
+    local dialogue = BuyDialogue:BuyDialogue()
+    LuaUnit.assertEquals(dialogue:Type(), 'BuyDialogue')
 end
 
-LuaUnit.LuaUnit.run('UseDialogueTests')
+LuaUnit.LuaUnit.run('BuyDialogueTests')

@@ -28,7 +28,7 @@ function Logger.AddItem(item_id)
     if item then
         table.insert(Logger.items, { time = os.time(), text = item.en })
     else
-        print('Unable to find an item with id: ' .. tostring(item_id))
+        log('Unable to find an item with id: ' .. tostring(item_id))
     end
 end
 

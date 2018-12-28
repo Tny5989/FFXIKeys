@@ -23,35 +23,29 @@ local function AllByValue(name, search_value, domain)
 end
 
 --------------------------------------------------------------------------------
-local Npcs = {}
+local Vendors = {}
 
-Npcs.Values = {}
-Npcs.Values['']       = { id = 00000000, en = '',          zone = 000 }
-Npcs.Values[17727633] = { id = 17727633, en = 'Habitox',   zone = 232 }
-Npcs.Values[17719641] = { id = 17719641, en = 'Mystrix',   zone = 230 }
-Npcs.Values[17735872] = { id = 17735872, en = 'Bountibox', zone = 234 }
-Npcs.Values[17739956] = { id = 17739956, en = 'Specilox',  zone = 235 }
-Npcs.Values[17756352] = { id = 17756352, en = 'Arbitrix',  zone = 239 }
-Npcs.Values[17764606] = { id = 17764606, en = 'Funtrox',   zone = 241 }
-Npcs.Values[17780998] = { id = 17780998, en = 'Sweepstox', zone = 245 }
-Npcs.Values[17776886] = { id = 17776886, en = 'Priztrix',  zone = 244 }
-Npcs.Values[16982639] = { id = 16982639, en = 'Wondrix',   zone = 500 }
-Npcs.Values[17826176] = { id = 17826176, en = 'Rewardox',  zone = 256 }
-Npcs.Values[17830186] = { id = 17830186, en = 'Winrix',    zone = 257 }
+Vendors.Values = {}
+Vendors.Values['']       = { id = 0,        en = '',                 zone = 000 }
+Vendors.Values[17719646] = { id = 17719646, en = 'Urbiolaine',       zone = 230 }
+Vendors.Values[17739961] = { id = 17739961, en = 'Igsli',            zone = 235 }
+Vendors.Values[17764611] = { id = 17764611, en = 'Teldro-Kesdrodo',  zone = 241 }
+Vendors.Values[17764612] = { id = 17764612, en = 'Yonolala',         zone = 241 }
+Vendors.Values[17826181] = { id = 17826181, en = 'Nunaarl Bthtrogg', zone = 256 }
 
 --------------------------------------------------------------------------------
-function Npcs.GetByProperty(key, value)
-    return ByValue(tostring(key), value, Npcs.Values)
+function Vendors.GetByProperty(key, value)
+    return ByValue(tostring(key), value, Vendors.Values)
 end
 
 --------------------------------------------------------------------------------
-function Npcs.GetAllByProperty(key, value)
-    return AllByValue(tostring(key), value, Npcs.Values)
+function Vendors.GetAllByProperty(key, value)
+    return AllByValue(tostring(key), value, Vendors.Values)
 end
 
 --------------------------------------------------------------------------------
-function Npcs.GetClosest()
-    local npcs = Npcs.GetAllByProperty('zone', windower.ffxi.get_info().zone)
+function Vendors.GetClosest()
+    local npcs = Vendors.GetAllByProperty('zone', windower.ffxi.get_info().zone)
 
     local mobs = {}
     for key, value in pairs(npcs) do
@@ -75,4 +69,4 @@ function Npcs.GetClosest()
     return closest_key and npcs[closest_key] or npcs[#npcs]
 end
 
-return Npcs
+return Vendors

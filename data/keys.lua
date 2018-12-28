@@ -27,11 +27,11 @@ end
 local Keys = {}
 Keys.Values = {}
 
--- Null Key
-Keys.Values['']            = { id = 0000, en = '' }
+-- Nil Key
+Keys.Values['']   = { id = 0000, idx = 0, en = '' }
 
 -- Keys
-Keys.Values[8973] = { id = 8973, en = 'SP Gobbie Key' }
+Keys.Values[8973] = { id = 8973, idx = 1, en = 'SP Gobbie Key' }
 
 --------------------------------------------------------------------------------
 function Keys.GetByProperty(key, value)

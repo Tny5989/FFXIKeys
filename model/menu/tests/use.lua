@@ -1,26 +1,26 @@
 local LuaUnit = require('luaunit')
-local ActionMenu = require('model/menu/action')
+local UseMenu = require('model/menu/use')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-ActionMenuTests = {}
+UseMenuTests = {}
 
 --------------------------------------------------------------------------------
-function ActionMenuTests:TestIdIsCorrect()
-    local menu = ActionMenu:ActionMenu(1234)
+function UseMenuTests:TestIdIsCorrect()
+    local menu = UseMenu:UseMenu(1234)
     LuaUnit.assertEquals(menu:Id(), 1234)
 end
 
 --------------------------------------------------------------------------------
-function ActionMenuTests:TestOptionForResult()
-    local menu = ActionMenu:ActionMenu(1234)
+function UseMenuTests:TestOptionForResult()
+    local menu = UseMenu:UseMenu(1234)
     LuaUnit.assertEquals(menu:OptionFor(), { option = 1, automated = true })
 end
 
 --------------------------------------------------------------------------------
-function ActionMenuTests:TestTypeIsActionMenu()
-    local menu = ActionMenu:ActionMenu(1234)
-    LuaUnit.assertEquals(menu:Type(), 'ActionMenu')
+function UseMenuTests:TestTypeIsUseMenu()
+    local menu = UseMenu:UseMenu(1234)
+    LuaUnit.assertEquals(menu:Type(), 'UseMenu')
 end
 
-LuaUnit.LuaUnit.run('ActionMenuTests')
+LuaUnit.LuaUnit.run('UseMenuTests')
