@@ -1,34 +1,39 @@
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-local NilBag = {}
-NilBag.__index = NilBag
-NilBag.INVALID_INDEX = -1
+local NilEntity = require('model/entity/nil')
 
 --------------------------------------------------------------------------------
-function NilBag:NilBag()
+--------------------------------------------------------------------------------
+local NilKey = {}
+NilKey.__index = NilKey
+
+--------------------------------------------------------------------------------
+function NilKey:NilKey()
     local o = {}
     setmetatable(o, self)
+    o._id = 0
+    o._option = 0
+    o._entity = NilEntity:NilEntity()
+    o._type = 'NilKey'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilBag:FreeSlots()
-    return 0
+function NilKey:Item()
+    return self._id
 end
 
 --------------------------------------------------------------------------------
-function NilBag:ItemCount(id)
-    return 0
+function NilKey:Option()
+    return self._option
 end
 
 --------------------------------------------------------------------------------
-function NilBag:ItemIndex(id)
-    return NilBag.INVALID_INDEX
+function NilKey:Entity()
+    return self._entity
 end
 
 --------------------------------------------------------------------------------
-function NilBag:Type()
-    return 'NilBag'
+function NilKey:Type()
+    return self._type
 end
 
-return NilBag
+return NilKey

@@ -1,8 +1,8 @@
-local BuyCommand = require('command/buy_command')
-local ConfigCommand = require('command/config_command')
-local NilCommand = require('command/nil_command')
-local StopCommand = require('command/stop_command')
-local UnlockCommand = require('command/unlock_command')
+local BuyCommand = require('command/buy')
+local ConfigCommand = require('command/config')
+local NilCommand = require('command/nil')
+local StopCommand = require('command/stop')
+local UnlockCommand = require('command/unlock')
 local Keys = require('data/keys')
 local Locks = require('data/locks')
 
@@ -41,7 +41,7 @@ function CommandFactory.CreateCommand(cmd, p1, p2, p3)
         local lock = Locks.GetUnityByName(p2)
         local count = p3 and tonumber(p3) or nil
         return BuyCommand:BuyCommand(key.id, lock.id, key.option, lock.menu, lock.zone, count)
-    elseif cmd == 'printlinks' or cmd == 'openlinks' then
+    elseif cmd == 'printlinks' or cmd == 'openlinks' or cmd == 'logitems' then
         if log then
             log('Settings Saved')
         end

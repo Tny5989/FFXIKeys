@@ -1,4 +1,4 @@
-local NilCommand = require('command/nil_command')
+local NilCommand = require('command/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -7,7 +7,7 @@ ConfigCommand.__index = ConfigCommand
 
 --------------------------------------------------------------------------------
 function ConfigCommand:ConfigCommand(setting)
-    local o = {}
+    local o = NilCommand:NilCommand()
     setmetatable(o, self)
     o._setting = tostring(setting)
     o._type = 'ConfigCommand'

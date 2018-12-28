@@ -1,39 +1,34 @@
-local NilEntity = require('model/entity/nil_entity')
+--------------------------------------------------------------------------------
+--------------------------------------------------------------------------------
+local NilInventory = {}
+NilInventory.__index = NilInventory
+NilInventory.INVALID_INDEX = -1
 
 --------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-local NilKey = {}
-NilKey.__index = NilKey
-
---------------------------------------------------------------------------------
-function NilKey:NilKey()
+function NilInventory:NilInventory()
     local o = {}
     setmetatable(o, self)
-    o._id = 0
-    o._option = 0
-    o._entity = NilEntity:NilEntity()
-    o._type = 'NilKey'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilKey:Item()
-    return self._id
+function NilInventory:FreeSlots()
+    return 0
 end
 
 --------------------------------------------------------------------------------
-function NilKey:Option()
-    return self._option
+function NilInventory:ItemCount(id)
+    return 0
 end
 
 --------------------------------------------------------------------------------
-function NilKey:Entity()
-    return self._entity
+function NilInventory:ItemIndex(id)
+    return NilInventory.INVALID_INDEX
 end
 
 --------------------------------------------------------------------------------
-function NilKey:Type()
-    return self._type
+function NilInventory:Type()
+    return 'NilInventory'
 end
 
-return NilKey
+return NilInventory

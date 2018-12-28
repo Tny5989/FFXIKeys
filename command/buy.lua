@@ -1,7 +1,7 @@
-local NilCommand = require('command/nil_command')
-local KeyFactory = require('model/key/key_factory')
-local LockFactory = require('model/lock/lock_factory')
-local PurchaseFactory = require('model/action/purchase_factory')
+local NilCommand = require('command/nil')
+local KeyFactory = require('model/key/factory')
+local LockFactory = require('model/lock/factory')
+local PurchaseFactory = require('model/action/factory')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -10,7 +10,7 @@ BuyCommand.__index = BuyCommand
 
 --------------------------------------------------------------------------------
 function BuyCommand:BuyCommand(key_id, vendor_id, option_id, menu_id, zone_id, count)
-    local o = {}
+    local o = NilCommand:NilCommand()
     setmetatable(o, self)
     local key = KeyFactory.CreateKey(key_id, option_id)
     local lock = LockFactory.CreateLock(vendor_id, menu_id)

@@ -1,5 +1,5 @@
-local BagFactory = require('model/inventory/bag_factory')
-local NilEntity = require('model/entity/nil_entity')
+local BagFactory = require('model/inventory/factory')
+local NilEntity = require('model/entity/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -8,13 +8,13 @@ PlayerEntity.__index = PlayerEntity
 
 --------------------------------------------------------------------------------
 function PlayerEntity:PlayerEntity(player)
-    local o = {}
+    local o = NilEntity:NilEntity()
     setmetatable(o, self)
     o._id = player.id
     o._index = player.index
     o._distance = 0
     o._type = 'PlayerEntity'
-    o._bag = BagFactory.CreateBag(0)
+    o._bag = BagFactory.CreateInventory(0)
     return o
 end
 

@@ -1,4 +1,4 @@
-local ItemKey = require('model/key/item_key')
+local ItemKey = require('model/key/item')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -7,10 +7,8 @@ GameKey.__index = GameKey
 
 --------------------------------------------------------------------------------
 function GameKey:GameKey(id, option, entity)
-    local o = {}
+    local o = ItemKey:ItemKey(id, option)
     setmetatable(o, self)
-    o._id = id
-    o._option = option
     o._entity = entity
     o._type = 'GameKey'
     return o

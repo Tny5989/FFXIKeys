@@ -1,22 +1,22 @@
-local NilUnlock = require('model/action/nil_unlock')
+local NilAction = require('model/action/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local ValidUnlock = NilUnlock:NilUnlock()
-ValidUnlock.__index = ValidUnlock
+local UnlockAction = NilAction:NilAction()
+UnlockAction.__index = UnlockAction
 
 --------------------------------------------------------------------------------
-function ValidUnlock:ValidUnlock(key, lock)
-    local o = {}
+function UnlockAction:UnlockAction(key, lock)
+    local o = NilAction:NilAction()
     setmetatable(o, self)
-    o._type = 'ValidUnlock'
+    o._type = 'UnlockAction'
     o._key = key
     o._lock = lock
     return o
 end
 
 --------------------------------------------------------------------------------
-function ValidUnlock:__call()
+function UnlockAction:__call()
     local pkt = packets.new('outgoing', 0x036)
     pkt['Target'] = self._lock:Npc()
     pkt['Item Count 1'] = 1
@@ -29,4 +29,4 @@ function ValidUnlock:__call()
     return true
 end
 
-return ValidUnlock
+return UnlockAction

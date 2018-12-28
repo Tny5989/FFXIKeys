@@ -1,25 +1,25 @@
-local NilBag = require('model/inventory/nil_bag')
+local NilInventory = require('model/inventory/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local PlayerBag = NilBag:NilBag()
-PlayerBag.__index = PlayerBag
+local PlayerInventory = NilInventory:NilInventory()
+PlayerInventory.__index = PlayerInventory
 
 --------------------------------------------------------------------------------
-function PlayerBag:PlayerBag(items)
-    local o = {}
+function PlayerInventory:PlayerInventory(items)
+    local o = NilInventory:NilInventory()
     setmetatable(o, self)
     o._items = items
     return o
 end
 
 --------------------------------------------------------------------------------
-function PlayerBag:FreeSlots()
+function PlayerInventory:FreeSlots()
     return self._items.max - self._items.count
 end
 
 --------------------------------------------------------------------------------
-function PlayerBag:ItemCount(id)
+function PlayerInventory:ItemCount(id)
     local count = 0
     for _, value in pairs(self._items) do
         if type(value) == 'table' and value.id == id then
@@ -30,18 +30,18 @@ function PlayerBag:ItemCount(id)
 end
 
 --------------------------------------------------------------------------------
-function PlayerBag:ItemIndex(id)
+function PlayerInventory:ItemIndex(id)
     for key, value in pairs(self._items) do
         if type(value) == 'table' and value.id == id then
             return key
         end
     end
-    return NilBag.ItemIndex(self, id)
+    return NilInventory.ItemIndex(self, id)
 end
 
 --------------------------------------------------------------------------------
-function PlayerBag:Type()
-    return 'PlayerBag'
+function PlayerInventory:Type()
+    return 'PlayerInventory'
 end
 
-return PlayerBag
+return PlayerInventory

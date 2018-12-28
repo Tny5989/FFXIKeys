@@ -1,4 +1,4 @@
-local NpcLock = require('model/lock/npc_lock')
+local NpcLock = require('model/lock/npc')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -7,10 +7,8 @@ GameLock.__index = GameLock
 
 --------------------------------------------------------------------------------
 function GameLock:GameLock(id, menu, entity)
-    local o = {}
+    local o = NpcLock:NpcLock(id, menu)
     setmetatable(o, self)
-    o._id = id
-    o._menu = menu
     o._entity = entity
     o._type = 'GameLock'
     return o

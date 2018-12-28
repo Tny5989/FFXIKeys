@@ -1,4 +1,4 @@
-local NilKey = require('model/key/nil_key')
+local NilKey = require('model/key/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -7,7 +7,7 @@ ItemKey.__index = ItemKey
 
 --------------------------------------------------------------------------------
 function ItemKey:ItemKey(id, option)
-    local o = {}
+    local o = NilKey:NilKey()
     setmetatable(o, self)
     o._id = id
     o._option = option

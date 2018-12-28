@@ -1,6 +1,6 @@
-local EntityFactory = require('model/entity/entity_factory')
-local NilLock = require('model/lock/nil_lock')
-local GameLock = require('model/lock/game_lock')
+local EntityFactory = require('model/entity/factory')
+local NilLock = require('model/lock/nil')
+local GameLock = require('model/lock/game')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

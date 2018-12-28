@@ -1,4 +1,4 @@
-local NilPurchase = require('model/action/nil_purchase')
+local NilAction = require('model/action/nil')
 
 --------------------------------------------------------------------------------
 local function CreateActionPacket(target)
@@ -32,32 +32,32 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local ValidPurchase = NilPurchase:NilPurchase()
-ValidPurchase.__index = ValidPurchase
+local PurchaseAction = NilAction:NilAction()
+PurchaseAction.__index = PurchaseAction
 
 --------------------------------------------------------------------------------
-function ValidPurchase:ValidPurchase(key, vendor, zone, count)
-    local o = {}
+function PurchaseAction:PurchaseAction(key, vendor, zone, count)
+    local o = NilAction:NilAction()
     setmetatable(o, self)
-    o._type = 'ValidPurchase'
+    o._type = 'PurchaseAction'
     o._index = 1
     o._packets = {[1] = {CreateActionPacket(vendor)}, [2] = CreateDialogChoicePackets(vendor, key, zone, count), [3] = {}}
     return o
 end
 
 --------------------------------------------------------------------------------
-function ValidPurchase:_get_packets()
+function PurchaseAction:_get_packets()
     local pkts = self._packets[self._index]
     self._index = math.min(self._index + 1, 3)
     return pkts
 end
 
 --------------------------------------------------------------------------------
-function ValidPurchase:__call()
+function PurchaseAction:__call()
     for _, pkt in pairs(self:_get_packets()) do
         packets.inject(pkt)
     end
     return self._index < 3
 end
 
-return ValidPurchase
+return PurchaseAction

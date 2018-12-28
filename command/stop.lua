@@ -1,4 +1,4 @@
-local NilCommand = require('command/nil_command')
+local NilCommand = require('command/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -7,7 +7,7 @@ StopCommand.__index = StopCommand
 
 --------------------------------------------------------------------------------
 function StopCommand:StopCommand()
-    local o = {}
+    local o = NilCommand:NilCommand()
     setmetatable(o, self)
     o._type = 'StopCommand'
     return o

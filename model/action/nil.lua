@@ -1,24 +1,24 @@
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local NilPurchase = {}
-NilPurchase.__index = NilPurchase
+local NilAction = {}
+NilAction.__index = NilAction
 
 --------------------------------------------------------------------------------
-function NilPurchase:NilPurchase()
+function NilAction:NilAction()
     local o = {}
     setmetatable(o, self)
-    o._type = 'NilPurchase'
+    o._type = 'NilAction'
     return o
 end
 
 --------------------------------------------------------------------------------
-function NilPurchase:Type()
+function NilAction:Type()
     return self._type
 end
 
 --------------------------------------------------------------------------------
-function NilPurchase:__call()
+function NilAction:__call()
     return false
 end
 
-return NilPurchase
+return NilAction

@@ -1,4 +1,4 @@
-local NilEntity = require('model/entity/nil_entity')
+local NilEntity = require('model/entity/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -7,7 +7,7 @@ MobEntity.__index = MobEntity
 
 --------------------------------------------------------------------------------
 function MobEntity:MobEntity(mob)
-    local o = {}
+    local o = NilEntity:NilEntity()
     setmetatable(o, self)
     o._id = mob.id
     o._index = mob.index

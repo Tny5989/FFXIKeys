@@ -1,6 +1,6 @@
-local MobEntity = require('model/entity/mob_entity')
-local NilEntity = require('model/entity/nil_entity')
-local PlayerEntity = require('model/entity/player_entity')
+local MobEntity = require('model/entity/mob')
+local NilEntity = require('model/entity/nil')
+local PlayerEntity = require('model/entity/player')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

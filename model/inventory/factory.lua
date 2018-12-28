@@ -1,22 +1,22 @@
-local NilBag = require('model/inventory/nil_bag')
-local PlayerBag = require('model/inventory/player_bag')
+local NilInventory = require('model/inventory/nil')
+local PlayerInventory = require('model/inventory/player')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local BagFactory = {}
+local InventoryFactory = {}
 
 --------------------------------------------------------------------------------
-function BagFactory.CreateBag(bag_num)
+function InventoryFactory.CreateInventory(bag_num)
     if not bag_num then
-        return NilBag:NilBag()
+        return NilInventory:NilInventory()
     end
 
     local items = windower.ffxi.get_items(bag_num)
     if not items then
-        return NilBag:NilBag()
+        return NilInventory:NilInventory()
     end
 
-    return PlayerBag:PlayerBag(items)
+    return PlayerInventory:PlayerInventory(items)
 end
 
-return BagFactory
+return InventoryFactory

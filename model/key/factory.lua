@@ -1,7 +1,6 @@
-local GameKey = require('model/key/game_key')
-local ItemKey = require('model/key/item_key')
-local EntityFactory = require('model/entity/entity_factory')
-local NilKey = require('model/key/nil_key')
+local GameKey = require('model/key/game')
+local EntityFactory = require('model/entity/factory')
+local NilKey = require('model/key/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

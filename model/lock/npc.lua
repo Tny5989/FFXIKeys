@@ -1,4 +1,4 @@
-local NilLock = require('model/lock/nil_lock')
+local NilLock = require('model/lock/nil')
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -7,7 +7,7 @@ NpcLock.__index = NpcLock
 
 --------------------------------------------------------------------------------
 function NpcLock:NpcLock(id, menu)
-    local o = {}
+    local o = NilLock:NilLock()
     setmetatable(o, self)
     o._id = id
     o._menu = menu
