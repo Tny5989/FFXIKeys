@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '2.0.0'
+_addon.version = '2.1.0'
 _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
