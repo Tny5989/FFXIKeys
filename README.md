@@ -13,12 +13,13 @@ Toggle Logging Items  | //keys logitems
 Toggle Looping        | //keys loop
 
 
-Ease of Use commands for 'SP Gobbie Keys'
+Aliases:
 
 Action                | Addon Command
 --------------------- | -----------------------------
-Use                   | //usekeys
-Buy                   | //buykeys \<count\>
+Use SP Gobbie Key     | //usekeys
+Buy SP Gobbie Key     | //buykeys \<count\>
+Buy Warp Scroll       | //getscroll
 
 \<key\> should be replaced with values from data/keys.lua.
 
