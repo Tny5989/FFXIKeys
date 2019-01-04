@@ -1,11 +1,12 @@
 local NilInteraction = require('model/interaction/nil')
 
 --------------------------------------------------------------------------------
-local function CreateChoicePacket(target, menu, choice, automated)
+local function CreateChoicePacket(target, menu, choice, automated, cycles)
     local pkt = packets.new('outgoing', 0x05B)
     pkt['Target'] = target:Id()
     pkt['Target Index'] = target:Index()
     pkt['Option Index'] = choice
+    pkt['_unknown1'] = cycles
     pkt['Automated Message'] = automated
     pkt['Zone'] = target:Zone()
     pkt['Menu ID'] = menu
@@ -21,7 +22,7 @@ Choice.__index = Choice
 function Choice:Choice()
     local o = NilInteraction:NilInteraction()
     setmetatable(o, self)
-    o._to_send = { [1] = function(target, menu, choice, automated) return {CreateChoicePacket(target, menu, choice, automated)} end }
+    o._to_send = { [1] = function(target, menu, choice, automated, cycles) return {CreateChoicePacket(target, menu, choice, automated, cycles)} end }
     o._idx = 1
     o._type = 'Choice'
 
@@ -43,15 +44,15 @@ function Choice:OnIncomingData(id, pkt)
 end
 
 --------------------------------------------------------------------------------
-function Choice:_GeneratePackets(target, menu, choice, automated)
-    local pkts = self._to_send[self._idx](target, menu, choice, automated)
+function Choice:_GeneratePackets(target, menu, choice, automated, cycles)
+    local pkts = self._to_send[self._idx](target, menu, choice, automated, cycles)
     self._idx = self._idx + 1
     return pkts
 end
 
 --------------------------------------------------------------------------------
-function Choice:__call(target, menu, choice, automated)
-    local pkts = self:_GeneratePackets(target, menu, choice, automated)
+function Choice:__call(target, menu, choice, automated, cycles)
+    local pkts = self:_GeneratePackets(target, menu, choice, automated, cycles)
     for _, pkt in pairs(pkts) do
         packets.inject(pkt)
     end

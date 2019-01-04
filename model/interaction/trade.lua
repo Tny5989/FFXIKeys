@@ -51,7 +51,7 @@ function Trade:_GeneratePackets(target, player, item_id)
 end
 
 --------------------------------------------------------------------------------
-function Trade:__call(target, _, _, _, player, item_id)
+function Trade:__call(target, _, _, _, _, player, item_id)
     local pkts = self:_GeneratePackets(target, player, item_id)
     for _, pkt in pairs(pkts) do
         packets.inject(pkt)

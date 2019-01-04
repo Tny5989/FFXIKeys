@@ -76,7 +76,7 @@ function BuyDialogue:_OnSuccess()
     local menu_id = self._menu:Id()
     local next = self._interactions[self._idx]
 
-    next(self._target, menu_id, option.option, option.automated)
+    next(self._target, menu_id, option.option, option.automated, option.cycle)
 end
 
 return BuyDialogue
