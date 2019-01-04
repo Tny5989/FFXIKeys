@@ -59,9 +59,9 @@ function TradeTests:TestCallingInjectsPackets()
     local Trade = Trade:Trade()
     local target = MockEntity:MockEntity(1234, 1)
     local player = MockEntity:MockEntity(4321, 2)
-    Trade(target, nil, nil, nil, player, 2)
+    Trade(target, nil, nil, nil, nil, player, 2)
     LuaUnit.assertEquals(packets.injectcount, 1)
-    Trade(target, nil, nil, nil, player, 2)
+    Trade(target, nil, nil, nil, nil, player, 2)
     LuaUnit.assertEquals(packets.injectcount, 1)
 end
 

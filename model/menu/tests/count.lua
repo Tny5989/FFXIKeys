@@ -13,8 +13,8 @@ end
 
 --------------------------------------------------------------------------------
 function CountMenuTests:TestOptionForResult()
-    local menu = CountMenu:CountMenu(1234, 1, 6)
-    LuaUnit.assertEquals(menu:OptionFor(), { option = 49188, automated = true })
+    local menu = CountMenu:CountMenu(1234, 12, 11)
+    LuaUnit.assertEquals(menu:OptionFor(), { option = 24964, automated = true, cycle = 1 })
 end
 
 --------------------------------------------------------------------------------

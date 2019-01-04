@@ -37,7 +37,7 @@ end
 function ChoiceTests:TestFirstPacketGroupIsChoicePacket()
     local choice = Choice:Choice()
     local target = MockEntity:MockEntity(1234, 1)
-    local pkts = choice:_GeneratePackets(target, 9002, 12, true)
+    local pkts = choice:_GeneratePackets(target, 9002, 12, true, 0)
     LuaUnit.assertEquals(#pkts, 1)
     LuaUnit.assertEquals(pkts[1].id, 0x05B)
     LuaUnit.assertEquals(pkts[1].dir, 'outgoing')
@@ -48,7 +48,7 @@ function ChoiceTests:TestSecondPacketGroupIsEmpty()
     local choice = Choice:Choice()
     local target = MockEntity:MockEntity(1234, 1)
     choice:_GeneratePackets(target, 9002, 12, true)
-    local pkts = choice:_GeneratePackets(target, 9002, 12, true)
+    local pkts = choice:_GeneratePackets(target, 9002, 12, true, 0)
     LuaUnit.assertEquals(0, #pkts)
 end
 

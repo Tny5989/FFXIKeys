@@ -14,7 +14,7 @@ end
 --------------------------------------------------------------------------------
 function NilMenuTests:TestOptionForReturn()
     local menu = NilMenu:NilMenu(0)
-    LuaUnit.assertEquals(menu:OptionFor(), { option = 0, automated = false })
+    LuaUnit.assertEquals(menu:OptionFor(), { option = 0, automated = false, cycle = 0 })
 end
 
 --------------------------------------------------------------------------------
