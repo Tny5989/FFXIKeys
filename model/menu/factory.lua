@@ -51,7 +51,7 @@ function MenuFactory.CreateBuyMenu(pkt)
 
     local params = ppkt['Menu Parameters']
     if not params then
-        return SimpleMenu:SimpleMenu(menu_id, 0, false)
+        return SimpleMenu:SimpleMenu(menu_id, 0, false, 0)
     end
 
     return BuyMenu:BuyMenu(menu_id)
@@ -70,9 +70,9 @@ function MenuFactory.CreateExtraMenu(pkt, last_menu, v1, v2)
     end
 
     if last_menu:Type() == 'UseMenu' then
-        return SimpleMenu:SimpleMenu(last_menu:Id(), 2, true)
+        return SimpleMenu:SimpleMenu(last_menu:Id(), 2, true, 0)
     elseif last_menu:Type() == 'SimpleMenu' then
-        return SimpleMenu:SimpleMenu(last_menu:Id(), 2, false);
+        return SimpleMenu:SimpleMenu(last_menu:Id(), 2, false, 0);
     end
 
     if last_menu:Type() == 'BuyMenu' then
