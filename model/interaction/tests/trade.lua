@@ -38,7 +38,8 @@ function TradeTests:TestFirstPacketGroupIsItemUsePacket()
     local Trade = Trade:Trade()
     local target = MockEntity:MockEntity(1234, 1)
     local player = MockEntity:MockEntity(4321, 2)
-    local pkts = Trade:_GeneratePackets(target, player, 2)
+    local data = { target = target, player = player }
+    local pkts = Trade:_GeneratePackets(data)
     LuaUnit.assertEquals(1, #pkts)
     LuaUnit.assertEquals(pkts[1].id, 0x036)
     LuaUnit.assertEquals(pkts[1].dir, 'outgoing')
@@ -49,8 +50,9 @@ function TradeTests:TestSecondPacketGroupIsEmpty()
     local Trade = Trade:Trade()
     local target = MockEntity:MockEntity(1234, 1)
     local player = MockEntity:MockEntity(4321, 2)
-    Trade:_GeneratePackets(target, player, 2)
-    local pkts = Trade:_GeneratePackets(target, player, 2)
+    local data = { target = target, player = player }
+    Trade:_GeneratePackets(data)
+    local pkts = Trade:_GeneratePackets(data)
     LuaUnit.assertEquals(0, #pkts)
 end
 
@@ -59,9 +61,10 @@ function TradeTests:TestCallingInjectsPackets()
     local Trade = Trade:Trade()
     local target = MockEntity:MockEntity(1234, 1)
     local player = MockEntity:MockEntity(4321, 2)
-    Trade(target, nil, nil, nil, nil, player, 2)
+    local data = { target = target, player = player }
+    Trade(data)
     LuaUnit.assertEquals(packets.injectcount, 1)
-    Trade(target, nil, nil, nil, nil, player, 2)
+    Trade(data)
     LuaUnit.assertEquals(packets.injectcount, 1)
 end
 

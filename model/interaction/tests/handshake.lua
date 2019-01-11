@@ -37,7 +37,7 @@ end
 function HandshakeTests:TestFirstPacketGroupIsActionPacket()
     local handshake = Handshake:Handshake()
     local target = MockEntity:MockEntity(1234, 1)
-    local pkts = handshake:_GeneratePackets(target)
+    local pkts = handshake:_GeneratePackets({ target = target })
     LuaUnit.assertEquals(1, #pkts)
     LuaUnit.assertEquals(pkts[1].id, 0x01A)
     LuaUnit.assertEquals(pkts[1].dir, 'outgoing')
@@ -47,8 +47,8 @@ end
 function HandshakeTests:TestSecondPacketGroupIsEmpty()
     local handshake = Handshake:Handshake()
     local target = MockEntity:MockEntity(1234, 1)
-    handshake:_GeneratePackets(target)
-    local pkts = handshake:_GeneratePackets(target)
+    handshake:_GeneratePackets({ target = target })
+    local pkts = handshake:_GeneratePackets({ target = target })
     LuaUnit.assertEquals(0, #pkts)
 end
 
@@ -56,9 +56,10 @@ end
 function HandshakeTests:TestCallingInjectsPackets()
     local handshake = Handshake:Handshake()
     local target = MockEntity:MockEntity(1234, 1)
-    handshake(target)
+    local data = { target = target }
+    handshake(data)
     LuaUnit.assertEquals(packets.injectcount, 1)
-    handshake(target)
+    handshake(data)
     LuaUnit.assertEquals(packets.injectcount, 1)
 end
 

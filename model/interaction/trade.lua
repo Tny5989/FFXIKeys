@@ -1,12 +1,12 @@
 local NilInteraction = require('model/interaction/nil')
 
 --------------------------------------------------------------------------------
-local function CreateItemPacket(target, player, item_id)
+local function CreateItemPacket(data)
     local pkt = packets.new('outgoing', 0x036)
-    pkt['Target'] = target:Id()
-    pkt['Target Index'] = target:Index()
+    pkt['Target'] = data.target:Id()
+    pkt['Target Index'] = data.target:Index()
     pkt['Item Count 1'] = 1
-    pkt['Item Index 1'] = player:Bag():ItemIndex(item_id)
+    pkt['Item Index 1'] = data.player:Bag():ItemIndex(data.item_id)
     pkt['Number of Items'] = 1
     return pkt
 end
@@ -20,8 +20,7 @@ Trade.__index = Trade
 function Trade:Trade()
     local o = NilInteraction:NilInteraction()
     setmetatable(o, self)
-    o._to_send = { [1] = function(target, player, item_id)
-        return {CreateItemPacket(target, player, item_id)} end }
+    o._to_send = { [1] = function(data) return {CreateItemPacket(data)} end }
     o._idx = 1
     o._type = 'Trade'
 
@@ -44,15 +43,15 @@ function Trade:OnIncomingData(id, _)
 end
 
 --------------------------------------------------------------------------------
-function Trade:_GeneratePackets(target, player, item_id)
-    local pkts = self._to_send[self._idx](target, player, item_id)
+function Trade:_GeneratePackets(data)
+    local pkts = self._to_send[self._idx](data)
     self._idx = self._idx + 1
     return pkts
 end
 
 --------------------------------------------------------------------------------
-function Trade:__call(target, _, _, _, _, player, item_id)
-    local pkts = self:_GeneratePackets(target, player, item_id)
+function Trade:__call(data)
+    local pkts = self:_GeneratePackets(data)
     for _, pkt in pairs(pkts) do
         packets.inject(pkt)
     end
