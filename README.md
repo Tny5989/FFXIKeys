@@ -20,7 +20,7 @@ Use SP Gobbie Key     | //usekeys
 Buy SP Gobbie Key     | //buykeys \<count\>
 Buy Warp Scroll       | //getscroll
 
-\<key\> should be replaced with values from data/keys.lua.  
+\<key\> should be replaced with values from [data/keys.lua](https://github.com/Tny5989/FFXIKeys/blob/master/data/keys.lua).  
 \<count\> should be replaced with a number.
 
 This addon does not check your accolades.  It is up to you to verify your accolades amount before buying keys.
