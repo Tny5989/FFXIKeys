@@ -1,4 +1,3 @@
-local BuyDialogue = require('model/dialogue/buy')
 local UseDialogue = require('model/dialogue/use')
 local NilDialogue = require('model/dialogue/nil')
 
@@ -39,41 +38,6 @@ function DialogueFactory.CreateUseDialogue(npc, player, item_id)
     end
 
     return UseDialogue:UseDialogue(npc, player, item_id)
-end
-
---------------------------------------------------------------------------------
-function DialogueFactory.CreateBuyDialogue(npc, player, item_idx, count)
-    if not npc or npc:Type() == 'NilEntity' then
-        log('Unable to find npc')
-        return NilDialogue:NilDialogue()
-    end
-
-    if not player or player:Type() == 'NilEntity' then
-        log('Unable to find player')
-        return NilDialogue:NilDialogue()
-    end
-
-    if npc:Distance() > settings.config.maxdistance then
-        log('Npc too far away')
-        return NilDialogue:NilDialogue()
-    end
-
-    if not item_idx then
-        log('Bad item id')
-        return NilDialogue:NilDialogue()
-    end
-
-    if not count then
-        log('Bad item count')
-        return NilDialogue:NilDialogue()
-    end
-
-    if player:Bag():FreeSlots() < 1 then
-        log('Inventory full')
-        return NilDialogue:NilDialogue()
-    end
-
-    return BuyDialogue:BuyDialogue(npc, item_idx, count)
 end
 
 return DialogueFactory

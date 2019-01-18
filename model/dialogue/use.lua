@@ -85,7 +85,10 @@ function UseDialogue:_OnSuccess()
     local menu_id = self._menu:Id()
     local next = self._interactions[self._idx]
 
-    next(self._target, menu_id, option.option, option.automated, option.cycle, self._player, self._item_id)
+    local data = { target = self._target, menu = menu_id, choice = option.option,
+        automated = option.automated, uk1 = option.uk1, player = self._player,
+        item_id = self._item_id }
+    next(data)
 end
 
 return UseDialogue

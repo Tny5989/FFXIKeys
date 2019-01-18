@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '2.3.0'
+_addon.version = '2.3.1'
 _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
@@ -29,14 +29,14 @@ local function OnReward(reward)
         if settings.config.logitems then
             FileLogger.AddItem(reward)
         end
+        return true
     end
+    return false
 end
 
 --------------------------------------------------------------------------------
 local function OnCommandSuccess(reward)
-    OnReward(reward)
-
-    if settings.config.loop and state.command:IsRepeatable() then
+    if OnReward(reward) and settings.config.loop and state.command:IsRepeatable() then
         state.command:Reset()
         state.command(state)
     else
@@ -70,8 +70,8 @@ local function OnOutgoingData(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
-local function OnCommand(cmd, name, count)
-    local new_command = CommandFactory.CreateCommand(cmd, name, count)
+local function OnCommand(cmd, name)
+    local new_command = CommandFactory.CreateCommand(cmd, name)
     if new_command:IsSimple() then
         new_command(state)
     elseif state.command:IsSimple() then
