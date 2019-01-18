@@ -6,7 +6,6 @@ Action                | Addon Command
 Load                  | //lua l ffxikeys
 Unload                | //lua u ffxikeys
 Use                   | //keys use \<key\>
-Buy                   | //keys buy \<key\>
 Toggle Printing Links | //keys printlinks
 Toggle Opening Links  | //keys openlinks
 Toggle Logging Items  | //keys logitems
