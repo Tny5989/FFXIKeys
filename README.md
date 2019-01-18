@@ -17,8 +17,6 @@ Aliases:
 Action                | Addon Command
 --------------------- | -----------------------------
 Use SP Gobbie Key     | //usekeys
-Buy SP Gobbie Key     | //buykeys \<count\>
-Buy Warp Scroll       | //getscroll
 
 \<key\> should be replaced with values from [data/keys.lua](https://github.com/Tny5989/FFXIKeys/blob/master/data/keys.lua).  
 \<count\> should be replaced with a number.
