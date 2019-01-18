@@ -29,14 +29,14 @@ local function OnReward(reward)
         if settings.config.logitems then
             FileLogger.AddItem(reward)
         end
+        return true
     end
+    return false
 end
 
 --------------------------------------------------------------------------------
 local function OnCommandSuccess(reward)
-    OnReward(reward)
-
-    if settings.config.loop and state.command:IsRepeatable() then
+    if OnReward(reward) and settings.config.loop and state.command:IsRepeatable() then
         state.command:Reset()
         state.command(state)
     else
