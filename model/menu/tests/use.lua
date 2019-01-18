@@ -14,7 +14,7 @@ end
 --------------------------------------------------------------------------------
 function UseMenuTests:TestOptionForResult()
     local menu = UseMenu:UseMenu(1234)
-    LuaUnit.assertEquals(menu:OptionFor(), { option = 1, automated = true, cycle = 0 })
+    LuaUnit.assertEquals(menu:OptionFor(), { option = 1, automated = true, uk1 = 0 })
 end
 
 --------------------------------------------------------------------------------

@@ -6,15 +6,15 @@ local NilDialogue = require('model/dialogue/nil')
 NilDialogueTests = {}
 
 --------------------------------------------------------------------------------
-function NilDialogueTests:TestOnIncomingDataReturnFalse()
-    local c = NilDialogue:NilDialogue()
-    LuaUnit.assertFalse(c:OnIncomingData(0x052, {}))
+function NilDialogueTests:TestOnOutgoingDataAlwaysReturnsFalse()
+    local dialogue = NilDialogue:NilDialogue()
+    LuaUnit.assertFalse(dialogue:OnOutgoingData(0x052, {}))
 end
 
 --------------------------------------------------------------------------------
-function NilDialogueTests:TestOnOutgoingDataReturnFalse()
-    local c = NilDialogue:NilDialogue()
-    LuaUnit.assertFalse(c:OnOutgoingData(0x052, {}))
+function NilDialogueTests:TestOnIncomingDataAlwaysReturnsFalse()
+    local dialogue = NilDialogue:NilDialogue()
+    LuaUnit.assertFalse(dialogue:OnIncomingData(0x052, {}));
 end
 
 --------------------------------------------------------------------------------
@@ -34,20 +34,8 @@ function NilDialogueTests:TestSuccessCallbackOnStart()
     dialogue:SetSuccessCallback(success)
     dialogue:SetFailureCallback(failure)
     dialogue:Start()
-    LuaUnit.assertEquals(sc, 0)
-    LuaUnit.assertEquals(fc, 1)
-end
-
---------------------------------------------------------------------------------
-function NilDialogueTests:TestOnIncomingDataAlwaysReturnsFalse()
-    local dialogue = NilDialogue:NilDialogue()
-    LuaUnit.assertFalse(dialogue:OnIncomingData(0x052, {}));
-end
-
---------------------------------------------------------------------------------
-function NilDialogueTests:TestTargetTypeIsNilEntity()
-    local dialogue = NilDialogue:NilDialogue()
-    LuaUnit.assertEquals(dialogue:Target():Type(), 'NilEntity')
+    LuaUnit.assertEquals(sc, 1)
+    LuaUnit.assertEquals(fc, 0)
 end
 
 --------------------------------------------------------------------------------

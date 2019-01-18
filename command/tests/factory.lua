@@ -85,20 +85,8 @@ function CommandFactoryTests:TestStopCommandCreatedForStop()
 end
 
 --------------------------------------------------------------------------------
-function CommandFactoryTests:TestBuyCommandCreatedWhenValidParams()
-    local c = CommandFactory.CreateCommand('buy', 'SP Gobbie Key', 2)
-    LuaUnit.assertEquals(c:Type(), 'BuyCommand')
-end
-
---------------------------------------------------------------------------------
-function CommandFactoryTests:TestNilCommandCreatedWhenBadBuyParam()
-    local c = CommandFactory.CreateCommand('buy', nil, 2)
-    LuaUnit.assertEquals(c:Type(), 'NilCommand')
-end
-
---------------------------------------------------------------------------------
 function CommandFactoryTests:TestNilCommandCreatedWhenUnknownParam()
-    local c = CommandFactory.CreateCommand('buy', 'apples', 2)
+    local c = CommandFactory.CreateCommand('use', 'apples')
     LuaUnit.assertEquals(c:Type(), 'NilCommand')
 end
 

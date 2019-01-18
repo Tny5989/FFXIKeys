@@ -22,8 +22,8 @@ function EntityFactory.CreatePlayer()
 end
 
 --------------------------------------------------------------------------------
-function EntityFactory.CreateMob(mob_id, zone)
-    if not mob_id or not zone then
+function EntityFactory.CreateMob(mob_id)
+    if not mob_id then
         return NilEntity:NilEntity()
     end
 
@@ -32,7 +32,12 @@ function EntityFactory.CreateMob(mob_id, zone)
         return NilEntity:NilEntity()
     end
 
-    return MobEntity:MobEntity(mob, zone)
+    local info = windower.ffxi.get_info()
+    if not info or not info.zone then
+        return NilEntity:NilEntity()
+    end
+
+    return MobEntity:MobEntity(mob, info.zone)
 end
 
 return EntityFactory

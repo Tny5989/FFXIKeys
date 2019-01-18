@@ -55,7 +55,18 @@ end
 
 --------------------------------------------------------------------------------
 function EntityFactoryTests:TestNilEntityCreatedWhenBadParam()
-    local e = EntityFactory.CreateMob()
+    windower = {}
+    windower.ffxi = {}
+
+    function windower.ffxi.get_mob_by_id(id)
+        return {id = id, index = 4321, distance = 9999}
+    end
+
+    function windower.ffxi.get_info()
+        return { zone = 11 }
+    end
+
+    local e = EntityFactory.CreateMob(nil)
     LuaUnit.assertEquals(e:Type(), 'NilEntity')
 end
 
@@ -64,6 +75,26 @@ function EntityFactoryTests:TestNilEntityCreatedWhenUnableToGetMobInfo()
     windower = {}
     windower.ffxi = {}
     function windower.ffxi.get_mob_by_id()
+        return nil
+    end
+
+    function windower.ffxi.get_info()
+        return { zone = 11 }
+    end
+
+    local e = EntityFactory.CreateMob(1234)
+    LuaUnit.assertEquals(e:Type(), 'NilEntity')
+end
+
+--------------------------------------------------------------------------------
+function EntityFactoryTests:TestNilEntityCreatedWhenUnableToGetZone()
+    windower = {}
+    windower.ffxi = {}
+    function windower.ffxi.get_mob_by_id(id)
+        return {id = id, index = 4321, distance = 9999}
+    end
+
+    function windower.ffxi.get_info()
         return nil
     end
 
@@ -77,6 +108,10 @@ function EntityFactoryTests:TestMobEntityCreatedWhenAllInformationObtained()
     windower.ffxi = {}
     function windower.ffxi.get_mob_by_id(id)
         return {id = id, index = 4321, distance = 9999}
+    end
+
+    function windower.ffxi.get_info()
+        return { zone = 11 }
     end
 
     local e = EntityFactory.CreateMob(1234)

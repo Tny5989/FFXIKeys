@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '2.2.0'
+_addon.version = '2.2.1'
 _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
@@ -70,8 +70,8 @@ local function OnOutgoingData(id, _, pkt, b, i)
 end
 
 --------------------------------------------------------------------------------
-local function OnCommand(cmd, name, count)
-    local new_command = CommandFactory.CreateCommand(cmd, name, count)
+local function OnCommand(cmd, name)
+    local new_command = CommandFactory.CreateCommand(cmd, name)
     if new_command:IsSimple() then
         new_command(state)
     elseif state.command:IsSimple() then

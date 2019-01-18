@@ -6,7 +6,7 @@ local NilMenu = require('model/menu/nil')
 NilMenuTests = {}
 
 --------------------------------------------------------------------------------
-function NilMenuTests:TestIdIsZero()
+function NilMenuTests:TestIdIsCorrect()
     local menu = NilMenu:NilMenu(0)
     LuaUnit.assertEquals(menu:Id(), 0)
 end
@@ -14,7 +14,8 @@ end
 --------------------------------------------------------------------------------
 function NilMenuTests:TestOptionForReturn()
     local menu = NilMenu:NilMenu(0)
-    LuaUnit.assertEquals(menu:OptionFor(), { option = 0, automated = false, cycle = 0 })
+    LuaUnit.assertEquals(menu:OptionFor(),
+        { option = 0, automated = false, uk1 = 0 })
 end
 
 --------------------------------------------------------------------------------
