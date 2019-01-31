@@ -18,6 +18,11 @@ local state = {}
 state.command = NilCommand:NilCommand()
 
 --------------------------------------------------------------------------------
+local function Restart()
+    state.command(state)
+end
+
+--------------------------------------------------------------------------------
 local function OnReward(reward)
     if reward then
         if settings.config.printlinks then
@@ -36,9 +41,10 @@ end
 
 --------------------------------------------------------------------------------
 local function OnCommandSuccess(reward)
-    if OnReward(reward) and settings.config.loop and state.command:IsRepeatable() then
+    if OnReward(reward) and settings.config.loop
+            and state.command:IsRepeatable() then
         state.command:Reset()
-        state.command(state)
+        coroutine.schedule(Restart, settings.config.delay)
     else
         state.command = NilCommand:NilCommand()
         FileLogger.Flush()
