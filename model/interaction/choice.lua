@@ -54,6 +54,7 @@ end
 function Choice:__call(data)
     local pkts = self:_GeneratePackets(data)
     for _, pkt in pairs(pkts) do
+        PacketLogger.AddPacket(pkt)
         packets.inject(pkt)
     end
 end
