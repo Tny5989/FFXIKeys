@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '2.3.2'
+_addon.version = '2.3.3'
 _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
@@ -16,6 +16,11 @@ local NilCommand = require('command/nil')
 --------------------------------------------------------------------------------
 local state = {}
 state.command = NilCommand:NilCommand()
+
+--------------------------------------------------------------------------------
+local function Restart()
+    state.command(state)
+end
 
 --------------------------------------------------------------------------------
 local function OnReward(reward)
@@ -36,9 +41,10 @@ end
 
 --------------------------------------------------------------------------------
 local function OnCommandSuccess(reward)
-    if OnReward(reward) and settings.config.loop and state.command:IsRepeatable() then
+    if OnReward(reward) and settings.config.loop
+            and state.command:IsRepeatable() then
         state.command:Reset()
-        state.command(state)
+        coroutine.schedule(Restart, settings.config.delay)
     else
         state.command = NilCommand:NilCommand()
         FileLogger.Flush()
