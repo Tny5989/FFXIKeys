@@ -8,7 +8,6 @@ require('logger')
 packets = require('packets')
 settings = require('util/settings')
 
-PacketLogger = require('util/packet_logger')
 local CommandFactory = require('command/factory')
 local Aliases = require('util/aliases')
 local FileLogger = require('util/logger')

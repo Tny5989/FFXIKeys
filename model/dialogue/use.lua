@@ -45,21 +45,17 @@ function UseDialogue:OnIncomingData(id, pkt)
     local block = false
     if id == 0x037 then
         block = true
-        PacketLogger.AddPacket(packets.parse('incoming', pkt))
     elseif id == 0x034 or id == 0x032 then
         block = true
         self._menu = MenuFactory.CreateUseMenu(pkt)
         self:_AppendInteraction(Choice:Choice())
-        PacketLogger.AddPacket(packets.parse('incoming', pkt))
     elseif id == 0x05C then
         block = true
         self._menu = MenuFactory.CreateExtraMenu(pkt, self._menu, self._item_id, 0)
         self:_AppendInteraction(Choice:Choice())
-        PacketLogger.AddPacket(packets.parse('incoming', pkt))
     elseif id == 0x02A then
         block = false
         self._reward = ParseReward(pkt)
-        PacketLogger.AddPacket(packets.parse('incoming', pkt))
     end
 
     return (self._interactions[self._idx]:OnIncomingData(id, pkt) or block)
