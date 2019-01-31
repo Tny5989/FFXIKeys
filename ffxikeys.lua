@@ -8,14 +8,16 @@ require('logger')
 packets = require('packets')
 settings = require('util/settings')
 
+local LoggerFactory = require('util/logger/factory')
 local CommandFactory = require('command/factory')
 local Aliases = require('util/aliases')
-local FileLogger = require('util/logger')
+local NilLogger = require('util/logger/nil')
 local NilCommand = require('command/nil')
 
 --------------------------------------------------------------------------------
 local state = {}
 state.command = NilCommand:NilCommand()
+local Logger = NilLogger:NilLogger()
 
 --------------------------------------------------------------------------------
 local function Restart()
@@ -32,7 +34,7 @@ local function OnReward(reward)
             windower.open_url('https://www.ffxiah.com/item/' .. reward .. '/')
         end
         if settings.config.logitems then
-            FileLogger.AddItem(reward)
+            Logger:Log(reward)
         end
         return true
     end
@@ -47,7 +49,7 @@ local function OnCommandSuccess(reward)
         coroutine.schedule(Restart, settings.config.delay)
     else
         state.command = NilCommand:NilCommand()
-        FileLogger.Flush()
+        Logger:Flush()
     end
 end
 
@@ -56,11 +58,12 @@ local function OnCommandFailure(reward)
     OnReward(reward)
 
     state.command = NilCommand:NilCommand()
-    FileLogger.Flush()
+    Logger:Flush()
 end
 
 --------------------------------------------------------------------------------
 local function OnLoad()
+    Logger = LoggerFactory.CreateItemLogger()
     settings.load()
     Aliases.Update()
 end
@@ -91,6 +94,7 @@ local function OnCommand(cmd, name)
 end
 
 --------------------------------------------------------------------------------
+windower.register_event('login', OnLoad)
 windower.register_event('load', OnLoad)
 windower.register_event('zone change', OnLoad)
 windower.register_event('addon command', OnCommand)
