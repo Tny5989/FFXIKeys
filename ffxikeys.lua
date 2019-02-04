@@ -1,6 +1,6 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '2.3.3'
+_addon.version = '2.3.4'
 _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
@@ -8,16 +8,14 @@ require('logger')
 packets = require('packets')
 settings = require('util/settings')
 
-local LoggerFactory = require('util/logger/factory')
 local CommandFactory = require('command/factory')
 local Aliases = require('util/aliases')
-local NilLogger = require('util/logger/nil')
+local FileLogger = require('util/logger')
 local NilCommand = require('command/nil')
 
 --------------------------------------------------------------------------------
 local state = {}
 state.command = NilCommand:NilCommand()
-local Logger = NilLogger:NilLogger()
 
 --------------------------------------------------------------------------------
 local function Restart()
@@ -34,7 +32,7 @@ local function OnReward(reward)
             windower.open_url('https://www.ffxiah.com/item/' .. reward .. '/')
         end
         if settings.config.logitems then
-            Logger:Log(reward)
+            FileLogger.AddItem(reward)
         end
         return true
     end
@@ -49,7 +47,7 @@ local function OnCommandSuccess(reward)
         coroutine.schedule(Restart, settings.config.delay)
     else
         state.command = NilCommand:NilCommand()
-        Logger:Flush()
+        FileLogger.Flush()
     end
 end
 
@@ -58,12 +56,11 @@ local function OnCommandFailure(reward)
     OnReward(reward)
 
     state.command = NilCommand:NilCommand()
-    Logger:Flush()
+    FileLogger.Flush()
 end
 
 --------------------------------------------------------------------------------
 local function OnLoad()
-    Logger = LoggerFactory.CreateItemLogger()
     settings.load()
     Aliases.Update()
 end
