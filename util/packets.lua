@@ -1,7 +1,7 @@
 local Packets = require('packets')
 
 local last_packets = {}
-local tracking = {[0x034] = true, [0x032] = true, [0x05C] = true, [0x052] = true, [0x036] = true, [0x02A] = true}
+local tracking = {[0x034] = true, [0x032] = true, [0x05C] = true, [0x052] = true, [0x02A] = true}
 
 --------------------------------------------------------------------------------
 -- Interprets a section of data as a number.
