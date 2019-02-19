@@ -1,11 +1,11 @@
 _addon.name = 'FFXIKeys'
 _addon.author = 'Areint/Alzade'
-_addon.version = '2.3.3'
+_addon.version = '2.3.5'
 _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
 require('logger')
-packets = require('packets')
+packets = require('util/packets')
 settings = require('util/settings')
 
 local CommandFactory = require('command/factory')
@@ -67,7 +67,11 @@ end
 
 --------------------------------------------------------------------------------
 local function OnIncomingData(id, _, pkt, b, i)
-    return state.command:OnIncomingData(id, pkt)
+    if not packets.is_duplicate(id, pkt) then
+        return state.command:OnIncomingData(id, pkt)
+    else
+        return false
+    end
 end
 
 --------------------------------------------------------------------------------
@@ -91,6 +95,7 @@ local function OnCommand(cmd, name)
 end
 
 --------------------------------------------------------------------------------
+windower.register_event('login', OnLoad)
 windower.register_event('load', OnLoad)
 windower.register_event('zone change', OnLoad)
 windower.register_event('addon command', OnCommand)
