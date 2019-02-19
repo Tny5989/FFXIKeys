@@ -5,7 +5,7 @@ _addon.commands = {'keys'}
 
 --------------------------------------------------------------------------------
 require('logger')
-packets = require('packets')
+packets = require('util/packets')
 settings = require('util/settings')
 
 local CommandFactory = require('command/factory')
@@ -67,7 +67,11 @@ end
 
 --------------------------------------------------------------------------------
 local function OnIncomingData(id, _, pkt, b, i)
-    return state.command:OnIncomingData(id, pkt)
+    if not packets.is_duplicate(id, pkt) then
+        return state.command:OnIncomingData(id, pkt)
+    else
+        return false
+    end
 end
 
 --------------------------------------------------------------------------------
